@@ -1,4 +1,4 @@
-package com.harper.unit2_final_project.models;
+package com.harper.launchcode_backend_final_project.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.harper.launchcode_backend_final_project.models.Genre;
