@@ -13,6 +13,17 @@ import "../styles/NavBar-Footer.css";
 function NavBar() {
   const [image, setImage] = useState(Logo);
 
+  window.onscroll = function () {
+    if (
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20
+    ) {
+      document.querySelector(".navbar").style.top = "0";
+    } else {
+      document.querySelector(".navbar").style.top = "-50";
+    }
+  };
+
   function handleClick() {
     if (image === Logo) {
       setImage(Logo2);
@@ -26,18 +37,25 @@ function NavBar() {
       <div className="navbar">
         <div className="leftSide">
           <img className="nav-logo" src={image} onClick={handleClick} />
-          <p className="siteName">What Should I Watch</p>
+          <p className="site-name">What Should I Watch</p>
         </div>
-        <div className="rightSide"></div>
-        <Link to="/">Home</Link>
-        <Link to="/feedback">Feedback</Link>
-        <Link to="/about">About</Link>
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+        <div className="rightSide">
+          <Link className="nav-link" to="/">
+            Home
+          </Link>
+          <Link className="nav-link" to="/feedback">
+            Feedback
+          </Link>
+          <Link className="nav-link" to="/about">
+            About
+          </Link>
+          <SignedOut>
+            <SignInButton className="button-navbar" />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
       </div>
     </header>
   );

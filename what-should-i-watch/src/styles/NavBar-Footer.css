@@ -1,48 +1,78 @@
-.navbar {
+header .navbar {
   position: fixed;
+  display: flex;
+  flex-direction: row;
+  align-content: end;
+  flex-wrap: nowrap;
   left: 0;
   top: 0;
   right: 0;
+  gap: 3vw;
   width: 100%;
   height: 70px;
   background-color: #121619;
-  display: flex;
-  flex-direction: row;
   z-index: 50;
+  transition: top 0.3s ease;
 }
 
 .navbar .leftSide {
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
   padding-left: 10px;
-  max-height: 70px;
+  height: 70px;
+  margin-right: 3em;
 }
 
 .navbar .nav-logo {
+  position: fixed;
   width: 70px;
   height: 70px;
+  padding: 0;
+  margin: 0;
+  top: 0;
 }
 
-p.siteName {
-  position: relative;
-  margin: -1rem -1rem;
-  font-size: 0.5rem;
+p.site-name {
+  margin-top: 55px;
+  margin-bottom: 0;
+  height: 70px;
+  width: 70px;
+  justify-self: flex-end;
+  align-self: flex-end;
+  font-size: 7px;
   z-index: 1;
+  text-wrap: nowrap;
 }
 
 .navbar .rightSide {
-  flex: 50%;
   height: 100%;
+  width: 100%;
   display: flex;
+  flex: 1;
   flex-direction: row;
-  align-items: flex-end;
-  justify-content: flex-end;
+  justify-content: end;
+  align-content: end;
+  gap: 1;
+  text-align: end;
+  margin-right: 10px;
 }
 
-.navbar a {
+.navbar .nav-link {
   color: white;
-  text-decoration: none;
-  margin: 20px;
+  width: fit-content;
+  padding: 1em;
+  padding-bottom: 0;
+  align-self: flex-end;
+  font-size: 2.25vw;
+}
+
+.button-navbar {
+  align-self: flex-end;
+  width: 10vw;
+  padding: 0.25rem;
+  font-size: 2vw;
+  background-color: #1a1a1a;
 }
 
 footer {
@@ -101,33 +131,30 @@ img.tmdb-logo {
   }
 }
 
-@media only screen and (max-width: 900px) {
-  .navbar .rightSide a {
-    width: 70px;
-  }
-  .navbar .leftSide {
-    justify-content: flex-start;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .navbar .rightSide a {
-    display: none;
-  }
-
-  .navbar .rightSide {
-    justify-content: flex-end;
-    padding-right: 5%;
-  }
-
-  .navbar .rightSide button {
-    display: inherit;
+@media (min-width: 768px) {
+  .button-navbar {
+    align-self: flex-end;
+    width: 10vw;
+    font-size: 2vw;
   }
 }
 
-@media only screen and (min-width: 900px) {
-  .navbar .rightSide button {
-    display: none;
+@media (min-width: 1024px) {
+  .navbar .nav-link {
+    font-size: 23px;
+  }
+  .button-navbar {
+    align-self: flex-end;
+    width: 102px;
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .button-navbar {
+    align-self: flex-end;
+    width: 102px;
+    font-size: 20px;
   }
 
   .hiddenLinks {
