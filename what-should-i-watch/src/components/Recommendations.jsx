@@ -5,10 +5,10 @@ import AddToWatchList from "./AddToWatchList";
 const Recommendations = ({ movieList }) => {
   return (
     <div className="recommend-grid">
-      <MovieCard movieList={movieList} />
-      <MovieCard movieList={movieList} />
-      <MovieCard movieList={movieList} />
-      <MovieCard movieList={movieList} />
+      <MovieCard movieList={movieList} toWatchList={AddToWatchList} />
+      <MovieCard movieList={movieList} toWatchList={AddToWatchList} />
+      <MovieCard movieList={movieList} toWatchList={AddToWatchList} />
+      <MovieCard movieList={movieList} toWatchList={AddToWatchList} />
       <MovieCard movieList={movieList} toWatchList={AddToWatchList} />
     </div>
   );
