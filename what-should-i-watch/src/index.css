@@ -5,9 +5,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -19,9 +17,12 @@
 }
 
 body {
-  margin: 70px;
-  min-width: 320px;
+  margin-top: 70px;
+  margin-right: 0;
+  margin-left: 0;
+  min-width: 1vh;
   min-height: 100vh;
+  background-color: #181a1b;
 }
 
 h1 {
