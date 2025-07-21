@@ -13,17 +13,6 @@ import "../styles/NavBar-Footer.css";
 function NavBar() {
   const [image, setImage] = useState(Logo);
 
-  window.onscroll = function () {
-    if (
-      document.body.scrollTop > 20 ||
-      document.documentElement.scrollTop > 20
-    ) {
-      document.querySelector(".navbar").style.top = "0";
-    } else {
-      document.querySelector(".navbar").style.top = "-50";
-    }
-  };
-
   function handleClick() {
     if (image === Logo) {
       setImage(Logo2);
