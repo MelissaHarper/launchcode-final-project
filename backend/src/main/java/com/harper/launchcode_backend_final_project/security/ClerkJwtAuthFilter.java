@@ -9,11 +9,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -28,12 +28,15 @@ public class ClerkJwtAuthFilter extends OncePerRequestFilter {
 
     @Value("${clerk.issuer}")
     private String clerkIssuer;
-    private final ClerkJwksProvider jwksProvider;
+
+    @Autowired
+    private ClerkJwksProvider jwksProvider;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         if (request.getRequestURI().contains("/api/webhooks/")) {
-            // Skip JWT validation for webhook endpoints
             filterChain.doFilter(request, response);
             return;
         }
@@ -57,6 +60,7 @@ public class ClerkJwtAuthFilter extends OncePerRequestFilter {
 
             Claims claims = Jwts.parser()
                     .verifyWith(publicKey)
+                    .clockSkewSeconds(60)
                     .requireIssuer(clerkIssuer)
                     .build()
                     .parseSignedClaims(token)
