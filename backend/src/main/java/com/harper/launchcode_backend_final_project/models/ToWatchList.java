@@ -20,6 +20,7 @@ import java.util.Set;
 public class ToWatchList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private int id;
 
     @OneToOne(mappedBy = "toWatchList")
