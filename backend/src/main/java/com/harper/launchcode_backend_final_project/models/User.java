@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @AllArgsConstructor
+@RequiredArgsConstructor(staticName = "of")
 @NoArgsConstructor
 public class User {
     @Id
@@ -24,20 +25,22 @@ public class User {
     @NonNull
     private String clerkId;
 
-    private String username;
     @NonNull
     private String email;
+
+    private String username;
+
+    @CreatedDate
+    @NonNull
+    @Setter(AccessLevel.NONE)
+    private Instant createdAt;
+
     private String photoUrl;
 
     @OneToMany(mappedBy = "user")
     @JsonBackReference
-    private final List<ToWatch> toWatch = new ArrayList<>();
+    private List<ToWatch> toWatch = new ArrayList<>();
+
     private boolean isLoggedIn;
-
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private Instant createdAt;
-
-
 
 }
