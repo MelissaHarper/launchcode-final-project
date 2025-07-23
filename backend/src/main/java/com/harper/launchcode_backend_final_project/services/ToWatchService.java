@@ -15,15 +15,15 @@ public class ToWatchService {
     @Autowired
     private ToWatchRepository toWatchRepository;
 
-    public ToWatch saveList(ToWatch toWatch) {
+    public ToWatch saveToWatch(ToWatch toWatch) {
         return toWatchRepository.save(toWatch);
     }
 
-    public List<ToWatch> fetchToWatchList(String clerkID) {
+    public List<ToWatch> fetchToWatch(String clerkID) {
         return toWatchRepository.findByClerkID(clerkID);
     }
 
-    public void removeMovieFromList(int id, String clerkID) {
+    public void removeItem(int id, String clerkID) {
        ToWatch existingMovie = toWatchRepository.findByIdAndClerkID(id, clerkID)
                .orElseThrow(() -> new RuntimeException("Movie not found in list"));
         toWatchRepository.delete(existingMovie);
