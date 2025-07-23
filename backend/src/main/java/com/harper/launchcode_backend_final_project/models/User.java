@@ -22,7 +22,10 @@ public class User {
     @Setter(AccessLevel.NONE)
     private int userId;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "to_watch_list_clerk_id", referencedColumnName = "clerkId")
     private String clerkId;
+
     private String username;
     private String email;
     private String photoUrl;
@@ -34,6 +37,7 @@ public class User {
     private boolean isLoggedIn;
 
     @CreatedDate
+    @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
 

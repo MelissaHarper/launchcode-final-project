@@ -26,11 +26,14 @@ public class ToWatchList {
     @OneToOne(mappedBy = "toWatchList")
     private User user;
 
-    private List<Integer> movies;
+    @OneToOne(mappedBy = "toWatchList")
     private String clerkId;
+
+    private List<Integer> movies;
     private String thumbnailUrl;
 
     @CreatedDate
+    @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
 }
