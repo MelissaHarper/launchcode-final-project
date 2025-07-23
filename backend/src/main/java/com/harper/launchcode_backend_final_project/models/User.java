@@ -1,16 +1,13 @@
 package com.harper.launchcode_backend_final_project.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -24,16 +21,17 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "to_watch_list_clerk_id", referencedColumnName = "clerkId")
+    @NonNull
     private String clerkId;
 
     private String username;
+    @NonNull
     private String email;
     private String photoUrl;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "to_watch_list_id", referencedColumnName = "id")
-    private ToWatchList toWatchList;
-
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private final List<ToWatch> toWatch = new ArrayList<>();
     private boolean isLoggedIn;
 
     @CreatedDate
