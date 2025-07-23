@@ -1,9 +1,16 @@
 package com.harper.launchcode_backend_final_project.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,17 +22,14 @@ public class ToWatchList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String listName;
-    
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User userID;
+    @OneToOne(mappedBy = "toWatchList")
+    private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "to_watch_list_movies",
-            joinColumns = @JoinColumn(name = "to_watch_list_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id")
-    )
-    private Set<Movie> movies = new HashSet<>();
+    private List<Integer> movies;
+    private String clerkId;
+    private String thumbnailUrl;
+
+    @CreatedDate
+    private Instant createdAt;
+
 }
