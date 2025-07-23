@@ -27,7 +27,7 @@ public class User {
     private String photoUrl;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "to_watch_list_id")
+    @JoinColumn(name = "to_watch_list_id", referencedColumnName = "id")
     private ToWatchList toWatchList;
 
     private boolean isLoggedIn;
