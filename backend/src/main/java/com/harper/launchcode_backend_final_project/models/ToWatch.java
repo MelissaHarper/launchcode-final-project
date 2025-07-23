@@ -25,10 +25,5 @@ public class ToWatch {
     private String clerkId;
 
     private int movieId;
-    private String thumbnailUrl;
-
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private Instant createdAt;
 
 }
