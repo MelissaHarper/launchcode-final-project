@@ -20,14 +20,13 @@ public class User {
     @Setter(AccessLevel.NONE)
     private int userId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "to_watch_list_clerk_id", referencedColumnName = "clerkId")
     @NonNull
     private String clerkId;
 
     @NonNull
     private String email;
 
+    @NonNull
     private String username;
 
     @CreatedDate
@@ -35,7 +34,7 @@ public class User {
     @Setter(AccessLevel.NONE)
     private Instant createdAt;
 
-    private String photoUrl;
+    private String imageUrl;
 
     @OneToMany(mappedBy = "user")
     @JsonBackReference

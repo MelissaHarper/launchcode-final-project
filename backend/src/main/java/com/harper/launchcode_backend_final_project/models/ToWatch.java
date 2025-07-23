@@ -21,7 +21,7 @@ public class ToWatch {
     @JsonManagedReference
     private User user;
 
-    @OneToOne(mappedBy = "toWatchList")
+    @NonNull
     private String clerkId;
 
     private int movieId;
