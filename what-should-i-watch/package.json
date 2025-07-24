@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "clean": "npx npm-force-resolutions",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -35,6 +36,7 @@
     "react-router": "^7.6.3",
     "react-router-dom": "^7.6.3",
     "react-select": "^5.10.2",
+    "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
@@ -50,22 +52,8 @@
   },
   "overrides": {
     "react-material-ui-carousel": {
-      "react": "^17.0.1 || ^18.0.0"
-    },
-    "@emotion/styled": {
-      "react": ">=16.8.0"
-    },
-    "@floating-ui/react": {
-      "react": ">=17.0.0"
-    },
-    "react-datepicker": {
-      "react": ">=17.0.0"
-    },
-    "@emotion/react": {
-      "react": ">=16.8.0"
-    },
-    "@material-ui/core@*": {
-      "react": "^16.8.0 || ^17.0.0"
+      "react": "^19.1.0",
+      "react-dom": "^19.1.0"
     }
   }
 }
