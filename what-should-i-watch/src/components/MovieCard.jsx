@@ -1,12 +1,21 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Dummy from "../assets/images/logo.png";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
 import { getRandomElement } from "../shared/utils";
 import "../styles/movieCard.css";
+import AddToWatchList from "./AddToWatchList";
 
 const MovieCard = (props) => {
+  const [toWatchList, setToWatchList] = useState();
+
   let movie = getRandomElement(props.movieList);
   const ToWatchList = props.toWatchList;
+
+  const addToWatchList = (movie) => {
+    const newToWatchList = [...toWatchList, movie];
+    setToWatchList(newToWatchList);
+  };
 
   return (
     <div className="movie-card">
@@ -23,10 +32,16 @@ const MovieCard = (props) => {
           />
         </Link>
         <div className="overlay">
-          <ToWatchList />
+          <ToWatchList
+            handleToWatchClick={addToWatchList}
+            toWatchComponent={AddToWatchList}
+          />
         </div>
       </div>
-      <div className="info-container">
+      <Link to={`/selection/movie/detail/${movie.id}`} className="movie-title">
+        {movie.title || movie.name}
+      </Link>
+      {/* <div className="info-container">
         <Link
           to={`/selection/movie/detail/${movie.id}`}
           className="movie-title"
@@ -54,7 +69,7 @@ const MovieCard = (props) => {
             )}
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -15,8 +15,9 @@
 
 .poster-container {
   align-content: center;
-  height: auto;
-  width: 100px;
+  height: 330px;
+  width: 220px;
+  margin: 0px, 5px;
   transition: transform 0.2s;
 }
 
@@ -27,8 +28,8 @@
 
 img.poster {
   justify-self: center;
-  height: 180px;
-  width: 100px;
+  height: auto;
+  width: auto;
   border-radius: 0.5rem;
   object-fit: cover;
 }
@@ -42,12 +43,14 @@ img.poster {
   align-items: center;
   justify-content: center;
   position: absolute;
+  height: 3em;
+  width: 220px;
   background: rgba(0, 0, 0, 0.8);
   transition: 0.5s ease;
   opacity: 0;
   bottom: 0;
   font-size: 0.75rem;
-  padding: 0.75rem;
+  padding: 2em, 0px;
   text-align: center;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
@@ -106,7 +109,7 @@ a {
 a:hover {
   color: rgb(220, 220, 233);
 }
-
+/* 
 @media (min-width: 768px) {
   .movie-card {
     height: 300px;
@@ -168,4 +171,4 @@ a:hover {
     width: 200px;
     height: 300px;
   }
-}
+} */
