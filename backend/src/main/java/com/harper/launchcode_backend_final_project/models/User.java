@@ -18,7 +18,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private int userId;
+    private int Id;
 
     @NonNull
     private String clerkId;
@@ -29,16 +29,17 @@ public class User {
     @NonNull
     private String username;
 
+    @NonNull
+    private String photoUrl;
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private List<ToWatch> movies = new ArrayList<>();
+
     @CreatedDate
     @NonNull
     @Setter(AccessLevel.NONE)
     private Instant createdAt;
-
-    private String imageUrl;
-
-    @OneToMany(mappedBy = "user")
-    @JsonBackReference
-    private List<ToWatch> toWatch = new ArrayList<>();
 
     private boolean isLoggedIn;
 
