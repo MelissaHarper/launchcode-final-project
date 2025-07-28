@@ -1,6 +1,8 @@
 package com.harper.launchcode_backend_final_project.config;
 
 import com.harper.launchcode_backend_final_project.security.ClerkJwtAuthFilter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,21 +24,25 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class SecurityConfig {
 
     @Autowired
-    private ClerkJwtAuthFilter jwtAuthFilter;
+    ClerkJwtAuthFilter jwtAuthFilter;
 
     @Value("${clerk.api.authorized-parties}")
     private List<String> clerkApiAuthorizedParties;
+
+    @Value("${app.allowed-origins}")
+    private List<String> allowedOrigins;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/webhooks/**", "/api/user", "/api/user/**")
+                        .requestMatchers("/api/webhooks/**", "/api/users", "/api/users/**")
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
@@ -53,8 +59,8 @@ public class SecurityConfig {
 
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(clerkApiAuthorizedParties);
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        allowedOrigins.forEach(config::addAllowedOrigin);
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
 
