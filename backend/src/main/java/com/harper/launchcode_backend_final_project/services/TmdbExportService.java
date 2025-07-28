@@ -6,6 +6,7 @@ import com.harper.launchcode_backend_final_project.models.Movie;
 import com.harper.launchcode_backend_final_project.models.ToWatch;
 import com.harper.launchcode_backend_final_project.repositories.MovieRepository;
 import com.harper.launchcode_backend_final_project.repositories.ToWatchRepository;
+import lombok.Data;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,20 +22,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Service to download and process the daily TMDB movie export.
+ * Fetches the latest movie IDs from TMDB, processes them,
+ * and saves them to the database.
+ */
+
 @Service
+@Data
 public class TmdbExportService {
 
     private static final String TMDB_EXPORT_BASE_URL = "http://files.tmdb.org/p/exports/movie_ids";
-    private final MovieRepository movieRepository;
-    private final ToWatchRepository toWatchRepository;
 
     @Autowired
-    public TmdbExportService(MovieRepository movieRepository, ToWatchRepository toWatchRepository) {
-        this.movieRepository = movieRepository;
-        this.toWatchRepository = toWatchRepository;
-    }
-
-
+    MovieRepository movieRepository;
 
         // Schedule to run every day at, for example, 3 AM
         @Scheduled(cron = "0 0 3 * * ?")
