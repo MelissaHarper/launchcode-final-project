@@ -5,32 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
-    private Boolean adult;
-    private String backdropPath;
-    @ManyToMany
-    @JsonManagedReference
-    private List<Genre> genres;
+
     @Id
-    private int id;
-    private String originalLanguage;
+    private Long id; // Long type required by TMDB API
     private String originalTitle;
-    private String overview;
-    private String popularity;
-    private String posterPath;
-    private String releaseDate;
-    private String title;
-    private String video;
-    private String voteAverage;
-    private String voteCount;
-
-
-
-
 }
