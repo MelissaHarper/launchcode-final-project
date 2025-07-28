@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
+import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +18,10 @@ import java.util.Set;
 public class Movie {
 
     @Id
-    private Long id; // Long type required by TMDB API
+    private int id;
     private String originalTitle;
+
+    @ManyToMany(mappedBy = "movies")
+    Set<ToWatch> toWatchLists = new HashSet<>();
+
 }
