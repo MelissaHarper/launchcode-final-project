@@ -1,14 +1,54 @@
 import { api } from "./call-headers";
+import axios from "axios";
 
-export const getWithFilters = async (searchTerms, payload) => {
-  const response = await api().get(
-    `/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${searchTerms}`,
-    {
+const BASE_URL = "https://api.themoviedb.org/3";
+
+// export const getWithFilters = async (searchTerms, payload) => {
+//   const response = await api().get(
+//     `/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${searchTerms}`,
+//     {
+//       payload,
+//     }
+//   );
+//   return response;
+// };
+
+export async function getWithFilters({ type, genreId, providerId, payload }) {
+  try {
+    const response = await api().get(`/discover/${type}`, {
+      params: {
+        include_adult: false,
+        sort_by: "popularity.desc",
+        watch_region: "US",
+        with_genres: genreId,
+        with_watch_providers: providerId,
+      },
       payload,
-    }
-  );
-  return response;
-};
+    });
+
+    return response.data.results.map((movie) => ({
+      id: movie.id,
+      title: movie.title,
+      description: movie.overview,
+      poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+    }));
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+    return [];
+  }
+}
+
+export async function getGenres(payload) {
+  const url = `${BASE_URL}/genre/movie/list`;
+  const { data } = await api().get(url, { payload });
+  return data.genres; // Array of { id, name }
+}
+
+export async function getProviders(payload) {
+  const url = `${BASE_URL}/watch/providers/movie`;
+  const { data } = await axios.get(url, { payload });
+  return data.results; // Array of { provider_id, provider_name, logo_path }
+}
 
 export const getTrending = async (type, payload) => {
   const response = await api().get(`/trending/all/${type}`, {
