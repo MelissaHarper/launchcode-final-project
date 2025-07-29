@@ -13,8 +13,13 @@ import MovieCard from "./components/MovieCard";
 import UserSyncHandler from "./components/UserSyncHandler";
 import UserDashboard from "./components/UserDashboard";
 import { AppContextProvider } from "./context/AppContext.jsx";
-import { ClerkProvider } from "@clerk/react-router";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn,
+} from "@clerk/react-router";
+// import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 import { getPopular } from "./shared/call-functions.js";
 import "./App.css";
 import { options } from "./shared/call-headers.js";
@@ -55,10 +60,10 @@ function App() {
   // }
 
   // Import clerk Publishable Key
-  const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+  const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
   // Throw error if key not imported
-  if (!PUBLISHABLE_KEY) {
+  if (!CLERK_PUBLISHABLE_KEY) {
     throw new Error("Add your Clerk Publishable Key to the .env file");
   }
 
@@ -67,7 +72,7 @@ function App() {
       <div className="App">
         <AppContextProvider>
           <BrowserRouter>
-            <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+            <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
               <UserSyncHandler />
               <NavBar />
               <div className="body-content">
