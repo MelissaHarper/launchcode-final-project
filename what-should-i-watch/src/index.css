@@ -12,18 +12,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html {
-  margin: 0;
-}
-
+html,
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: center;
   margin: 0;
-  padding: 8px;
-  min-width: 1vw;
 }
 
 *,
