@@ -5,7 +5,8 @@ import tmdbLogo from "../assets/images/tmdb-logo.svg";
 const Footer = () => {
   const navigate = useNavigate();
 
-  const handleRedirect = () => {
+  const handleRedirect = (event) => {
+    event.preventDefault();
     navigate(`/recommendations`);
   };
   return (
