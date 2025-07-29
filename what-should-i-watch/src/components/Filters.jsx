@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { getWithFilters } from "../shared/call-functions.js";
 import genreData from "../assets/data/tmdbGenres.json";
 import providerData from "../assets/data/watchProvidersIDsNames.json";
+import { options } from "../shared/call-headers.js";
 
 export function Filters({ setMovieList }) {
   const [genres, setGenres] = useState([]);
   const [providers, setProviders] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState("");
-  const [selectedProvider, setSelectedProvider] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState();
+  const [selectedProvider, setSelectedProvider] = useState();
 
   useEffect(() => {
     setGenres(genreData);
@@ -17,8 +18,10 @@ export function Filters({ setMovieList }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const movies = await getWithFilters({
+      type: "movie",
       genreId: selectedGenre,
       providerId: selectedProvider,
+      payload: options,
     });
     setMovieList(movies);
   };
@@ -36,9 +39,9 @@ export function Filters({ setMovieList }) {
           className="w-full p-2 rounded bg-zinc-700"
         >
           <option value="">All Genres</option>
-          {genres.map((g) => (
-            <option key={g.id} value={g.id}>
-              {g.name}
+          {genres.map((genre) => (
+            <option key={genre.id} value={genre.id}>
+              {genre.name}
             </option>
           ))}
         </select>
