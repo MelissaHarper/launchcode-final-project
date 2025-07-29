@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "../../context/AppContext";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
