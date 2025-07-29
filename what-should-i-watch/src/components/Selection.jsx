@@ -1,7 +1,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { getDetail, getCredits, getTrailers } from "../shared/call-functions";
-import { options } from "../shared/call-structure";
+import { options } from "../shared/call-headers";
 import SelectionDescription from "./SelectionDescriptionCard";
 import SelectionCredits from "./SelectionsCreditsCard";
 import SelectionTrailers from "./SelectionTrailersCard";
