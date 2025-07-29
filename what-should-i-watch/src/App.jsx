@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import axios from "axios";
 import NavBar from "./components/NavBar";
 import FilterContainer from "./components/FilterContainer";
 import Home from "./components/Home";
@@ -8,25 +9,51 @@ import Footer from "./components/Footer";
 import Selection from "./components/Selection";
 import Recommendations from "./components/Recommendations";
 import Feedback from "./components/Feedback";
-import "./App.css";
 import MovieCard from "./components/MovieCard";
-import movies from "./assets/data/mergedDummyData.json";
+import UserSyncHandler from "./components/UserSyncHandler";
+import UserDashboard from "./components/UserDashboard";
+import { AppContextProvider } from "./context/AppContext.jsx";
 import { ClerkProvider } from "@clerk/react-router";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
+import { getPopular } from "./shared/call-functions.js";
+import "./App.css";
+import { options } from "./shared/call-headers.js";
 
 function App() {
-  const [movieList, setMovieList] = useState();
+  const [movieList, setMovieList] = useState(getPopular("movie", options));
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState(null);
 
-  function setMovies() {
-    let movieData = movies.map((obj) => {
-      return { ...obj };
-    });
-    setMovieList(movieData);
-  }
+  // const API_BASE_URL = "http://localhost:8080/api";
 
-  // populates movieList upon first load
-  useEffect(() => {
-    setMovies();
-  }, []);
+  // // populates movieList upon first load
+  // useEffect(() => {
+  //   const fetchMovieData = async () => {
+  //     setIsLoading(true);
+  //     setError(null);
+
+  //     try {
+  //       const response = await axios.get(`${API_BASE_URL}/movies/ids`);
+  //       setMovieList(response.data);
+  //     } catch (err) {
+  //       console.error("Error fetching movie IDs from backend:", err);
+  //       setError("Failed to load movie data from backend.");
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchMovieData();
+  // }, []);
+
+  // if (isLoading) {
+  //   return <div>Loading movie IDs...</div>;
+  // }
+
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
+
   // Import clerk Publishable Key
   const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -38,40 +65,63 @@ function App() {
   return (
     <main>
       <div className="App">
-        <BrowserRouter>
-          <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-            <NavBar />
-            <Routes>
-              <Route index element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route
-                path="/recommendations"
-                element={
-                  <Recommendations
-                    movieList={movieList}
-                    setMovieList={setMovieList}
+        <AppContextProvider>
+          <BrowserRouter>
+            <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+              <UserSyncHandler />
+              <NavBar />
+              <div className="body-content">
+                <Routes>
+                  <Route
+                    index
+                    element={
+                      <Home movieList={movieList} setMovieList={setMovieList} />
+                    }
                   />
-                }
-              />
-              <Route
-                path="/filterContainer"
-                element={
-                  <FilterContainer
-                    movieList={movieList}
-                    setMovieList={setMovieList}
+                  <Route path="/about" element={<About />} />
+                  <Route
+                    path="/recommendations"
+                    element={
+                      <Recommendations
+                        movieList={movieList}
+                        setMovieList={setMovieList}
+                      />
+                    }
                   />
-                }
-              />
-              <Route path="/movieCard" element={<MovieCard />} />
-              <Route path="/feedback" element={<Feedback />} />
-              <Route
-                path="/selection/:type/detail/:id"
-                element={<Selection />}
-              />
-            </Routes>
-            <Footer />
-          </ClerkProvider>
-        </BrowserRouter>
+                  <Route
+                    path="/filterContainer"
+                    element={
+                      <FilterContainer
+                        movieList={movieList}
+                        setMovieList={setMovieList}
+                      />
+                    }
+                  />
+                  <Route path="/movieCard" element={<MovieCard />} />
+                  <Route path="/feedback" element={<Feedback />} />
+                  <Route
+                    path="/selection/:type/detail/:id"
+                    element={<Selection />}
+                  />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <>
+                        <SignedIn>
+                          <UserDashboard />
+                        </SignedIn>
+                        <SignedOut>
+                          <RedirectToSignIn />
+                        </SignedOut>
+                      </>
+                    }
+                  />
+                </Routes>
+              </div>
+              <Footer />
+            </ClerkProvider>
+          </BrowserRouter>
+        </AppContextProvider>
       </div>
       <></>
     </main>
