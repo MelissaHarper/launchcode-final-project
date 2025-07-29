@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Filter from "./FilterByGenre.jsx";
 import Modal from "@mui/material/Modal";
-import { filterByGenre } from "../shared/utils";
+import { filterByGenre } from "./services/utils.js";
 import "../styles/filterContainer.css";
 
 function FilterContainer({ movieList, setMovieList }) {

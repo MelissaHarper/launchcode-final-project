@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getWithFilters } from "../shared/call-functions.js";
+import { getWithFilters } from "./services/call-functions.js";
 import genreData from "../assets/data/tmdbGenres.json";
 import providerData from "../assets/data/watchProvidersIDsNames.json";
-import { options } from "../shared/call-headers.js";
+import { options } from "./services/call-headers.js";
 
 export function Filters({ setMovieList }) {
   const [genres, setGenres] = useState([]);

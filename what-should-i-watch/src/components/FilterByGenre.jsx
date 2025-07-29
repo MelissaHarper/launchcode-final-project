@@ -1,6 +1,6 @@
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { genreOptions } from "../shared/utils";
+import { genreOptions } from "./services/utils";
 
 const Filter = ({ selectedGenre, setSelectedGenre }) => {
   const animatedComponents = makeAnimated();

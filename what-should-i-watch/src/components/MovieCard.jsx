@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import Dummy from "../assets/images/logo.png";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
-import { getRandomElement } from "../shared/utils";
+import { getRandomElement } from "./services/utils";
 import "../styles/movieCard.css";
-import AddToWatchList from "./AddToWatchList";
+import AddToWatchList from "./services/AddToWatchList";
 
 const MovieCard = (props) => {
   const [toWatchList, setToWatchList] = useState();

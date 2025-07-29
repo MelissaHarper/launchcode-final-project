@@ -1,6 +1,6 @@
 import MovieCard from "./MovieCard";
 import "../styles/recommendations.css";
-import AddToWatchList from "./AddToWatchList";
+import AddToWatchList from "./services/AddToWatchList";
 
 const Recommendations = ({ movieList }) => {
   return (
