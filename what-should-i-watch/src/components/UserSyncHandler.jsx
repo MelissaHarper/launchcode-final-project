@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import { AppContext } from "../context/AppContext.jsx";
+import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
@@ -21,7 +21,7 @@ const UserSyncHandler = () => {
           clerkId: user.id,
           email: user.primaryEmailAddress.emailAddress,
           username: user.username,
-          imageUrl: user.imageUrl,
+          photoUrl: user.imageUrl,
         };
 
         await axios.post(`${baseUrl}/users`, userData, {
