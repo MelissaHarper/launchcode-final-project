@@ -1,15 +1,14 @@
 import MovieCard from "./MovieCard";
 import "../styles/recommendations.css";
-import AddToWatchList from "./services/AddToWatchList";
 
-const Recommendations = ({ movieList }) => {
+const Recommendations = (props) => {
   return (
     <div className="recommend-grid">
-      <MovieCard movieList={movieList} toWatchList={AddToWatchList} />
-      <MovieCard movieList={movieList} toWatchList={AddToWatchList} />
-      <MovieCard movieList={movieList} toWatchList={AddToWatchList} />
-      <MovieCard movieList={movieList} toWatchList={AddToWatchList} />
-      <MovieCard movieList={movieList} toWatchList={AddToWatchList} />
+      <MovieCard props={props} />
+      <MovieCard props={props} />
+      <MovieCard props={props} />
+      <MovieCard props={props} />
+      <MovieCard props={props} />
     </div>
   );
 };

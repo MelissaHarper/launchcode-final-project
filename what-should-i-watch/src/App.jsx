@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useAuth, useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import NavBar from "./components/NavBar";
 import FilterContainer from "./components/FilterContainer";
@@ -11,18 +10,18 @@ import Selection from "./components/Selection";
 import Recommendations from "./components/Recommendations";
 import Feedback from "./components/Feedback";
 import MovieCard from "./components/MovieCard";
-import UserSyncHandler from "./components/services/UserSyncHandler.jsx";
+import AddToWatchList from "./components/services/AddToWatchList";
 import UserDashboard from "./components/UserDashboard";
-import { AppContextProvider } from "./context/AppContext.jsx";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/react-router";
-// import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
-// import { getPopular } from "./components/services/call-functions.js";
-// import "./App.css";
-// import { options } from "./components/services/call-headers.js";
+// For future Clerk Authorization
+// import { AppContextProvider } from "./context/AppContext.jsx";
+// import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/react-router";
+// import UserSyncHandler from "./components/services/UserSyncHandler.jsx";
+// import { useAuth, useUser } from "@clerk/clerk-react";
 
 function App() {
   const [movieList, setMovieList] = useState();
   const [signedIn, setSignedIn] = useState(false);
+  const [toWatch, setToWatch] = useState([]);
 
   function authorizeClick(e) {
     e.preventDefault();
@@ -30,42 +29,11 @@ function App() {
       signedIn ? setSignedIn(false) : setSignedIn(true);
     }
   }
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  // const { getToken } = useAuth();
 
-  // const API_BASE_URL = "http://localhost:8080/api";
-
-  // // populates movieList upon first load
-  // useEffect(() => {
-  //   const fetchMovieData = async () => {
-  //     setIsLoading(true);
-  //     setError(null);
-  //     const token = await getToken();
-
-  //     try {
-  //       const response = await axios.get(`${API_BASE_URL}/movies/ids`, {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       });
-  //       setMovieList(response.data);
-  //     } catch (err) {
-  //       console.error("Error fetching movie IDs from backend:", err);
-  //       setError("Failed to load movie data from backend.");
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   fetchMovieData();
-  // }, []);
-
-  // if (isLoading) {
-  //   return <div>Loading movie IDs...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
+  function addMovieToWatch(movie) {
+    const newToWatch = [...toWatch, movie];
+    setToWatch(newToWatch);
+  }
 
   return (
     <main>
@@ -88,6 +56,10 @@ function App() {
                 <Recommendations
                   movieList={movieList}
                   setMovieList={setMovieList}
+                  toWatchComponent={AddToWatchList}
+                  handleToWatchClick={addMovieToWatch}
+                  toWatch={toWatch}
+                  setToWatch={setToWatch}
                 />
               }
             />
@@ -103,6 +75,10 @@ function App() {
             <Route path="/movieCard" element={<MovieCard />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/selection/:type/detail/:id" element={<Selection />} />
+            <Route
+              path="/userDashboard"
+              element={<UserDashboard toWatchComponent={AddToWatchList} />}
+            />
             {/* // For future Clerk Authorization */}
             {/* <Route
               path="/dashboard"

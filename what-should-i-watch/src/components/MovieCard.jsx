@@ -7,14 +7,21 @@ import "../styles/movieCard.css";
 import AddToWatchList from "./services/AddToWatchList";
 
 const MovieCard = (props) => {
-  const [toWatchList, setToWatchList] = useState();
+  const {
+    movieList,
+    setMovieList,
+    toWatch,
+    setToWatch,
+    toWatchComponent,
+    handleToWatchClick,
+  } = props;
 
-  let movie = getRandomElement(props.movieList);
+  let movie = getRandomElement(movieList);
   const ToWatchList = props.toWatchList;
 
   const addToWatchList = (movie) => {
-    const newToWatchList = [...toWatchList, movie];
-    setToWatchList(newToWatchList);
+    const newToWatch = [...toWatch, movie];
+    setToWatch(newToWatch);
   };
 
   return (
@@ -31,7 +38,7 @@ const MovieCard = (props) => {
             }}
           />
         </Link>
-        <div className="overlay">
+        <div className="overlay" onClick={handleToWatchClick}>
           <ToWatchList
             handleToWatchClick={addToWatchList}
             toWatchComponent={AddToWatchList}
