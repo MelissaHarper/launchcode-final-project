@@ -22,6 +22,8 @@ const UserSyncHandler = () => {
           email: user.primaryEmailAddress.emailAddress,
           username: user.username,
           photoUrl: user.imageUrl,
+          movies: [],
+          createdAt: user.created_at,
         };
 
         await axios.post(`${baseUrl}/users`, userData, {
