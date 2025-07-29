@@ -1,8 +1,8 @@
+// For future Clerk Authorization
 import { useContext, useEffect, useState } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { AppContext } from "../../context/AppContext";
 import axios from "axios";
-import { toast } from "react-hot-toast";
 
 const UserSyncHandler = () => {
   const [synced, setSynced] = useState(false);
@@ -23,7 +23,7 @@ const UserSyncHandler = () => {
           username: user.username,
           photoUrl: user.imageUrl,
           movies: [],
-          createdAt: user.created_at,
+          createdAt: user.createdAt,
         };
 
         await axios.post(`${baseUrl}/users`, userData, {
@@ -31,7 +31,7 @@ const UserSyncHandler = () => {
         });
         setSynced(true);
       } catch (error) {
-        toast.error(error.message);
+        console.error(error.message);
       }
     };
     saveUser();
