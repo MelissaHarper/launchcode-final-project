@@ -2,7 +2,9 @@ import axios from "axios";
 import { verifyWebhook } from "@clerk/react-router/webhooks";
 
 const authorization = import.meta.env.VITE_AUTHORIZATION;
+
 const tmdbBaseUrl = import.meta.env.VITE_BASE_TMDB_API_URL;
+
 export const tmdbApiKey = import.meta.env.TMDB_API_KEY;
 
 export const options = {
