@@ -41,6 +41,4 @@ public class User {
     @Setter(AccessLevel.NONE)
     private Instant createdAt;
 
-    private boolean isLoggedIn;
-
 }
