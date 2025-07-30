@@ -20,6 +20,18 @@ function FilterContainer({ setMovieList }) {
   const [selectedProviders, setSelectedProviders] = useState([]);
   const navigate = useNavigate();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const movies = await getWithFilters(
+      "movie",
+      selectedGenres,
+      selectedProviders,
+      options
+    );
+    setMovieList(movies);
+    navigate(`/recommendations`);
+  };
+
   return (
     <div className="bg-[#2b2c37] h-[100dvh] text-white flex  p-20 gap-4 items-center flex-col">
       <div className=" w-[400px] ">
@@ -58,6 +70,7 @@ function FilterContainer({ setMovieList }) {
           <FilterDropdown.AssignedList />
         </FilterDropdown>
       </div>
+      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
   // const [selectedGenre, setSelectedGenre] = useState(null);
