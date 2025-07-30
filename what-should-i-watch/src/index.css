@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   margin-top: 70px;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

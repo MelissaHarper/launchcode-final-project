@@ -19,6 +19,9 @@ export default defineConfig({
     },
   },
   server: {
-    allowedHosts: ["widely-endless-basilisk.ngrok-free.app"],
+    allowedHosts: [
+      "widely-endless-basilisk.ngrok-free.app",
+      "http://localhost:8080/api",
+    ],
   },
 });

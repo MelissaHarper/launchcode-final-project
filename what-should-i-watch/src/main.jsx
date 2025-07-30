@@ -5,7 +5,6 @@ import "./index.css";
 import App from "./App.jsx";
 import { AppContextProvider } from "./context/AppContext.jsx";
 import { BrowserRouter } from "react-router";
-// import "bootstrap/dist/css/bootstrap.min.css";
 
 // Import clerk Publishable Key
 const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -17,16 +16,15 @@ if (!CLERK_PUBLISHABLE_KEY) {
 
 createRoot(document.getElementById("root")).render(
   // For future Clerk Authorization
-  // <AppContextProvider>
-  <BrowserRouter>
-    {/* // For future Clerk Authorization */}
-    {/* <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}> */}
-    <StrictMode>
-      <App />
-    </StrictMode>
-    {/* // For future Clerk Authorization */}
-    {/* </ClerkProvider> */}
-  </BrowserRouter>
-  // For future Clerk Authorization
-  // </AppContextProvider>
+  <AppContextProvider>
+    <BrowserRouter>
+      {/* // For future Clerk Authorization */}
+      <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
+        <StrictMode>
+          <App />
+        </StrictMode>
+        {/* // For future Clerk Authorization */}
+      </ClerkProvider>
+    </BrowserRouter>
+  </AppContextProvider>
 );
