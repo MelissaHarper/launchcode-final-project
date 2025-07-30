@@ -1,17 +1,39 @@
 import { options } from "./call-headers.js";
-// import movies from "../assets/data/movies.json";
 
-//curl --request GET \
-//  --url 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=18%2C%2014&with_watch_providers=8%2C%20337&without_watch_providers=1825' \
-//  --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MWNiMjE1Yjk3NWEzYzJmMzc4NzQzZmI2OTgzOGZmMiIsIm5iZiI6MTc0NzY4NTY4OS42NjYsInN1YiI6IjY4MmI5MTM5MzVkOWE1NzQxYjViNWMwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.a6YZBJxVaiFmqgcgJeDw5syp5s2MHqEAcYSI4Vh4hX4' \
-//  --header 'accept: application/json'
+import { useEffect } from "react";
+
+export const useClickOutside = (ref, handler) => {
+  // console.log(handler, ref);
+  useEffect(() => {
+    const listener = (event) => {
+      // Do nothing if clicking ref's element or descendent elements
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+
+      handler(event);
+    };
+
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
+
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+  }, [ref, handler]);
+};
+
+export function sortByRank(listOfObjects) {
+  const sorted = [...listOfObjects].sort((a, b) => a.rank - b.rank);
+  return sorted;
+}
 
 export function getRandomNumber() {
   let randomNumber = Math.floor(Math.random() * 80000);
   return randomNumber;
 }
 
-/*** Utility Functions ***/
 export function getRandomElement(arr) {
   let randomIndex = Math.floor(Math.random() * arr.length);
   return arr[randomIndex];
