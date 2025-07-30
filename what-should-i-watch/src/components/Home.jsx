@@ -1,4 +1,4 @@
-import { Filters } from "./Filters";
+import FilterContainer from "./FilterContainer";
 
 function Home({ movieList, setMovieList }) {
   return (
@@ -7,7 +7,7 @@ function Home({ movieList, setMovieList }) {
         <h1> What Should I Watch? </h1>
       </div>
 
-      <Filters movieList={movieList} setMovieList={setMovieList} />
+      <FilterContainer movieList={movieList} setMovieList={setMovieList} />
     </div>
   );
 }
