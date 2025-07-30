@@ -12,19 +12,51 @@ const BASE_URL = "https://api.themoviedb.org/3";
 //   );
 //   return response;
 // };
+export const clerkMiddleware = (options) => {
+  return async (context, next) => {
+    const clerkClient = options.clerkClient || defaultClerkClient;
+
+    const requestState = await clerkClient.authenticateRequest(context.req, {
+      authorizedParties: ["https://example.com"],
+    });
+
+    if (requestState.headers) {
+      // This adds observability headers to the res
+      requestState.headers.forEach((value, key) =>
+        context.res.headers.append(key, value)
+      );
+
+      const locationHeader = requestState.headers.get("location");
+
+      if (locationHeader) {
+        return context.redirect(locationHeader, 307);
+      } else if (requestState.status === "handshake") {
+        throw new Error("Clerk: unexpected handshake without redirect");
+      }
+    }
+
+    context.set("clerkAuth", requestState.toAuth());
+    context.set("clerk", clerkClient);
+
+    await next();
+  };
+};
 
 export async function getWithFilters({ type, genreId, providerId, payload }) {
   try {
-    const response = await api().get(`/discover/${type}`, {
-      params: {
-        include_adult: false,
-        sort_by: "popularity.desc",
-        watch_region: "US",
-        with_genres: genreId,
-        with_watch_providers: providerId,
+    const response = await api().get(
+      `/discover/${type}`,
+      {
+        params: {
+          include_adult: false,
+          sort_by: "popularity.desc",
+          watch_region: "US",
+          with_genres: genreId,
+          with_watch_providers: providerId,
+        },
       },
-      payload,
-    });
+      { payload }
+    );
 
     return response.data.results.map((movie) => ({
       id: movie.id,
