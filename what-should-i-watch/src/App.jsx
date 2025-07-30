@@ -11,24 +11,56 @@ import Recommendations from "./components/Recommendations";
 import Feedback from "./components/Feedback";
 import MovieCard from "./components/MovieCard";
 import AddToWatchList from "./components/services/AddToWatchList";
-import UserDashboard from "./components/UserDashboard";
-// For future Clerk Authorization
-// import { AppContextProvider } from "./context/AppContext.jsx";
-// import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/react-router";
-// import UserSyncHandler from "./components/services/UserSyncHandler.jsx";
-// import { useAuth, useUser } from "@clerk/clerk-react";
+import UserDashboard from "./components/gated/UserDashboard";
+import { getPopular } from "./components/services/call-functions";
+import { options } from "./components/services/call-headers";
+
+import { AppContextProvider } from "./context/AppContext.jsx";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/react-router";
+import UserSyncHandler from "./components/services/UserSyncHandler.jsx";
+import { useAuth, useUser } from "@clerk/clerk-react";
 
 function App() {
-  const [movieList, setMovieList] = useState();
+  const [movieList, setMovieList] = useState([]);
   const [signedIn, setSignedIn] = useState(false);
   const [toWatch, setToWatch] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  function authorizeClick(e) {
-    e.preventDefault();
-    {
-      signedIn ? setSignedIn(false) : setSignedIn(true);
-    }
-  }
+  /* Callback Function to avoid passing setters */
+  const populateMovieList = (input) => {
+    setMovieList(input);
+  };
+
+  /* populates movieList upon first load */
+  useEffect(() => {
+    const fetchMovieData = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/movies/ids`
+        );
+        setMovieList(response.data);
+      } catch (err) {
+        console.error("Error fetching movie IDs from backend:", err);
+        setError("Failed to load movie data from backend.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMovieData();
+  }, []);
+
+  // if (isLoading) {
+  //   return <div>Loading movie IDs...</div>;
+  // }
+
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
   function addMovieToWatch(movie) {
     const newToWatch = [...toWatch, movie];
@@ -40,13 +72,16 @@ function App() {
       <div className="App">
         {/* // For future Clerk Authorization */}
         {/* <UserSyncHandler /> */}
-        <NavBar signedIn={signedIn} authorizeClick={authorizeClick} />
+        <NavBar />
         <div className="body-content">
           <Routes>
             <Route
               index
               element={
-                <Home movieList={movieList} setMovieList={setMovieList} />
+                <Home
+                  movieList={movieList}
+                  populateMovieList={populateMovieList}
+                />
               }
             />
             <Route path="/about" element={<About />} />
@@ -55,7 +90,7 @@ function App() {
               element={
                 <Recommendations
                   movieList={movieList}
-                  setMovieList={setMovieList}
+                  populateMovieList={populateMovieList}
                   toWatchComponent={AddToWatchList}
                   handleToWatchClick={addMovieToWatch}
                   toWatch={toWatch}
@@ -68,11 +103,23 @@ function App() {
               element={
                 <FilterContainer
                   movieList={movieList}
-                  setMovieList={setMovieList}
+                  populateMovieList={populateMovieList}
                 />
               }
             />
-            <Route path="/movieCard" element={<MovieCard />} />
+            <Route
+              path="/movieCard"
+              element={
+                <MovieCard
+                  movieList={movieList}
+                  populateMovieList={populateMovieList}
+                  toWatchComponent={AddToWatchList}
+                  handleToWatchClick={addMovieToWatch}
+                  toWatch={toWatch}
+                  setToWatch={setToWatch}
+                />
+              }
+            />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/selection/:type/detail/:id" element={<Selection />} />
             <Route
@@ -80,7 +127,7 @@ function App() {
               element={<UserDashboard toWatchComponent={AddToWatchList} />}
             />
             {/* // For future Clerk Authorization */}
-            {/* <Route
+            <Route
               path="/dashboard"
               element={
                 <>
@@ -92,7 +139,7 @@ function App() {
                   </SignedOut>
                 </>
               }
-            /> */}
+            />
           </Routes>
         </div>
         <Footer />
