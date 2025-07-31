@@ -34,8 +34,13 @@ export function getRandomNumber() {
   return randomNumber;
 }
 
+export function getRandomNumberBelow10() {
+  let randomNumber = Math.floor(Math.random() * 10) + 1;
+  return randomNumber;
+}
+
 export function getRandomElement(arr) {
-  let randomIndex = Math.floor(Math.random() * arr.length);
+  let randomIndex = Math.floor(Math.random() * 20) + 1;
   return arr[randomIndex];
 }
 

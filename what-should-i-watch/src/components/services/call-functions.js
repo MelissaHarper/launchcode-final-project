@@ -1,5 +1,6 @@
 import { api } from "./call-headers";
 import axios from "axios";
+import { getRandomNumberBelow10 } from "./utils";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 
@@ -42,17 +43,19 @@ export const clerkMiddleware = (options) => {
   };
 };
 
-export async function getWithFilters({ type, genreId, providerId, payload }) {
+export async function getWithFilters(type, genreId, providerId, payload) {
   try {
+    const page = getRandomNumberBelow10();
     const response = await api().get(
       `/discover/${type}`,
       {
         params: {
           include_adult: false,
           sort_by: "popularity.desc",
+          page: page,
           watch_region: "US",
-          with_genres: genreId,
-          with_watch_providers: providerId,
+          with_genres: genreId.join(","),
+          with_watch_providers: providerId.join(","),
         },
       },
       { payload }

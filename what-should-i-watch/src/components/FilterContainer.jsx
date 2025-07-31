@@ -13,7 +13,7 @@ import { options } from "./services/call-headers.js";
 import FilterDropdown from "./Filters.jsx";
 import { sortByRank } from "./services/utils.js";
 
-function FilterContainer({ setMovieList }) {
+function FilterContainer({ movieList, populateMovieList }) {
   const genres = genreData;
   const providers = sortByRank(providerData);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -22,13 +22,32 @@ function FilterContainer({ setMovieList }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(`Genres before map in filter container`);
+    const genreIds = selectedGenres.map((genre) => {
+      return genre.id;
+    });
+
+    console.log(`Genres from FilterContainer: ${genreIds}`);
+
+    const providerIds = selectedProviders.map((provider) => {
+      return provider.id;
+    });
+
+    console.log(`Genres from FilterContainer: ${providerIds}`);
+
     const movies = await getWithFilters(
       "movie",
-      selectedGenres,
-      selectedProviders,
+      genreIds,
+      providerIds,
       options
     );
-    setMovieList(movies);
+    populateMovieList(movies);
+    console.log(
+      `Movie List:` +
+        movieList.map((object) => {
+          return { ...object };
+        })
+    );
     navigate(`/recommendations`);
   };
 
@@ -37,7 +56,6 @@ function FilterContainer({ setMovieList }) {
       <div className=" w-[400px] ">
         <p className="text-2xl ">Genres</p>
         <FilterDropdown
-          setMovieList={setMovieList}
           assignedList={selectedGenres}
           setAssignedList={setSelectedGenres}
           options={genres}
@@ -55,7 +73,6 @@ function FilterContainer({ setMovieList }) {
       <div className=" w-[400px] ">
         <p className="text-2xl ">Streaming Service Providers</p>
         <FilterDropdown
-          setMovieList={setMovieList}
           assignedList={selectedProviders}
           setAssignedList={setSelectedProviders}
           options={providers}
@@ -86,7 +103,7 @@ function FilterContainer({ setMovieList }) {
   // };
 
   // const handleFilters = () => {
-  //   setMovieList(filterByGenre(selectedGenre.label, movieList));
+  //   populateMovieList(filterByGenre(selectedGenre.label, movieList));
   //   navigate(`/recommendations`);
   // };
 
