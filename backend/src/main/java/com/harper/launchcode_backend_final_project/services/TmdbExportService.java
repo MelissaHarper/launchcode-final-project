@@ -1,6 +1,9 @@
 package com.harper.launchcode_backend_final_project.services;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.harper.launchcode_backend_final_project.models.Movie;
 import com.harper.launchcode_backend_final_project.models.ToWatch;
@@ -9,6 +12,7 @@ import com.harper.launchcode_backend_final_project.repositories.ToWatchRepositor
 import lombok.Data;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -32,32 +36,38 @@ import java.util.Set;
 @Data
 public class TmdbExportService {
 
-    private static final String TMDB_EXPORT_BASE_URL = "http://files.tmdb.org/p/exports/movie_ids";
+    private static final String TMDB_EXPORT_BASE_URL = "http://files.tmdb.org/p/exports/";
 
     @Autowired
     MovieRepository movieRepository;
 
-        // Schedule to run every day at, for example, 3 AM
+    private final ObjectMapper objectMapper;
+
+        // Schedule to run every day at 3 AM except when the application is running in dev profile
         @Scheduled(cron = "0 0 3 * * ?")
+        @ConditionalOnProperty(name = "tmdb.scheduled-export.enabled", havingValue = "true", matchIfMissing = true)
         public void downloadAndProcessDailyExport() {
             LocalDate today = LocalDate.now();
             String formattedDate = today.format(DateTimeFormatter.ofPattern("MM_dd_yyyy"));
             String exportFileName = "movie_ids_" + formattedDate + ".json.gz";
-            String exportUrl = TMDB_EXPORT_BASE_URL + "_" + exportFileName;
+            String exportUrl = TMDB_EXPORT_BASE_URL + exportFileName;
 
             try {
                 URL url = new URL(exportUrl);
                 try (InputStream inputStream = new BufferedInputStream(url.openStream());
                      GzipCompressorInputStream gzipInputStream = new GzipCompressorInputStream(inputStream);
                 ) {
-                    ObjectMapper objectMapper = new ObjectMapper();
                     List<Movie> movies = new ArrayList<>();
-                    JsonNode rootNode = objectMapper.readTree(gzipInputStream);
 
-                    if (rootNode.isArray()) {
-                        for (JsonNode node : rootNode) {
-                            int id = node.get("id").asInt();
-                            String originalTitle = node.has("original_title") ? node.get("original_title").asText() : null;
+                    // Create a JsonFactory and JsonParser for streaming
+                    JsonFactory jsonFactory = objectMapper.getFactory();
+                    try (JsonParser jsonParser = jsonFactory.createParser(gzipInputStream);
+                         MappingIterator<JsonNode> mappingIterator = objectMapper.readValues(jsonParser, JsonNode.class)) {
+
+                        while (mappingIterator.hasNext()) {
+                            JsonNode node = mappingIterator.next();
+                            int id = node.path("id").asInt(); // Use path() to handle missing fields gracefully
+                            String originalTitle = node.path("original_title").asText(null); // Return null if not found
                             Set<ToWatch> toWatchLists = new HashSet<>();
                             movies.add(new Movie(id, originalTitle, toWatchLists));
                         }
