@@ -2,7 +2,9 @@ package com.harper.launchcode_backend_final_project.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -14,16 +16,14 @@ import java.util.List;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors() // Enable CORS using our bean below
-                .and()
-                .csrf().disable() // Disable CSRF for APIs
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)// Disable CSRF for APIs
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll() // ALL endpoints are public
                 );
 
-        return http.build();
+        return httpSecurity.build();
     }
 
     @Bean
