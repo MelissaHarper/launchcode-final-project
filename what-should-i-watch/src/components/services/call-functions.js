@@ -56,17 +56,13 @@ export async function getWithFilters(type, genreId, providerId, payload) {
           watch_region: "US",
           with_genres: genreId.join(","),
           with_watch_providers: providerId.join(","),
+          with_watch_monetization_types: "flatrate,free,ads,rent,buy",
         },
       },
       { payload }
     );
 
-    return response.data.results.map((movie) => ({
-      id: movie.id,
-      title: movie.title,
-      description: movie.overview,
-      poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-    }));
+    return response.data.results;
   } catch (error) {
     console.error("Error fetching movies:", error);
     return [];
