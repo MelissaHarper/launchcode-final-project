@@ -1,10 +1,4 @@
-// import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import Filter from "./FilterByGenre.jsx";
-// import Modal from "@mui/material/Modal";
-// import { filterByGenre } from "./services/utils.js";
-// import "../styles/filterContainer.css";
-import { createContext, useContext, useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getWithFilters } from "./services/call-functions.js";
 import genreData from "../assets/data/tmdbGenres.json";
@@ -14,7 +8,7 @@ import FilterDropdown from "./Filters.jsx";
 import { sortByRank, getRandomMovies } from "./services/utils.js";
 import { useAppContext } from "../context/AppContext.jsx";
 
-function FilterContainer({ movieList }) {
+function FilterContainer() {
   const { populateMovieList } = useAppContext();
   const { populateRecommendations } = useAppContext();
   const genres = genreData;
@@ -36,14 +30,11 @@ function FilterContainer({ movieList }) {
       options
     );
     populateMovieList(movies);
-    console.log(`Movies returned: ${movies.length}`);
+    // console.log(`Movies returned: ${movies.length}`);
 
     const randomFive = getRandomMovies(movies, 5);
     populateRecommendations(randomFive);
-    console.log(
-      `Random List from Filter Container after setting list: 
-        ${randomFive}`
-    );
+    // console.log(`Number of Recommendations: ${randomFive.length}`);
     navigate(`/recommendations`);
   };
 
@@ -86,60 +77,6 @@ function FilterContainer({ movieList }) {
       <button onClick={handleSubmit}>Submit</button>
     </div>
   );
-  // const [selectedGenre, setSelectedGenre] = useState(null);
-  // const [open, setOpen] = useState(false);
-  // const navigate = useNavigate();
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleFilters = () => {
-  //   populateMovieList(filterByGenre(selectedGenre.label, movieList));
-  //   navigate(`/recommendations`);
-  // };
-
-  // return (
-  //   <div className="filter-container">
-  //     <p className="filter-directions">
-  //       {" "}
-  //       Click the button for the type of filter you would like to apply
-  //     </p>
-
-  //     <div>
-  //       <button className="reusable-button" onClick={handleOpen}>
-  //         Genre
-  //       </button>
-  //       <Modal open={open} onClose={handleClose}>
-  //         <div className="filter-popup">
-  //           <Filter
-  //             selectedGenre={selectedGenre}
-  //             setSelectedGenre={setSelectedGenre}
-  //           />
-  //         </div>
-  //       </Modal>
-  //     </div>
-
-  //     {selectedGenre && (
-  //       <div className="confirm-input">
-  //         <h2>Search Parameters:</h2>
-  //         <p>
-  //           {`Genres:
-  //           ${selectedGenre.map((obj) => {
-  //             return `${obj.label} `;
-  //           })}`}
-  //         </p>
-  //       </div>
-  //     )}
-  //     <button className="reusable-button" onClick={handleFilters}>
-  //       Get me my movies!
-  //     </button>
-  //   </div>
-  // );
 }
 
 export default FilterContainer;
