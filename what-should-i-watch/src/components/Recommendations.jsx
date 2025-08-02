@@ -1,5 +1,6 @@
 import { useAppContext } from "../context/AppContext.jsx";
 import MovieCard from "./MovieCard";
+import "../styles/recommend-movieCard.css";
 
 const Recommendations = () => {
   const { recommendations } = useAppContext();
