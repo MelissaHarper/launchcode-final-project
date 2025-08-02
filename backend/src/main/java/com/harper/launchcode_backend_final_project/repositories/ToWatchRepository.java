@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ToWatchRepository extends JpaRepository<ToWatch, Integer> {
-    List<ToWatch> findByClerkID(String clerkID);
+public interface ToWatchRepository extends JpaRepository<ToWatch, String> {
+    List<ToWatch> findByUserId(String userId);
 
-    Optional<ToWatch> findByIdAndClerkID(int id, String clerkID);
+//    Optional<ToWatch> findByMovieIdAndUserId(int movieId, String userId);
 }

@@ -9,23 +9,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ToWatchService {
 
     @Autowired
-    private ToWatchRepository toWatchRepository;
+    ToWatchRepository toWatchRepository;
 
     public ToWatch saveToWatch(ToWatch toWatch) {
         return toWatchRepository.save(toWatch);
     }
 
-    public List<ToWatch> fetchToWatch(String clerkID) {
-        return toWatchRepository.findByClerkID(clerkID);
+    public List<ToWatch> fetchToWatch(String userId) {
+        return toWatchRepository.findByUserId(userId);
     }
 
-    public void removeItem(int id, String clerkID) {
-       ToWatch existingMovie = toWatchRepository.findByIdAndClerkID(id, clerkID)
-               .orElseThrow(() -> new RuntimeException("Movie not found in list"));
-        toWatchRepository.delete(existingMovie);
-    }
+//    public void removeItem(int id, String userId) {
+//       ToWatch existingMovie = toWatchRepository.findByMovieIdAndUserId(movieId, userId)
+//               .orElseThrow(() -> new RuntimeException("Movie not found in list"));
+//        toWatchRepository.delete(existingMovie);
+//    }
 }
