@@ -13,7 +13,7 @@ const Recommendations = () => {
   );
 
   return (
-    <div className="recommend-grid">
+    <div className="movie-grid">
       {recommendations.map((movie) => (
         <MovieCard key={movie.id} movie={movie} />
       ))}

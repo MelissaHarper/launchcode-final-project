@@ -7,7 +7,7 @@ export const AppContextProvider = ({ children }) => {
   const baseUrl = "http://localhost:8080/api";
   // const baseUrl = "widely-endless-basilisk.ngrok-free.app/api";
 
-  // Persist data in localStorage
+  // Set State and persist in localStorage
   const [movieList, setMovieList] = useState(() => {
     const saved = localStorage.getItem("movieList");
     return saved ? JSON.parse(saved) : [];
@@ -15,6 +15,11 @@ export const AppContextProvider = ({ children }) => {
 
   const [recommendations, setRecommendations] = useState(() => {
     const saved = localStorage.getItem("recommendations");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [toWatchList, setToWatchList] = useState(() => {
+    const saved = localStorage.getItem("toWatchList");
     return saved ? JSON.parse(saved) : [];
   });
 
@@ -29,13 +34,7 @@ export const AppContextProvider = ({ children }) => {
     localStorage.setItem("recommendations", JSON.stringify(list));
   };
 
-  // To watch list contexts
-  const [toWatchList, setToWatchList] = useState(() => {
-    const saved = localStorage.getItem("toWatchList");
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  const addToWatchList = (movie) => {
+  const addMovieToWatchList = (movie) => {
     const newToWatchList = [...toWatchList, movie];
     setToWatchList(newToWatchList);
   };
@@ -48,7 +47,7 @@ export const AppContextProvider = ({ children }) => {
     recommendations,
     populateRecommendations,
     toWatchList,
-    addToWatchList,
+    addMovieToWatchList,
   };
 
   return (

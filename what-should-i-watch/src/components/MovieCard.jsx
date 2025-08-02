@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import Dummy from "../assets/images/logo.png";
-import AddToWatchList from "./services/AddToWatchList";
+import { useAppContext } from "../context/AppContext.jsx";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
 import "../styles/recommend-movieCard.css";
+import AddToWatchList from "./services/AddToWatchList.jsx";
 
-const MovieCard = ({ movie, toWatchComponent, handleToWatchClick }) => {
-  const ToWatchComponent = toWatchComponent;
+const MovieCard = ({ movie }) => {
+  const { addMovieToWatchList } = useAppContext();
+  const handleToWatchClick = addMovieToWatchList;
+
   console.log(
     `Movie Id and poster path from MovieCard: ${movie.id}, ${movie.poster_path}`
   );
@@ -24,7 +27,11 @@ const MovieCard = ({ movie, toWatchComponent, handleToWatchClick }) => {
             }}
           />
         </Link>
-        <div className="overlay" onClick={handleToWatchClick}></div>
+        <div
+          className="overlay"
+          onClick={() => handleToWatchClick(movie.id)}
+        ></div>
+        <AddToWatchList />
       </div>
       <Link to={`/selection/movie/detail/${movie.id}`} className="movie-title">
         {movie.title || movie.name}

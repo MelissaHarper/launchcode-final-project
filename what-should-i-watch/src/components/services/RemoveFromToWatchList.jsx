@@ -1,9 +1,9 @@
 import "../../styles/recommend-movieCard.css";
 
-const AddToWatchList = () => {
+const RemoveFromWatchList = () => {
   return (
     <>
-      <span className="overlay-message">Add to Watch List </span>
+      <span className="overlay-message">Remove from Watch List </span>
       <svg
         className="heart"
         viewBox="0 0 16 16"
@@ -18,4 +18,4 @@ const AddToWatchList = () => {
   );
 };
 
-export default AddToWatchList;
+export default RemoveFromWatchList;

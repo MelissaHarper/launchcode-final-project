@@ -1,4 +1,4 @@
-.recommend-grid {
+.movie-grid {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -120,7 +120,7 @@ a:hover {
   .poster-container {
     flex-direction: row;
   }
-  .recommend-grid {
+  .movie-grid {
     flex-direction: row;
   }
   /* img.poster {
