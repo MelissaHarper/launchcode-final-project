@@ -1,3 +1,12 @@
+.recommend-grid {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
 .movie-card {
   display: flex;
   flex-direction: column;
@@ -109,6 +118,9 @@ a:hover {
 
 @media (min-width: 768px) {
   .poster-container {
+    flex-direction: row;
+  }
+  .recommend-grid {
     flex-direction: row;
   }
   /* img.poster {

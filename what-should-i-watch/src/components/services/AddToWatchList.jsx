@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/movieCard.css";
+import "../../styles/recommend-movieCard.css";
 
 const AddToWatchList = () => {
   return (
