@@ -15,15 +15,12 @@ if (!CLERK_PUBLISHABLE_KEY) {
 }
 
 createRoot(document.getElementById("root")).render(
-  // For future Clerk Authorization
   <AppContextProvider>
     <BrowserRouter>
-      {/* // For future Clerk Authorization */}
       <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
         <StrictMode>
           <App />
         </StrictMode>
-        {/* // For future Clerk Authorization */}
       </ClerkProvider>
     </BrowserRouter>
   </AppContextProvider>
