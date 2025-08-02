@@ -1,15 +1,46 @@
-import { createContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
   const baseUrl = "http://localhost:8080/api";
+  // const baseUrl = "widely-endless-basilisk.ngrok-free.app/api";
+
+  // Persist data in localStorage
+  const [movieList, setMovieList] = useState(() => {
+    const saved = localStorage.getItem("movieList");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [recommendations, setRecommendations] = useState(() => {
+    const saved = localStorage.getItem("recommendations");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Set lists
+  const populateMovieList = (list) => {
+    setMovieList(list);
+    localStorage.setItem("movieList", JSON.stringify(list));
+  };
+
+  const populateRecommendations = (list) => {
+    setRecommendations(list);
+    localStorage.setItem("recommendations", JSON.stringify(list));
+  };
 
   const contextValue = {
     baseUrl,
+    movieList,
+    populateMovieList,
+    recommendations,
+    populateRecommendations,
   };
 
   return (
     <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
   );
 };
+
+export function useAppContext() {
+  return useContext(AppContext);
+}
