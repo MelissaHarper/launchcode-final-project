@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import AddToWatchList from "../components/services/AddToWatchList";
 
 export const AppContext = createContext();
 
@@ -28,12 +29,26 @@ export const AppContextProvider = ({ children }) => {
     localStorage.setItem("recommendations", JSON.stringify(list));
   };
 
+  // To watch list contexts
+  const [toWatchList, setToWatchList] = useState(() => {
+    const saved = localStorage.getItem("toWatchList");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const addToWatchList = (movie) => {
+    const newToWatchList = [...toWatchList, movie];
+    setToWatchList(newToWatchList);
+  };
+
+  // Compile context
   const contextValue = {
     baseUrl,
     movieList,
     populateMovieList,
     recommendations,
     populateRecommendations,
+    toWatchList,
+    addToWatchList,
   };
 
   return (
