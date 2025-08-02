@@ -22,6 +22,7 @@ public class UserService {
     UserRepository userRepository;
 
     public User addUser(UserDTO userData){
+        // Create a new User object from the UserDTO
         User newUser = new User(
                 userData.getId(),
                 userData.getEmail(),
@@ -31,6 +32,18 @@ public class UserService {
                 userData.getCreatedAt() != null ? userData.getCreatedAt() : Instant.now(),
                 userData.getUpdated() != null ? userData.getUpdated() : Instant.now()
         );
+        // Check if user already exists
+        Boolean userExists = userRepository.existsById(newUser.getId());
+        if (userExists) {
+            // If user exists, update the existing user
+            User existingUser = userRepository.findById(newUser.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+            existingUser.setEmail(newUser.getEmail());
+            existingUser.setUsername(newUser.getUsername());
+            existingUser.setPhotoUrl(newUser.getPhotoUrl());
+            existingUser.setToWatch(newUser.getToWatch());
+            existingUser.setUpdated(Instant.now());
+            return userRepository.save(existingUser);
+        }
         return userRepository.save(newUser);
     }
 
