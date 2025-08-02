@@ -24,6 +24,11 @@ export const useClickOutside = (ref, handler) => {
   }, [ref, handler]);
 };
 
+export function getRandomMovies(list, count) {
+  const shuffled = [...list].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
+
 export function sortByRank(listOfObjects) {
   const sorted = [...listOfObjects].sort((a, b) => a.rank - b.rank);
   return sorted;
@@ -41,6 +46,7 @@ export function getRandomNumberBelow10() {
 
 export function getRandomElement(arr) {
   let randomIndex = Math.floor(Math.random() * 20) + 1;
+  console.log(`Movie from utils: ${arr[randomIndex]}`);
   return arr[randomIndex];
 }
 

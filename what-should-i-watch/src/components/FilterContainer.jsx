@@ -11,9 +11,12 @@ import genreData from "../assets/data/tmdbGenres.json";
 import providerData from "../assets/data/watchProvidersIDsNames.json";
 import { options } from "./services/call-headers.js";
 import FilterDropdown from "./Filters.jsx";
-import { sortByRank } from "./services/utils.js";
+import { sortByRank, getRandomMovies } from "./services/utils.js";
+import { useAppContext } from "../context/AppContext.jsx";
 
-function FilterContainer({ movieList, populateMovieList }) {
+function FilterContainer({ movieList }) {
+  const { populateMovieList } = useAppContext();
+  const { populateRecommendations } = useAppContext();
   const genres = genreData;
   const providers = sortByRank(providerData);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -22,18 +25,9 @@ function FilterContainer({ movieList, populateMovieList }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`Genres before map in filter container`);
-    const genreIds = selectedGenres.map((genre) => {
-      return genre.id;
-    });
+    const genreIds = selectedGenres.map((genre) => genre.id);
 
-    console.log(`Genres from FilterContainer: ${genreIds}`);
-
-    const providerIds = selectedProviders.map((provider) => {
-      return provider.id;
-    });
-
-    console.log(`Genres from FilterContainer: ${providerIds}`);
+    const providerIds = selectedProviders.map((provider) => provider.id);
 
     const movies = await getWithFilters(
       "movie",
@@ -42,11 +36,13 @@ function FilterContainer({ movieList, populateMovieList }) {
       options
     );
     populateMovieList(movies);
+    console.log(`Movies returned: ${movies.length}`);
+
+    const randomFive = getRandomMovies(movies, 5);
+    populateRecommendations(randomFive);
     console.log(
-      `Movie List:` +
-        movieList.map((object) => {
-          return { ...object };
-        })
+      `Random List from Filter Container after setting list: 
+        ${randomFive}`
     );
     navigate(`/recommendations`);
   };
