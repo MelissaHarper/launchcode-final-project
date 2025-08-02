@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import AddToWatchList from "../components/services/AddToWatchList";
 
 export const AppContext = createContext();
 
@@ -39,6 +38,13 @@ export const AppContextProvider = ({ children }) => {
     setToWatchList(newToWatchList);
   };
 
+  const removeMovieFromWatchList = (movie) => {
+    const newToWatchList = toWatchList.filter(
+      (toWatchMovie) => toWatchMovie.id !== movie.id
+    );
+    setToWatchList(newToWatchList);
+  };
+
   // Compile context
   const contextValue = {
     baseUrl,
@@ -48,6 +54,7 @@ export const AppContextProvider = ({ children }) => {
     populateRecommendations,
     toWatchList,
     addMovieToWatchList,
+    removeMovieFromWatchList,
   };
 
   return (

@@ -4,10 +4,13 @@ import { useAppContext } from "../context/AppContext.jsx";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
 import "../styles/recommend-movieCard.css";
 import AddToWatchList from "./services/AddToWatchList.jsx";
+import RemoveFromWatchList from "./services/RemoveFromToWatchList.jsx";
 
 const MovieCard = ({ movie }) => {
-  const { addMovieToWatchList } = useAppContext();
-  const handleToWatchClick = addMovieToWatchList;
+  const { toWatchList, addMovieToWatchList, removeMovieFromWatchList } =
+    useAppContext();
+  const handleAddToWatchClick = addMovieToWatchList;
+  const handleRemoveFromWatchClick = removeMovieFromWatchList;
 
   console.log(
     `Movie Id and poster path from MovieCard: ${movie.id}, ${movie.poster_path}`
@@ -27,11 +30,22 @@ const MovieCard = ({ movie }) => {
             }}
           />
         </Link>
-        <div
-          className="overlay"
-          onClick={() => handleToWatchClick(movie.id)}
-        ></div>
-        <AddToWatchList />
+
+        {!toWatchList.includes(movie.id) ? (
+          <div
+            className="overlay"
+            onClick={() => handleAddToWatchClick(movie.id)}
+          >
+            <AddToWatchList />
+          </div>
+        ) : (
+          <div
+            className="overlay"
+            onClick={() => handleRemoveFromWatchClick(movie.id)}
+          >
+            <RemoveFromWatchList />
+          </div>
+        )}
       </div>
       <Link to={`/selection/movie/detail/${movie.id}`} className="movie-title">
         {movie.title || movie.name}
