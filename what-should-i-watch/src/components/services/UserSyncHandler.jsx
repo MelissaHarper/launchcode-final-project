@@ -16,22 +16,25 @@ const UserSyncHandler = () => {
         return;
       }
       try {
-        const token = await getToken();
+        const token = await getToken({ template: "pickQuick" });
         const userData = {
           id: user.id,
           email: user.primaryEmailAddress.emailAddress,
           username: user.username,
           photoUrl: user.imageUrl,
-          movies: [],
           createdAt: user.createdAt,
         };
 
         await axios.post(`${baseUrl}/users/add`, userData, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log("✅ User synced to backend");
         setSynced(true);
       } catch (error) {
-        console.error(error.message);
+        console.error(
+          "❌ Error saving user:",
+          error.response?.data || error.message
+        );
       }
     };
     saveUser();
