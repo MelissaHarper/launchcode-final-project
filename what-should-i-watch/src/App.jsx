@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 import NavBar from "./components/NavBar";
 import FilterContainer from "./components/FilterContainer";
 import Home from "./components/Home";
@@ -14,8 +15,7 @@ function App() {
   return (
     <main>
       <div className="App">
-        {/* // For future Clerk Authorization */}
-        {/* <UserSyncHandler /> */}
+        <UserSyncHandler />
         <NavBar />
         <div className="body-content">
           <Routes>
