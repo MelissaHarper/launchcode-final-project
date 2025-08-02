@@ -18,7 +18,7 @@ const UserSyncHandler = () => {
       try {
         const token = await getToken();
         const userData = {
-          clerkId: user.id,
+          id: user.id,
           email: user.primaryEmailAddress.emailAddress,
           username: user.username,
           photoUrl: user.imageUrl,
@@ -26,7 +26,7 @@ const UserSyncHandler = () => {
           createdAt: user.createdAt,
         };
 
-        await axios.post(`${baseUrl}/users`, userData, {
+        await axios.post(`${baseUrl}/users/add`, userData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSynced(true);
