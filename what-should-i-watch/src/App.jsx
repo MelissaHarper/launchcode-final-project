@@ -28,7 +28,6 @@ function App() {
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/selection/:type/detail/:id" element={<Selection />} />
             <Route path="/userDashboard" element={<UserDashboard />} />
-            {/* // For future Clerk Authorization */}
             <Route
               path="/dashboard"
               element={
