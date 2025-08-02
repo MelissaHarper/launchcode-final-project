@@ -1,14 +1,14 @@
 // For future Clerk Authorization
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import { AppContext } from "../../context/AppContext";
+import { useAppContext } from "../../context/AppContext.jsx";
 import axios from "axios";
 
 const UserSyncHandler = () => {
   const [synced, setSynced] = useState(false);
   const { isLoaded, isSignedIn, getToken } = useAuth();
   const { user } = useUser();
-  const { baseUrl } = useContext(AppContext);
+  const { baseUrl } = useAppContext();
 
   useEffect(() => {
     const saveUser = async () => {
