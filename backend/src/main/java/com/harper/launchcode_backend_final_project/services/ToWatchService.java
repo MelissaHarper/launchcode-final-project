@@ -161,9 +161,9 @@ public class ToWatchService {
         }
         Optional<ToWatch> toWatch = toWatchRepository.findByUser(user);
         if (toWatch.isPresent()) {
-            ToWatch incomingToWatch = toWatch.get();
-            incomingToWatch.getMovies().removeIf(m -> m.getId() == movieId);
-            return toWatchRepository.save(incomingToWatch);
+            ToWatch incomingToWatchList = toWatch.get();
+            incomingToWatchList.getMovies().removeIf(m -> m.getId() == movieId);
+            return toWatchRepository.save(incomingToWatchList);
         }
         return null;
     }
