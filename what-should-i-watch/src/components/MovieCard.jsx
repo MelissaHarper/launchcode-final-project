@@ -1,20 +1,23 @@
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Dummy from "../assets/images/logo.png";
-import { useAppContext } from "../context/AppContext.jsx";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
 import "../styles/recommend-movieCard.css";
 import AddToWatchList from "./services/AddToWatchList.jsx";
 import RemoveFromWatchList from "./services/RemoveFromToWatchList.jsx";
+import { BackendContext } from "./services/UserSyncHandler.jsx";
 
 const MovieCard = ({ movie }) => {
-  const { toWatchList, addMovieToWatchList, removeMovieFromWatchList } =
-    useAppContext();
-  const handleAddToWatchClick = addMovieToWatchList;
-  const handleRemoveFromWatchClick = removeMovieFromWatchList;
+  const { handleToWatchClick, checkToWatchList, toWatchList } =
+    useContext(BackendContext);
+  const [isInToWatchList, setIsInToWatchList] = useState(false);
 
-  console.log(
-    `Movie Id and poster path from MovieCard: ${movie.id}, ${movie.poster_path}`
-  );
+  // Check if movie is in watch list if movie or watch list changes
+  useEffect(() => {
+    if (movie) {
+      setIsInToWatchList(checkToWatchList(movie));
+    }
+  }, [toWatchList, movie, checkToWatchList]);
 
   return (
     <div className="movie-card">
@@ -31,22 +34,17 @@ const MovieCard = ({ movie }) => {
           />
         </Link>
 
-        {!toWatchList.includes(movie.id) ? (
-          <div
-            className="overlay"
-            onClick={() => handleAddToWatchClick(movie.id)}
-          >
+        {!isInToWatchList ? (
+          <div className="overlay" onClick={() => handleToWatchClick(movie)}>
             <AddToWatchList />
           </div>
         ) : (
-          <div
-            className="overlay"
-            onClick={() => handleRemoveFromWatchClick(movie.id)}
-          >
+          <div className="overlay" onClick={() => handleToWatchClick(movie)}>
             <RemoveFromWatchList />
           </div>
         )}
       </div>
+
       <Link to={`/selection/movie/detail/${movie.id}`} className="movie-title">
         {movie.title || movie.name}
       </Link>

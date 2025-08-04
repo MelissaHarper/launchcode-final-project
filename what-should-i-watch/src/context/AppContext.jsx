@@ -1,12 +1,12 @@
 import { createContext, useContext, useState } from "react";
+import { BackendContext } from "../components/services/UserSyncHandler";
 
 export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
-  const baseUrl = "http://localhost:8080/api";
-  // const baseUrl = "widely-endless-basilisk.ngrok-free.app/api";
+  // const { addMovieToWatchList, removeMovieFromWatchList } =
+  //   useContext(BackendContext);
 
-  // Set State and persist in localStorage
   const [movieList, setMovieList] = useState(() => {
     const saved = localStorage.getItem("movieList");
     return saved ? JSON.parse(saved) : [];
@@ -17,12 +17,8 @@ export const AppContextProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : [];
   });
 
-  const [toWatchList, setToWatchList] = useState(() => {
-    const saved = localStorage.getItem("toWatchList");
-    return saved ? JSON.parse(saved) : [];
-  });
+  // const [toWatchList, setToWatchList] = useState([]);
 
-  // Set lists
   const populateMovieList = (list) => {
     setMovieList(list);
     localStorage.setItem("movieList", JSON.stringify(list));
@@ -33,32 +29,37 @@ export const AppContextProvider = ({ children }) => {
     localStorage.setItem("recommendations", JSON.stringify(list));
   };
 
-  const addMovieToWatchList = (movie) => {
-    const newToWatchList = [...toWatchList, movie];
-    setToWatchList(newToWatchList);
-  };
+  // const populateToWatchList = (list) => {
+  //   setToWatchList(list);
+  // };
 
-  const removeMovieFromWatchList = (movie) => {
-    const newToWatchList = toWatchList.filter(
-      (toWatchMovie) => toWatchMovie.id !== movie.id
-    );
-    setToWatchList(newToWatchList);
-  };
+  // const checkToWatchList = (movie) => {
+  //   if (!movie || !movie.id) return false; // ✅ Prevent null/undefined errors
+  //   return toWatchList.some((m) => m && m.id === movie.id);
+  // };
 
-  // Compile context
-  const contextValue = {
-    baseUrl,
-    movieList,
-    populateMovieList,
-    recommendations,
-    populateRecommendations,
-    toWatchList,
-    addMovieToWatchList,
-    removeMovieFromWatchList,
-  };
+  // const handleToWatchClick = (movie) => {
+  //   console.log(`WatchList length on click: ${toWatchList.length}`);
+  //   if (checkToWatchList(movie)) {
+  //     removeMovieFromWatchList(movie);
+  //     console.log(`WatchList length after remove: ${toWatchList.length}`);
+  //   } else {
+  //     addMovieToWatchList(movie);
+  //     console.log(`WatchList length after add: ${toWatchList.length}`);
+  //   }
+  // };
 
   return (
-    <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
+    <AppContext.Provider
+      value={{
+        movieList,
+        populateMovieList,
+        recommendations,
+        populateRecommendations,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
   );
 };
 

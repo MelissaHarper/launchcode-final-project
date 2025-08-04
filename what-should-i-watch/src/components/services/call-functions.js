@@ -1,8 +1,8 @@
-import { api } from "./call-headers";
 import axios from "axios";
+import { api } from "./call-headers";
 import { getRandomNumberBelow10 } from "./utils";
 
-const BASE_URL = "https://api.themoviedb.org/3";
+const BASE_URL = import.meta.env.VITE_BASE_TMDB_API_URL;
 
 // export const getWithFilters = async (searchTerms, payload) => {
 //   const response = await api().get(
@@ -13,35 +13,35 @@ const BASE_URL = "https://api.themoviedb.org/3";
 //   );
 //   return response;
 // };
-export const clerkMiddleware = (options) => {
-  return async (context, next) => {
-    const clerkClient = options.clerkClient || defaultClerkClient;
+// export const clerkMiddleware = (options) => {
+//   return async (context, next) => {
+//     const clerkClient = options.clerkClient || defaultClerkClient;
 
-    const requestState = await clerkClient.authenticateRequest(context.req, {
-      authorizedParties: ["https://example.com"],
-    });
+//     const requestState = await clerkClient.authenticateRequest(context.req, {
+//       authorizedParties: ["https://example.com"],
+//     });
 
-    if (requestState.headers) {
-      // This adds observability headers to the res
-      requestState.headers.forEach((value, key) =>
-        context.res.headers.append(key, value)
-      );
+//     if (requestState.headers) {
+//       // This adds observability headers to the res
+//       requestState.headers.forEach((value, key) =>
+//         context.res.headers.append(key, value)
+//       );
 
-      const locationHeader = requestState.headers.get("location");
+//       const locationHeader = requestState.headers.get("location");
 
-      if (locationHeader) {
-        return context.redirect(locationHeader, 307);
-      } else if (requestState.status === "handshake") {
-        throw new Error("Clerk: unexpected handshake without redirect");
-      }
-    }
+//       if (locationHeader) {
+//         return context.redirect(locationHeader, 307);
+//       } else if (requestState.status === "handshake") {
+//         throw new Error("Clerk: unexpected handshake without redirect");
+//       }
+//     }
 
-    context.set("clerkAuth", requestState.toAuth());
-    context.set("clerk", clerkClient);
+//     context.set("clerkAuth", requestState.toAuth());
+//     context.set("clerk", clerkClient);
 
-    await next();
-  };
-};
+//     await next();
+//   };
+// };
 
 export async function getWithFilters(type, genreId, providerId, payload) {
   try {

@@ -5,7 +5,7 @@ export const authorization = import.meta.env.VITE_AUTHORIZATION;
 
 export const tmdbBaseUrl = import.meta.env.VITE_BASE_TMDB_API_URL;
 
-export const tmdbApiKey = import.meta.env.TMDB_API_KEY;
+export const tmdbApiKey = import.meta.env.VITE_TMDB_API_KEY;
 
 export const tmdbImgBaseUrl = "https://image.tmdb.org/t/p/w45";
 

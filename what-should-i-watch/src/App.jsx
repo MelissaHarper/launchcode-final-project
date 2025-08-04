@@ -10,9 +10,11 @@ import Recommendations from "./components/Recommendations";
 import Feedback from "./components/Feedback";
 import MovieCard from "./components/MovieCard";
 import UserDashboard from "./components/gated/UserDashboard";
-import UserSyncHandler from "./components/services/UserSyncHandler";
+import { BackendContext } from "./components/services/UserSyncHandler";
+import { useContext } from "react";
 
 function App() {
+  const { UserSyncHandler } = useContext(BackendContext);
   return (
     <main>
       <div className="App">
