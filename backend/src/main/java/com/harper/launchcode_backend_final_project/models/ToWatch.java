@@ -18,12 +18,12 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ToWatch {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private int id;
+    @Column(name = "user_id")
+    private String id;
 
-    @NonNull
-    @OneToOne(mappedBy = "toWatch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -41,4 +41,6 @@ public class ToWatch {
     @NonNull
     @UpdateTimestamp
     private Instant updatedAt;
+
+
 }

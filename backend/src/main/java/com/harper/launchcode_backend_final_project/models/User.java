@@ -18,14 +18,14 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
     @Id
-    @Setter(AccessLevel.NONE)
+    @Column(name= "id")
     private String id;
 
     private String email;
     private String username;
     private String photoUrl;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "to_watch_id")
     private ToWatch toWatch;
 

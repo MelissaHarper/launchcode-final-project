@@ -25,27 +25,33 @@ public class UserService {
 
 public User addOrUpdateUser(UserDTO userData){
         // Create a new User object from the UserDTO
-        User newUser = new User(
-                userData.getId(),
-                userData.getEmail(),
-                userData.getUsername(),
-                userData.getPhotoUrl(),
-                userData.getToWatch() ,
-                userData.getCreatedAt() != null ? userData.getCreatedAt() : Instant.now(),
-                userData.getUpdated() != null ? userData.getUpdated() : Instant.now()
-        );
+
         // Check if user already exists
-        Boolean userExists = userRepository.existsById(newUser.getId());
+        Boolean userExists = userRepository.existsById(userData.getId());
         if (userExists) {
             // If user exists, update the existing user in case of an update through Clerk
-            User existingUser = userRepository.findById(newUser.getId());
-            existingUser.setEmail(newUser.getEmail());
-            existingUser.setUsername(newUser.getUsername());
-            existingUser.setPhotoUrl(newUser.getPhotoUrl());
-            existingUser.setToWatch(newUser.getToWatch());
+            User existingUser = userRepository.findById(userData.getId());
+            existingUser.setEmail(userData.getEmail());
+            existingUser.setUsername(userData.getUsername());
+            existingUser.setPhotoUrl(userData.getPhotoUrl());
             existingUser.setUpdated(Instant.now());
             return userRepository.save(existingUser);
         }
+        User newUser = new User();
+            newUser.setId(userData.getId());
+            newUser.setEmail(userData.getEmail());
+            newUser.setUsername(userData.getUsername());
+            newUser.setPhotoUrl(userData.getPhotoUrl());
+            newUser.setCreatedAt(userData.getCreatedAt());
+            newUser.setUpdated(Instant.now());
+
+        // Create a new ToWatch list for the user
+        ToWatch newToWatch = new ToWatch(Instant.now(), Instant.now());
+
+        // Set relationship between ToWatch and User
+        newToWatch.setUser(newUser);
+        newUser.setToWatch(newToWatch);
+
         return userRepository.save(newUser);
     }
 

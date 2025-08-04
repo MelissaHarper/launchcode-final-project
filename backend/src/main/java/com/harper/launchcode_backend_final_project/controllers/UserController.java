@@ -1,35 +1,3 @@
-//package com.harper.launchcode_backend_final_project.controllers;
-//
-//import com.harper.launchcode_backend_final_project.models.User;
-//import com.harper.launchcode_backend_final_project.services.UserService;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.access.prepost.PreAuthorize;
-//import org.springframework.web.bind.annotation.*;
-//
-//@RestController
-//@RequestMapping("/api/users")
-//@CrossOrigin(origins = "*")
-//@RequiredArgsConstructor
-//public class UserController {
-//
-//    @Autowired
-//    private UserService userService;
-//
-//    @PostMapping
-//    @PreAuthorize("isAuthenticated()")
-//    public User addOrUpdateUser(@RequestBody User user) {
-//        return userService.addOrUpdateUser(user);
-//    }
-//
-//    @GetMapping("/{id}")
-//    @PreAuthorize("isAuthenticated()")
-//    public User getUser(@PathVariable String id) {
-//        return userService.getUser(id);
-//    }
-//}
-
-
 
 package com.harper.launchcode_backend_final_project.controllers;
 

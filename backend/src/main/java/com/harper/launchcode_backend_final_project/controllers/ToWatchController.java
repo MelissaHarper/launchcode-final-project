@@ -6,6 +6,7 @@ import com.harper.launchcode_backend_final_project.models.dto.MovieDTO;
 import com.harper.launchcode_backend_final_project.services.ToWatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +34,9 @@ public class ToWatchController {
 
     @DeleteMapping("/{userId}/remove/{movieId}")
 //    @PreAuthorize("isAuthenticated()")
-    public ToWatch removeMovieFromWatchList(@PathVariable String userId, @PathVariable int movieId) {
-        return toWatchService.removeMovieFromWatchList(userId, movieId);
+    public ResponseEntity<Void> removeMovieFromWatchList(@PathVariable String userId, @PathVariable int movieId) {
+        toWatchService.removeMovieFromWatchList(userId, movieId);
+        return ResponseEntity.noContent().build();
     }
 
 }
