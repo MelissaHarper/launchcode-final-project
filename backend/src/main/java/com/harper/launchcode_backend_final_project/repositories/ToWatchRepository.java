@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ToWatchRepository extends JpaRepository<ToWatch, String> {
-    List<ToWatch> findByUserId(String userId);
+    Optional<ToWatch> findByUserId(String userId);
 
-//    Optional<ToWatch> findByMovieIdAndUserId(int movieId, String userId);
+//    Optional<ToWatch> findByMovieIdAndUserId( String userId, int movieId);
 }

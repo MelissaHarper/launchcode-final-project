@@ -1,47 +1,40 @@
 package com.harper.launchcode_backend_final_project.controllers;
 
+import com.harper.launchcode_backend_final_project.models.Movie;
 import com.harper.launchcode_backend_final_project.models.ToWatch;
+import com.harper.launchcode_backend_final_project.models.dto.MovieDTO;
 import com.harper.launchcode_backend_final_project.services.ToWatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-
-import static org.apache.tomcat.util.net.openssl.OpenSSLStatus.getName;
 
 @RestController
+@RequestMapping("/api/towatch")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
-@RequestMapping("/api/to-watch-list")
 public class ToWatchController {
 
     @Autowired
     private ToWatchService toWatchService;
 
-    @PostMapping
-    public ResponseEntity<ToWatch> saveToWatch(@RequestBody ToWatch toWatch) {
-        return ResponseEntity.ok(toWatchService.saveToWatch(toWatch));
+    @GetMapping("/{userId}")
+    @PreAuthorize("isAuthenticated()")
+    public ToWatch getWatchList(@PathVariable String userId) {
+        return toWatchService.getOrCreateToWatch(userId);
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<ToWatch>> fetchToWatch(Authentication authentication) {
-        return ResponseEntity.ok(toWatchService.fetchToWatch(authentication.getName()));
+    @PostMapping("/{userId}/add")
+//    @PreAuthorize("isAuthenticated()")
+    public ToWatch addMovieToWatchList(@PathVariable String userId, @RequestBody MovieDTO movie) {
+        System.out.println("Adding movie to watch list: " + movie.getPosterPath());
+        return toWatchService.addMovieToWatchList(userId, movie);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeItem(@PathVariable int id, Authentication authentication){
-        if(authentication.getName()!=null){
-            toWatchService.removeItem(id, authentication.getName());
-            return ResponseEntity.noContent().build();
-        }
-        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User does not have permission to access this resource");
+    @DeleteMapping("/{userId}/remove/{movieId}")
+    @PreAuthorize("isAuthenticated()")
+    public ToWatch removeMovieFromWatchList(@PathVariable String userId, @PathVariable int movieId) {
+        return toWatchService.removeMovieFromWatchList(userId, movieId);
     }
 
-
-
-    }
-
+}
