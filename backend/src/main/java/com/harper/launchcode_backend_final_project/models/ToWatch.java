@@ -15,13 +15,16 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class ToWatch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private int id;
 
-    private String userId;
+    @NonNull
+    @OneToOne(mappedBy = "toWatch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private User user;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(

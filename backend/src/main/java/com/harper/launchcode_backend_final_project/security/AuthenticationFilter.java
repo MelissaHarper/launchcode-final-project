@@ -41,7 +41,7 @@ public class AuthenticationFilter extends OncePerRequestFilter{
             throws ServletException, IOException {
 
 
-        if(request.getRequestURI().contains("/api/webhooks")){
+        if(request.getRequestURI().contains("/api")){
             filterChain.doFilter(request, response);
             return;
         }
@@ -79,7 +79,6 @@ public class AuthenticationFilter extends OncePerRequestFilter{
                     Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"))
             );
 
-            // ✅ Set the authentication into the SecurityContext
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
             System.out.println("Auth header: " + authHeader);

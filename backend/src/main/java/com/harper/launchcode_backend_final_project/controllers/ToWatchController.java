@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/towatch")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 public class ToWatchController {
 
@@ -19,7 +19,7 @@ public class ToWatchController {
     private ToWatchService toWatchService;
 
     @GetMapping("/{userId}")
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public ToWatch getWatchList(@PathVariable String userId) {
         return toWatchService.getOrCreateToWatch(userId);
     }
@@ -32,7 +32,7 @@ public class ToWatchController {
     }
 
     @DeleteMapping("/{userId}/remove/{movieId}")
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public ToWatch removeMovieFromWatchList(@PathVariable String userId, @PathVariable int movieId) {
         return toWatchService.removeMovieFromWatchList(userId, movieId);
     }

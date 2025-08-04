@@ -8,5 +8,7 @@ import java.util.List;
 public class MovieDTO {
     private int id;
     private String originalTitle;
-    private List<ToWatchDTO> toWatchLists;
+    private String posterPath;
+    private String title;
+    private String originalName;
 }

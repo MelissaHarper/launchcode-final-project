@@ -67,9 +67,12 @@ public class TmdbExportService {
                         while (mappingIterator.hasNext()) {
                             JsonNode node = mappingIterator.next();
                             int id = node.path("id").asInt(); // Use path() to handle missing fields gracefully
-                            String originalTitle = node.path("original_title").asText(null); // Return null if not found
+                            String originalTitle = node.path("original_title").asText(null);
+                            String posterPath = node.path("poster_path").asText(null);
+                            String title = node.path("title").asText(null);
+                            String originalName = node.path("original_name").asText(null); // Return null if not found
                             Set<ToWatch> toWatchLists = new HashSet<>();
-                            movies.add(new Movie(id, originalTitle, toWatchLists));
+                            movies.add(new Movie(id, originalTitle, posterPath, title, originalName, toWatchLists));
                         }
                     }
 

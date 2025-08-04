@@ -4,10 +4,8 @@ import com.harper.launchcode_backend_final_project.repositories.MovieRepository;
 import com.harper.launchcode_backend_final_project.models.Movie;
 import com.harper.launchcode_backend_final_project.repositories.ToWatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,10 +22,16 @@ public class MovieController {
     ToWatchRepository toWatchRepository;
 
 
-    @GetMapping("/ids")
-    public List<Integer> getMovieIds() {
-        return movieRepository.findAll().stream()
-                .map(Movie::getId)
-                .collect(Collectors.toList());
+
+    @GetMapping
+    public List<Movie> getAllMovies() {
+        return movieRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Movie> getMovieById(@PathVariable int id) {
+        return movieRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
