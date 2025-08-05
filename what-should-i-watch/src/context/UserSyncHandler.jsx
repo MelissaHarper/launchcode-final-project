@@ -73,8 +73,12 @@ export const BackendContextProvider = ({ children }) => {
       const res = await axios.get(`${backendBaseUrl}/towatch/${userData.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      populateToWatchList(res.data.movies);
-      console.log("✅ Watchlist fetched from backend:", res.data);
+
+      const formatMovies = res.data.movies.map(
+        ({ posterPath: poster_path, ...rest }) => ({ poster_path, ...rest })
+      );
+      populateToWatchList(formatMovies);
+      console.log("✅ Watchlist fetched from backend:", res.data.movies);
     } catch (error) {
       console.error(
         "❌ Error fetching watchlist:",
