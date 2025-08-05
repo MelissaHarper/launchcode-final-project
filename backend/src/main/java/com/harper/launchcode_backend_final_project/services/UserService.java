@@ -43,30 +43,6 @@ public class UserService {
             existingUser.setUpdated(Instant.now());
             return userRepository.save(existingUser);
         }
-
-        // Create a new ToWatch list for the user
-        ToWatch newToWatch = new ToWatch(Instant.now(), Instant.now());
-
-        // Set relationship between ToWatch and User
-        newToWatch.setUser(newUser);
-        newUser.setToWatch(newToWatch);
-
         return userRepository.save(newUser);
-    }
-
-    public void deleteAccount(String id){
-        Boolean userExists = userRepository.existsById(id);
-        if (userExists) {
-        User existingUser = userRepository.findById(id);
-        userRepository.delete(existingUser);
-    } else {
-            throw new RuntimeException("User not found");
-        }
-    }
-
-    public User getUserById(String id){
-            Boolean userExists = userRepository.existsById(id);
-        return userRepository.findById(id);
-
     }
 }
