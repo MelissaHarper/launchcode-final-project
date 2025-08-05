@@ -5,66 +5,58 @@ import { options } from "./services/call-headers";
 import SelectionDescription from "./SelectionDescriptionCard";
 import SelectionCredits from "./SelectionsCreditsCard";
 import SelectionTrailers from "./SelectionTrailersCard";
-import jtLoading from "../assets/images/jt-loading.gif";
 import "../styles/Selection.css";
 
 const Selection = () => {
   const { type, id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [detail, setDetail] = useState(null);
-  const [displayedCredits, setDisplayedCredits] = useState([]);
   const [trailers, setTrailers] = useState([]);
-  const [visibleCreditsCount, setVisibleCreditsCount] = useState(0);
-
+  const [allCredits, setAllCredits] = useState([]);
+  const [visibleCreditsCount, setVisibleCreditsCount] = useState(5);
   const payload = options;
 
-  // Load more cast credits
-  const handleLoadMore = async () => {
-    const resCredits = await getCredits(type || "", id || "", payload);
-    if (resCredits.data)
-      setDisplayedCredits(
-        resCredits.data.cast.slice(0, visibleCreditsCount + 5)
-      );
-    setVisibleCreditsCount((prevCount) => prevCount + 5);
-  };
+  const displayedCredits = allCredits.slice(0, visibleCreditsCount);
 
-  // Get Movie Details
-  const getDetailMovie = async () => {
-    const resData = await getDetail(type || "", id || "", payload);
-    if (resData.data) setDetail(resData.data);
-
-    const resCredits = await getCredits(type || "", id || "", payload);
-    setDisplayedCredits(resCredits.data.cast.slice(0, visibleCreditsCount + 5));
-
-    const resTrailers = await getTrailers(type || "", id || "", payload);
-    if (resTrailers.data && resTrailers.data.results.length > 0)
-      setTrailers(
-        resTrailers.data.results
-          .filter(
-            (trailer) =>
-              trailer.site === "YouTube" &&
-              (trailer.type === "Teaser" || trailer.type === "Trailer") &&
-              trailer.official
-          )
-          .slice(0, 5)
-      );
-
-    Promise.all([resData, resCredits, resTrailers]).then(() => {
-      setIsLoading(false);
-    });
+  const handleLoadMore = () => {
+    setVisibleCreditsCount((prev) => prev + 5);
   };
 
   useEffect(() => {
-    getDetailMovie();
-  });
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      const resData = await getDetail(type || "", id || "", payload);
+      if (resData.data) setDetail(resData.data);
+
+      const resCredits = await getCredits(type || "", id || "", payload);
+      if (resCredits.data) setAllCredits(resCredits.data.cast);
+
+      const resTrailers = await getTrailers(type || "", id || "", payload);
+      if (resTrailers.data?.results?.length > 0) {
+        setTrailers(
+          resTrailers.data.results
+            .filter(
+              (trailer) =>
+                trailer.site === "YouTube" &&
+                (trailer.type === "Teaser" || trailer.type === "Trailer") &&
+                trailer.official
+            )
+            .slice(0, 5)
+        );
+      }
+
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, [type, id, payload]);
 
   return (
     <>
-      {/* Banner, poster & description */}
       {!isLoading && <SelectionDescription movie={detail} />}
 
       <div className="credits-video-container">
-        {/* Credits */}
         <div>
           <p className="title">Cast</p>
           {<SelectionCredits credits={displayedCredits} />}
@@ -72,18 +64,13 @@ const Selection = () => {
             Load More Cast
           </button>
         </div>
-        <Suspense
-          fallback=<img
-            src={jtLoading}
-            alt="John Travolta looking around confused"
-          />
-        >
-          {/* Trailers */}
+
+        {trailers.length > 0 && (
           <div>
             <p className="title">Trailers</p>
             {<SelectionTrailers trailers={trailers} />}
           </div>
-        </Suspense>
+        )}
       </div>
 
       <p> {!detail && "We messed up, click that button again."}</p>
