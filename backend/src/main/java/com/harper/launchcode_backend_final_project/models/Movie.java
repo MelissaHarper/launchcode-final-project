@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "toWatchLists")
 public class Movie {
 
     @Id

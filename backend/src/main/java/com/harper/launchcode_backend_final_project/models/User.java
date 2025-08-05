@@ -12,6 +12,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "toWatch")
 public class User {
     @Id
     @Column(name= "id")

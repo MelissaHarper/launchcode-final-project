@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@ToString(exclude = {"user", "movies"})
 public class ToWatch {
     @Id
     @Column(name = "user_id")
