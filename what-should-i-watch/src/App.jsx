@@ -10,7 +10,7 @@ import Recommendations from "./components/Recommendations";
 import Feedback from "./components/Feedback";
 import MovieCard from "./components/MovieCard";
 import UserDashboard from "./components/gated/UserDashboard";
-import { BackendContext } from "./components/services/UserSyncHandler";
+import { BackendContext } from "./context/UserSyncHandler";
 import { useContext } from "react";
 
 function App() {
