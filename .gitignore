@@ -95,3 +95,4 @@ unit1-final-project.code-workspace
 
 backend/src/main/resources/app.env
 backend/src/test/java/com/harper/launchcode_backend_final_project/LaunchcodeBackendFinalProjectApplicationTests.java
+.env
