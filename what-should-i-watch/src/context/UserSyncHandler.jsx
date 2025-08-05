@@ -93,8 +93,9 @@ export const BackendContextProvider = ({ children }) => {
         originalName: movie.original_name,
       };
 
-      await axios.post(`${backendBaseUrl}/towatch/${user.id}/add`, movieData, {
+      await axios.put(`${backendBaseUrl}/towatch/${user.id}/add`, movieData, {
         headers: { Authorization: `Bearer ${token}` },
+        "Content-Type": "application/json",
       });
       console.log("✅ Movie synced to backend");
     } catch (error) {
@@ -105,35 +106,8 @@ export const BackendContextProvider = ({ children }) => {
     }
   };
 
-  // const movieData = {
-  //   id: movie.id,
-  //   originalTitle: movie.original_title,
-  //   posterPath: movie.poster_path,
-  //   title: movie.title,
-  //   originalName: movie.original_name,
-  // };
-
-  // await fetch(`${backendBaseUrl}/towatch/${user.id}/add`, userData, {
-  //   method: "POST",
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(movieData),
-  // });
-
-  // await fetchWatchListFromBackend();
-  // };
-
   const removeMovieFromWatchList = async (movie) => {
     const token = await getToken({ template: "pickQuick" });
-    const userData = {
-      id: user.id,
-      email: user.primaryEmailAddress.emailAddress,
-      username: user.username,
-      photoUrl: user.imageUrl,
-      createdAt: user.createdAt,
-    };
 
     const movieData = {
       id: movie.id ? movie.id : null,
@@ -143,16 +117,14 @@ export const BackendContextProvider = ({ children }) => {
       originalName: movie.original_name ? movie.original_name : null,
     };
 
-    await fetch(
-      `${backendBaseUrl}/towatch/${userData.id}/remove/${movie.id}`,
-      userData,
+    await axios.delete(
+      `${backendBaseUrl}/towatch/${user.id}/remove/${movie.id}`,
+      movieData,
       {
-        method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(movieData),
       }
     );
     await fetchWatchListFromBackend();
