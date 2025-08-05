@@ -4,45 +4,6 @@ import { getRandomNumberBelow10 } from "./utils";
 
 const BASE_URL = import.meta.env.VITE_BASE_TMDB_API_URL;
 
-// export const getWithFilters = async (searchTerms, payload) => {
-//   const response = await api().get(
-//     `/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${searchTerms}`,
-//     {
-//       payload,
-//     }
-//   );
-//   return response;
-// };
-// export const clerkMiddleware = (options) => {
-//   return async (context, next) => {
-//     const clerkClient = options.clerkClient || defaultClerkClient;
-
-//     const requestState = await clerkClient.authenticateRequest(context.req, {
-//       authorizedParties: ["https://example.com"],
-//     });
-
-//     if (requestState.headers) {
-//       // This adds observability headers to the res
-//       requestState.headers.forEach((value, key) =>
-//         context.res.headers.append(key, value)
-//       );
-
-//       const locationHeader = requestState.headers.get("location");
-
-//       if (locationHeader) {
-//         return context.redirect(locationHeader, 307);
-//       } else if (requestState.status === "handshake") {
-//         throw new Error("Clerk: unexpected handshake without redirect");
-//       }
-//     }
-
-//     context.set("clerkAuth", requestState.toAuth());
-//     context.set("clerk", clerkClient);
-
-//     await next();
-//   };
-// };
-
 export async function getWithFilters(type, genreId, providerId, payload) {
   try {
     const page = getRandomNumberBelow10();
@@ -128,18 +89,12 @@ export const getDetail = async (type, id, payload) => {
     .get(`/${type}/${id}`, { payload })
     .catch(function (error) {
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
         console.log(error.response.data);
         console.log(error.response.status);
         console.log(error.response.headers);
       } else if (error.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
         console.log(error.request);
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.log("Error", error.message);
       }
       console.log(error.config);
