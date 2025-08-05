@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -22,12 +22,18 @@ public class UserService {
     @Autowired
     private ToWatchRepository toWatchRepository;
 
-
-public User addOrUpdateUser(UserDTO userData){
-        // Create a new User object from the UserDTO
+    public User addOrUpdateUser(UserDTO userData){
+            // Create a new User object from the UserDTO
+        User newUser = new User();
+        newUser.setId(userData.getId());
+        newUser.setEmail(userData.getEmail());
+        newUser.setUsername(userData.getUsername());
+        newUser.setPhotoUrl(userData.getPhotoUrl());
+        newUser.setCreatedAt(userData.getCreatedAt());
+        newUser.setUpdated(Instant.now());
 
         // Check if user already exists
-        Boolean userExists = userRepository.existsById(userData.getId());
+        Boolean userExists = userRepository.existsById(newUser.getId());
         if (userExists) {
             // If user exists, update the existing user in case of an update through Clerk
             User existingUser = userRepository.findById(userData.getId());
@@ -37,13 +43,6 @@ public User addOrUpdateUser(UserDTO userData){
             existingUser.setUpdated(Instant.now());
             return userRepository.save(existingUser);
         }
-        User newUser = new User();
-            newUser.setId(userData.getId());
-            newUser.setEmail(userData.getEmail());
-            newUser.setUsername(userData.getUsername());
-            newUser.setPhotoUrl(userData.getPhotoUrl());
-            newUser.setCreatedAt(userData.getCreatedAt());
-            newUser.setUpdated(Instant.now());
 
         // Create a new ToWatch list for the user
         ToWatch newToWatch = new ToWatch(Instant.now(), Instant.now());

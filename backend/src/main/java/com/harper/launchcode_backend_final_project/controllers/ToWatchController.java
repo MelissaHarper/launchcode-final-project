@@ -1,39 +1,34 @@
 package com.harper.launchcode_backend_final_project.controllers;
 
-import com.harper.launchcode_backend_final_project.models.Movie;
 import com.harper.launchcode_backend_final_project.models.ToWatch;
 import com.harper.launchcode_backend_final_project.models.dto.MovieDTO;
 import com.harper.launchcode_backend_final_project.services.ToWatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/towatch")
-@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class ToWatchController {
 
     @Autowired
-    private ToWatchService toWatchService;
+    ToWatchService toWatchService;
 
     @GetMapping("/{userId}")
-//    @PreAuthorize("isAuthenticated()")
-    public ToWatch getWatchList(@PathVariable String userId) {
-        return toWatchService.getOrCreateToWatch(userId);
+    public ToWatch getOrCreateToWatchList(@PathVariable String userId) {
+        return toWatchService.getOrCreateToWatchList(userId);
     }
 
-    @PostMapping("/{userId}/add")
-//    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/{userId}/add")
     public ToWatch addMovieToWatchList(@PathVariable String userId, @RequestBody MovieDTO movie) {
-        System.out.println("Adding movie to watch list: " + movie.getPosterPath());
+        System.out.println("Adding movie to watch list: " + movie.getTitle());
         return toWatchService.addMovieToWatchList(userId, movie);
     }
 
     @DeleteMapping("/{userId}/remove/{movieId}")
-//    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> removeMovieFromWatchList(@PathVariable String userId, @PathVariable int movieId) {
         toWatchService.removeMovieFromWatchList(userId, movieId);
         return ResponseEntity.noContent().build();

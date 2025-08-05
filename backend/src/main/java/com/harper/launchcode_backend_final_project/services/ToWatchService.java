@@ -2,7 +2,6 @@ package com.harper.launchcode_backend_final_project.services;
 
 import com.harper.launchcode_backend_final_project.models.Movie;
 import com.harper.launchcode_backend_final_project.models.ToWatch;
-import com.harper.launchcode_backend_final_project.models.User;
 import com.harper.launchcode_backend_final_project.models.dto.MovieDTO;
 import com.harper.launchcode_backend_final_project.repositories.MovieRepository;
 import com.harper.launchcode_backend_final_project.repositories.ToWatchRepository;
@@ -17,10 +16,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Optional;
+import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")
 public class ToWatchService {
 
@@ -35,7 +33,7 @@ public class ToWatchService {
     @Autowired
     private UserRepository userRepository;
 
-    public ToWatch getOrCreateToWatch(String userId) {
+    public ToWatch getOrCreateToWatchList(String userId) {
         return toWatchRepository.findById(userId)
                 .orElseGet(() -> {
                     ToWatch newList = new ToWatch( Instant.now(), Instant.now());
@@ -49,113 +47,49 @@ public class ToWatchService {
     public ToWatch addMovieToWatchList(String userId, MovieDTO movieDTO) {
         logger.info("Attempting to add movie for userId: {} with movieDTO: {}", userId, movieDTO);
 
-        // Instantiate the ToWatch object so it can be used within each method
-        ToWatch toWatchList;
+       ToWatch watchList = toWatchRepository.findById(userId).orElseGet(() -> {
+                  ToWatch newList = new ToWatch(Instant.now(), Instant.now());
+                    newList.setId(userId);
+                    Set<Movie> movies = new HashSet<>();
+                    return newList;
+        });
+       Movie movie = movieRepository.findById(movieDTO.getId())
+                .orElseGet(() -> {
+                    Movie newMovie = new Movie();
+                    newMovie.setId(movieDTO.getId());
+                    newMovie.setOriginalTitle(movieDTO.getOriginalTitle());
+                    newMovie.setPosterPath(movieDTO.getPosterPath());
+                    newMovie.setTitle(movieDTO.getTitle());
+                    newMovie.setOriginalName(movieDTO.getOriginalName());
+                    return movieRepository.save(newMovie);
+                });
 
-        // Find or create the ToWatch list
-        Optional<ToWatch> existingToWatch = toWatchRepository.findById(userId);
-        if (existingToWatch.isPresent()) {
-            toWatchList = existingToWatch.get();
-            logger.debug("Existing ToWatch list found for userId: {}", userId);
+        // Check if movie is already in the ToWatch list
+        if (watchList.getMovies().contains(movie)) {
+            logger.warn("Movie with ID {} is already in the ToWatch list for userId: {}", movie.getId(), userId);
+            return watchList; // Return early if movie is already present
         } else {
-            ToWatch newList = new ToWatch( Instant.now(), Instant.now());
-            newList.setId(userId);
-            return toWatchRepository.save(newList);
+            watchList.getMovies().add(movie);
+            movie.getToWatchLists().add(watchList);
+            logger.info("Adding movie with ID {} to ToWatch list for userId: {}", movie.getId(), userId);
         }
 
-        // 2. Prepare the Movie object
-        Movie incomingMovie = getMovie(movieDTO);
-        logger.debug("Incoming Movie object from DTO: {}", incomingMovie);
-
-        // 3. Find or create/update the Movie in the Movie repository
-        Movie movieToAssociate;
-        Optional<Movie> movieInDb = movieRepository.findById(incomingMovie.getId());
-
-        if (movieInDb.isPresent()) {
-            movieToAssociate = movieInDb.get();
-            logger.debug("Movie with ID {} found in database. Updating details if necessary.", movieToAssociate.getId());
-
-            // Update only if existing movie has nulls or if incoming data is newer
-            if (movieToAssociate.getOriginalTitle() == null && incomingMovie.getOriginalTitle() != null) {
-                movieToAssociate.setOriginalTitle(incomingMovie.getOriginalTitle());
-            } else if (incomingMovie.getOriginalTitle() != null && !incomingMovie.getOriginalTitle().equals(movieToAssociate.getOriginalTitle())) {
-                movieToAssociate.setOriginalTitle(incomingMovie.getOriginalTitle());
-            }
-
-            if (movieToAssociate.getPosterPath() == null && incomingMovie.getPosterPath() != null) {
-                movieToAssociate.setPosterPath(incomingMovie.getPosterPath());
-            } else if (incomingMovie.getPosterPath() != null && !incomingMovie.getPosterPath().equals(movieToAssociate.getPosterPath())) {
-                movieToAssociate.setPosterPath(incomingMovie.getPosterPath());
-            }
-
-            if (movieToAssociate.getTitle() == null && incomingMovie.getTitle() != null) {
-                movieToAssociate.setTitle(incomingMovie.getTitle());
-            } else if (incomingMovie.getTitle() != null && !incomingMovie.getTitle().equals(movieToAssociate.getTitle())) {
-                movieToAssociate.setTitle(incomingMovie.getTitle());
-            }
-
-            if (movieToAssociate.getOriginalName() == null && incomingMovie.getOriginalName() != null) {
-                movieToAssociate.setOriginalName(incomingMovie.getOriginalName());
-            } else if (incomingMovie.getOriginalName() != null && !incomingMovie.getOriginalName().equals(movieToAssociate.getOriginalName())) {
-                movieToAssociate.setOriginalName(incomingMovie.getOriginalName());
-            }
-
-            movieRepository.save(movieToAssociate);
-            logger.debug("Existing movie updated and saved: {}", movieToAssociate);
-
-        } else {
-            // Movie doesn't exist, save the incoming movie as new
-            movieToAssociate = movieRepository.save(incomingMovie);
-            logger.debug("New movie saved: {}", movieToAssociate);
-        }
-
-        // 4. Add the Movie to the ToWatch list's collection
-        if (toWatchList.getMovies() == null) {
-            toWatchList.setMovies(new HashSet<>());
-            toWatchList.getMovies().add(movieToAssociate);
-            logger.warn("ToWatch list's movies set was null, initialized a new HashSet.");
-        }
-
-        // Check if the movie is already present in the set to avoid redundant adds
-        if (toWatchList.getMovies().add(movieToAssociate)) {
-            logger.info("Movie ID {} successfully added to ToWatch list for userId: {}", movieToAssociate.getId(), userId);
-//            // 5. Update the inverse side
-//            movieToAssociate.getToWatchLists().add(toWatchList);
-//            movieRepository.save(movieToAssociate); // Resave the movie to update the inverse side
-//            logger.info("ToWatch list in movieRepository updated with movie ID {} for userId: {}", movieToAssociate.getId(), userId);
-
-        } else {
-            logger.warn("Movie ID {} is already in ToWatch list for userId: {}", movieToAssociate.getId(), userId);
-        }
-
-        // 6. Save the ToWatch object to persist the changes in the relationship
-        toWatchRepository.save(toWatchList);
-        logger.info("ToWatch list for userId {} saved after movie addition. Current movie count: {}", userId, toWatchList.getMovies().size());
-
-        return toWatchList;
+        return toWatchRepository.save(watchList);
     }
 
-    private static Movie getMovie(MovieDTO movieDTO) {
-        Movie incomingMovie = new Movie(movieDTO.getId());
-        if (movieDTO.getOriginalTitle() != null) {
-            incomingMovie.setOriginalTitle(movieDTO.getOriginalTitle());
-        }
-        if (movieDTO.getPosterPath() != null) {
-            incomingMovie.setPosterPath(movieDTO.getPosterPath());
-        }
-        if (movieDTO.getTitle() != null) {
-            incomingMovie.setTitle(movieDTO.getTitle());
-        }
-        if (movieDTO.getOriginalName() != null) {
-            incomingMovie.setOriginalName(movieDTO.getOriginalName());
-        }
-        return incomingMovie;
-    }
+
+
+
 
     public void removeMovieFromWatchList(String userId, int movieId) {
-        ToWatch existingMovie = toWatchRepository.findByIdAndMovieId(userId, movieId)
-                .orElseThrow(()-> new RuntimeException("Movie not found in list"));
-        toWatchRepository.delete(existingMovie);
+        ToWatch toWatch = toWatchRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("ToWatch list not found for userId: " + userId));
+        if (toWatch != null) {
+            Movie movie = movieRepository.findById(movieId)
+                    .orElseThrow(() -> new RuntimeException("Movie not found with ID: " + movieId));
+            toWatch.getMovies().remove(movie);
+            logger.info("Movie with ID {} removed from ToWatch list for userId: {}", movie, userId);
+        }
     }
 }
 
