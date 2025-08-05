@@ -42,7 +42,7 @@ export const BackendContextProvider = ({ children }) => {
         }
       };
       saveUser();
-    }, []);
+    }, [synced]);
     return null;
   };
 
@@ -97,6 +97,7 @@ export const BackendContextProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` },
         "Content-Type": "application/json",
       });
+      await fetchWatchListFromBackend();
       console.log("✅ Movie synced to backend");
     } catch (error) {
       console.error(
@@ -107,27 +108,35 @@ export const BackendContextProvider = ({ children }) => {
   };
 
   const removeMovieFromWatchList = async (movie) => {
-    const token = await getToken({ template: "pickQuick" });
+    try {
+      const token = await getToken({ template: "pickQuick" });
 
-    const movieData = {
-      id: movie.id ? movie.id : null,
-      originalTitle: movie.original_title ? movie.original_title : null,
-      posterPath: movie.poster_path ? movie.poster_path : null,
-      title: movie.title ? movie.title : null,
-      originalName: movie.original_name ? movie.original_name : null,
-    };
+      const movieData = {
+        id: movie.id ? movie.id : null,
+        originalTitle: movie.original_title ? movie.original_title : null,
+        posterPath: movie.poster_path ? movie.poster_path : null,
+        title: movie.title ? movie.title : null,
+        originalName: movie.original_name ? movie.original_name : null,
+      };
 
-    await axios.delete(
-      `${backendBaseUrl}/towatch/${user.id}/remove/${movie.id}`,
-      movieData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    await fetchWatchListFromBackend();
+      await axios.delete(
+        `${backendBaseUrl}/towatch/${user.id}/remove/${movie.id}`,
+        movieData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await fetchWatchListFromBackend();
+      console.log("✅ Movie synced to backend");
+    } catch (error) {
+      console.error(
+        "❌ Error saving Movie:",
+        error.response?.data || error.message
+      );
+    }
   };
 
   const checkToWatchList = (movie) => {
