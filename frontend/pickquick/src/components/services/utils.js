@@ -3,10 +3,8 @@ import { options } from "./call-headers.js";
 import { useEffect } from "react";
 
 export const useClickOutside = (ref, handler) => {
-  // console.log(handler, ref);
   useEffect(() => {
     const listener = (event) => {
-      // Do nothing if clicking ref's element or descendent elements
       if (!ref.current || ref.current.contains(event.target)) {
         return;
       }

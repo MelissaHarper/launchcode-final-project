@@ -49,11 +49,6 @@ export const BackendContextProvider = ({ children }) => {
     setToWatchList(list);
   };
 
-  //   if (isLoaded && isSignedIn) {
-  //     fetchWatchListFromBackend();
-  //   }
-  //
-
   const fetchWatchListFromBackend = useCallback(async () => {
     if (!isLoaded || !isSignedIn || !user) {
       console.log(
@@ -78,12 +73,8 @@ export const BackendContextProvider = ({ children }) => {
         ({ posterPath: poster_path, ...rest }) => ({ poster_path, ...rest })
       );
       populateToWatchList(formatMovies);
-      console.log("✅ Watchlist fetched from backend:", res.data.movies);
     } catch (error) {
-      console.error(
-        "❌ Error fetching watchlist:",
-        error.response?.data || error.message
-      );
+      console.error(error.response?.data || error.message);
     }
   }, [isLoaded, isSignedIn, user, getToken, backendBaseUrl]);
 
@@ -109,12 +100,8 @@ export const BackendContextProvider = ({ children }) => {
         "Content-Type": "application/json",
       });
       await fetchWatchListFromBackend();
-      console.log("✅ Movie synced to backend");
     } catch (error) {
-      console.error(
-        "❌ Error saving Movie:",
-        error.response?.data || error.message
-      );
+      console.error(error.response?.data || error.message);
     }
   };
 
@@ -129,17 +116,13 @@ export const BackendContextProvider = ({ children }) => {
         }
       );
       await fetchWatchListFromBackend();
-      console.log("✅ Movie synced to backend");
     } catch (error) {
-      console.error(
-        "❌ Error saving Movie:",
-        error.response?.data || error.message
-      );
+      console.error(error.response?.data || error.message);
     }
   };
 
   const checkToWatchList = (movie) => {
-    if (!movie || !movie.id) return false; // Prevent null/undefined errors
+    if (!movie || !movie.id) return false;
     return toWatchList.some((m) => m && m.id === movie.id);
   };
 

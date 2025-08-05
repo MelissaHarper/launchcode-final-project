@@ -13,7 +13,6 @@ const MovieCard = ({ movie }) => {
     useContext(BackendContext);
   const [isInToWatchList, setIsInToWatchList] = useState(false);
 
-  // Check if movie is in watch list if movie or watch list changes
   useEffect(() => {
     movie && setIsInToWatchList(checkToWatchList(movie));
     console.log(`Movie is in toWatchList. ${isInToWatchList}`);

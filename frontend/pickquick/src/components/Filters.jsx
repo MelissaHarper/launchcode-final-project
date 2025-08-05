@@ -3,11 +3,7 @@ import { useClickOutside } from "./services/utils";
 import { FiCheck, FiChevronDown } from "react-icons/fi";
 import { FaXmark } from "react-icons/fa6";
 import { tmdbImgBaseUrl } from "./services/call-headers";
-// import { useNavigate } from "react-router-dom";
-// import { getWithFilters } from "./services/call-functions.js";
-// import genreData from "../assets/data/tmdbGenres.json";
-// import providerData from "../assets/data/watchProvidersIDsNames.json";
-// import { options } from "./services/call-headers.js";
+
 const FilterContext = createContext();
 const FilterDropdown = ({
   children,
@@ -17,11 +13,6 @@ const FilterDropdown = ({
   options,
   selectionIdentifier,
 }) => {
-  //   const [genres, setGenres] = useState([]);
-  //   const [providers, setProviders] = useState([]);
-  //   const [selectedGenres, setSelectedGenres] = useState();
-  //   const [selectedProviders, setSelectedProviders] = useState();
-  //   const navigate = useNavigate();
   const FilterDropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -76,7 +67,7 @@ const ListContainer = () => {
         className={`absolute bottom-full translate-x-9 text-white  left-full translate-y-full rounded bg-[#20212c] w-max list-none `}
       >
         <FilterDropdown.Close />
-        <div className="flex flex-col p-2">
+        <div className="flex flex-col p-2 z-10">
           {options?.map((option, index) => (
             <FilterDropdown.Item key={index} option={option} />
           ))}
@@ -91,13 +82,10 @@ const Item = ({ option }) => {
 
   function handleAssign(option) {
     setAssignedList((prevList) => {
-      // Check if the option already exists in the list
       if (prevList.includes(option)) {
-        // If option exists, remove it from the list
         const updatedList = prevList.filter((item) => item !== option);
         return updatedList;
       } else {
-        // If option doesn't exist, add it to the list
         return [...prevList, option];
       }
     });
@@ -150,11 +138,13 @@ const AssignedList = () => {
             className="flex items-center gap-1 w-[47.5%] p-2 hover:bg-[#20212c] rounded transition-all duration-200"
             onClick={() => handleRemove(option.id)}
           >
-            <img
-              className="w-6 h-6 "
-              src={`${tmdbImgBaseUrl}${option.imgUrl}`}
-              alt={`${option.name} image`}
-            />
+            {option.imgUrl && (
+              <img
+                className="w-6 h-6 "
+                src={`${tmdbImgBaseUrl}${option.imgUrl}`}
+                alt={`${option.name} image`}
+              />
+            )}
 
             <span>{option.name}</span>
             <span className="ml-auto cursor-pointer p-1 hover:bg-[#2b2c37] rounded-full">
@@ -193,66 +183,3 @@ FilterDropdown.Header = Header;
 FilterDropdown.Button = Button;
 FilterDropdown.AssignedList = AssignedList;
 FilterDropdown.Close = Close;
-// useEffect(() => {
-//   setGenres(genreData);
-//   setProviders(providerData);
-// }, []);
-
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   const movies = await getWithFilters({
-//     type: "movie",
-//     genreId: selectedGenres,
-//     providerId: selectedProviders,
-//     payload: options,
-//   });
-//   setMovieList(movies);
-
-//   navigate(`/recommendations`);
-// };
-
-// return (
-//   <form
-//     onSubmit={handleSubmit}
-//     className="p-4 space-y-4 bg-zinc-800 text-white"
-//   >
-//     <div>
-//       <label className="block mb-1">Genre</label>
-//       <select
-//         value={selectedGenres}
-//         onChange={(e) => setSelectedGenres(...selectedGenres, e.target.value)}
-//         className="w-full p-2 rounded bg-zinc-700"
-//       >
-//         <option value="">All Genres</option>
-//         {genres.map((genre) => (
-//           <option key={genre.id} value={genre.id}>
-//             {genre.name}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-
-//     <div>
-//       <label className="block mb-1">Provider</label>
-//       <select
-//         value={selectedProviders}
-//         onChange={(e) =>
-//           setSelectedProviders(...selectedProviders, e.target.value)
-//         }
-//         className="w-full p-2 rounded bg-zinc-700"
-//       >
-//         <option value="">All Providers</option>
-//         {providers.map((p) => (
-//           <option key={p.provider_id} value={p.provider_id}>
-//             {p.provider_name}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-
-//     <button type="submit" className="bg-indigo-600 px-4 py-2 rounded">
-//       Get Picks
-//     </button>
-//   </form>
-// );
-// }

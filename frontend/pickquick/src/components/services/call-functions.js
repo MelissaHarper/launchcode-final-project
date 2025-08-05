@@ -33,13 +33,13 @@ export async function getWithFilters(type, genreId, providerId, payload) {
 export async function getGenres(payload) {
   const url = `${BASE_URL}/genre/movie/list`;
   const { data } = await api().get(url, { payload });
-  return data.genres; // Array of { id, name }
+  return data.genres;
 }
 
 export async function getProviders(payload) {
   const url = `${BASE_URL}/watch/providers/movie`;
   const { data } = await axios.get(url, { payload });
-  return data.results; // Array of { provider_id, provider_name, logo_path }
+  return data.results;
 }
 
 export const getTrending = async (type, payload) => {

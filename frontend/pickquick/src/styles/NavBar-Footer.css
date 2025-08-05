@@ -66,13 +66,9 @@ p.site-name {
 }
 
 .button-navbar {
-  align-self: flex-end;
-  justify-self: flex-end;
   flex-grow: 0.05;
   max-height: 40px;
   width: 10vw;
-  padding: 1em;
-  padding-bottom: 0;
   margin: 0.5em;
   font-size: 2vw;
   background-color: #1a1a1a;
@@ -84,7 +80,7 @@ p.site-name {
 }
 
 footer {
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   margin-top: 1vh;

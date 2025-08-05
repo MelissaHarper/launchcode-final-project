@@ -30,11 +30,9 @@ function FilterContainer() {
       options
     );
     populateMovieList(movies);
-    // console.log(`Movies returned: ${movies.length}`);
 
     const randomFive = getRandomMovies(movies, 5);
     populateRecommendations(randomFive);
-    // console.log(`Number of Recommendations: ${randomFive.length}`);
     navigate(`/recommendations`);
   };
 
@@ -66,11 +64,7 @@ function FilterContainer() {
           selectionIdentifier={"Streaming Providers"}
         >
           <FilterDropdown.Header />
-          <FilterDropdown.Button
-          // listStyles={
-          //   "!-left-5 !-translate-x-full bg-[#605e80]  border text-white"
-          // }
-          />
+          <FilterDropdown.Button />
           <FilterDropdown.AssignedList />
         </FilterDropdown>
       </div>

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import tmdbLogo from "../assets/images/tmdb-logo.svg";
 import "../styles/NavBar-Footer.css";
 
@@ -15,6 +16,9 @@ const Footer = () => {
           is not endorsed or certified by TMDB or JustWatch.
         </p>
       </div>
+      <Link className="footer-link" to="/feedback">
+        Feedback
+      </Link>
 
       <div className="box-travel"></div>
     </footer>

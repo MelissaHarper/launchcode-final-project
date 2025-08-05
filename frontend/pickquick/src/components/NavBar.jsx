@@ -18,9 +18,7 @@ function NavBar() {
         <Link className="nav-link" to="/">
           Home
         </Link>
-        <Link className="nav-link" to="/feedback">
-          Feedback
-        </Link>
+
         <Link className="nav-link" to="/about">
           About
         </Link>
