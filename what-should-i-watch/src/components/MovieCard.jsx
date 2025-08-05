@@ -14,10 +14,9 @@ const MovieCard = ({ movie }) => {
 
   // Check if movie is in watch list if movie or watch list changes
   useEffect(() => {
-    if (movie) {
-      setIsInToWatchList(checkToWatchList(movie));
-    }
-  }, [toWatchList, movie, checkToWatchList]);
+    movie && setIsInToWatchList(checkToWatchList(movie));
+    console.log(`Movie is in toWatchList. ${isInToWatchList}`);
+  }, [toWatchList, movie, checkToWatchList, isInToWatchList]);
 
   return (
     <div className="movie-card">
