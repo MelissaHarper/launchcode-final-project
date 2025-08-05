@@ -7,16 +7,16 @@ import com.harper.launchcode_backend_final_project.repositories.MovieRepository;
 import com.harper.launchcode_backend_final_project.repositories.ToWatchRepository;
 import com.harper.launchcode_backend_final_project.repositories.UserRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @CrossOrigin(origins = "http://localhost:5173")
@@ -33,27 +33,27 @@ public class ToWatchService {
     @Autowired
     private UserRepository userRepository;
 
-    public ToWatch getOrCreateToWatchList(String userId) {
-        return toWatchRepository.findById(userId)
-                .orElseGet(() -> {
-                    ToWatch newList = new ToWatch( Instant.now(), Instant.now());
-                    newList.setId(userId);
-                    logger.info("No existing ToWatch list found for userId: {}. Creating a new one.", userId);
-                    return toWatchRepository.save(newList);
-                });
+    public ResponseEntity<?> getToWatchList(String userId) {
+        ToWatch watchList = toWatchRepository.findById(userId).orElse(null);
+        if (watchList != null) {
+            return new ResponseEntity<>(watchList, HttpStatus.OK); // 200
+        } else {
+            String response = "WatchList with ID of " + userId + " not found.";
+            return new ResponseEntity<>(Collections.singletonMap("response", response), HttpStatus.NOT_FOUND); // 404
+        }
     }
 
     @Transactional
-    public ToWatch addMovieToWatchList(String userId, MovieDTO movieDTO) {
+    public ResponseEntity<?> addMovieToWatchList(String userId, MovieDTO movieDTO) {
         logger.info("Attempting to add movie for userId: {} with movieDTO: {}", userId, movieDTO);
 
-       ToWatch watchList = toWatchRepository.findById(userId).orElseGet(() -> {
-                  ToWatch newList = new ToWatch(Instant.now(), Instant.now());
-                    newList.setId(userId);
-                    Set<Movie> movies = new HashSet<>();
-                    return newList;
+        ToWatch watchList = toWatchRepository.findById(userId).orElseGet(() -> {
+            ToWatch newList = new ToWatch(Instant.now(), Instant.now());
+            newList.setId(userId);
+            List<Movie> movies = new ArrayList<>();
+            return newList;
         });
-       Movie movie = movieRepository.findById(movieDTO.getId())
+        Movie movie = movieRepository.findById(movieDTO.getId())
                 .orElseGet(() -> {
                     Movie newMovie = new Movie();
                     newMovie.setId(movieDTO.getId());
@@ -64,31 +64,34 @@ public class ToWatchService {
                     return movieRepository.save(newMovie);
                 });
 
-        // Check if movie is already in the ToWatch list
-        if (watchList.getMovies().contains(movie)) {
-            logger.warn("Movie with ID {} is already in the ToWatch list for userId: {}", movie.getId(), userId);
-            return watchList; // Return early if movie is already present
-        } else {
+        if (!watchList.getMovies().contains(movie)) {
             watchList.getMovies().add(movie);
             movie.getToWatchLists().add(watchList);
-            logger.info("Adding movie with ID {} to ToWatch list for userId: {}", movie.getId(), userId);
         }
 
-        return toWatchRepository.save(watchList);
+        toWatchRepository.save(watchList);
+
+        return new ResponseEntity<>(movie, HttpStatus.CREATED);
     }
 
 
-
-
-
-    public void removeMovieFromWatchList(String userId, int movieId) {
+    @Transactional
+    public ResponseEntity<?> removeMovieFromWatchList(String userId, int movieId) {
         ToWatch toWatch = toWatchRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("ToWatch list not found for userId: " + userId));
-        if (toWatch != null) {
-            Movie movie = movieRepository.findById(movieId)
-                    .orElseThrow(() -> new RuntimeException("Movie not found with ID: " + movieId));
+                .orElse(null);
+
+        Movie movie = movieRepository.findById(movieId)
+                .orElse(null);
+        if (toWatch == null || movie == null) {
+            String response = "ToWatch list or Movie not found for userId: " + userId + " and movieId: " + movieId;
+            return new ResponseEntity<>(Collections.singletonMap("response", response), HttpStatus.NOT_FOUND); // 404
+        } else {
             toWatch.getMovies().remove(movie);
-            logger.info("Movie with ID {} removed from ToWatch list for userId: {}", movie, userId);
+            movie.getToWatchLists().remove(toWatch);
+
+            toWatchRepository.save(toWatch);
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204
         }
     }
 }

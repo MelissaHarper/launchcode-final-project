@@ -1,6 +1,5 @@
 package com.harper.launchcode_backend_final_project.controllers;
 
-import com.harper.launchcode_backend_final_project.models.ToWatch;
 import com.harper.launchcode_backend_final_project.models.dto.MovieDTO;
 import com.harper.launchcode_backend_final_project.services.ToWatchService;
 import lombok.RequiredArgsConstructor;
@@ -18,20 +17,19 @@ public class ToWatchController {
     ToWatchService toWatchService;
 
     @GetMapping("/{userId}")
-    public ToWatch getOrCreateToWatchList(@PathVariable String userId) {
-        return toWatchService.getOrCreateToWatchList(userId);
+    public ResponseEntity<?> getToWatchList(@PathVariable String userId) {
+         return toWatchService.getToWatchList(userId);
+
     }
 
     @PutMapping("/{userId}/add")
-    public ToWatch addMovieToWatchList(@PathVariable String userId, @RequestBody MovieDTO movie) {
-        System.out.println("Adding movie to watch list: " + movie.getTitle());
+    public ResponseEntity<?> addMovieToWatchList(@PathVariable String userId, @RequestBody MovieDTO movie) {
         return toWatchService.addMovieToWatchList(userId, movie);
     }
 
     @DeleteMapping("/{userId}/remove/{movieId}")
-    public ResponseEntity<Void> removeMovieFromWatchList(@PathVariable String userId, @PathVariable int movieId) {
-        toWatchService.removeMovieFromWatchList(userId, movieId);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> removeMovieFromWatchList(@PathVariable String userId, @PathVariable int movieId) {
+        return toWatchService.removeMovieFromWatchList(userId, movieId);
     }
 
 }
