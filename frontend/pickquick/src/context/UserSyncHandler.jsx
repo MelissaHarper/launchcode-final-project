@@ -31,13 +31,10 @@ export const BackendContextProvider = ({ children }) => {
           await axios.post(`${backendBaseUrl}/users/add`, userData, {
             headers: { Authorization: `Bearer ${token}` },
           });
-          console.log("✅ User synced to backend");
+
           setSynced(true);
         } catch (error) {
-          console.error(
-            "❌ Error saving user:",
-            error.response?.data || error.message
-          );
+          console.error(error.response?.data || error.message);
         }
       };
       saveUser(), setUserLoading(false);
@@ -51,9 +48,6 @@ export const BackendContextProvider = ({ children }) => {
 
   const fetchWatchListFromBackend = useCallback(async () => {
     if (!isLoaded || !isSignedIn || !user) {
-      console.log(
-        "⏳ Waiting for Clerk user to load before fetching watchlist"
-      );
       return;
     }
     try {
