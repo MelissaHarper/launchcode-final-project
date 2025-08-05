@@ -1,27 +1,28 @@
 package com.harper.launchcode_backend_final_project.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 import jakarta.persistence.*;
-import lombok.RequiredArgsConstructor;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "toWatchLists")
 public class Movie {
 
     @Id
     private int id;
     private String originalTitle;
+    private String posterPath;
+    private String title;
+    private String originalName;
 
     @ManyToMany(mappedBy = "movies")
-    Set<ToWatch> toWatchLists = new HashSet<>();
+    @JsonBackReference("towatch-movies")
+    private final List<ToWatch> toWatchLists = new ArrayList<>();
 
 }

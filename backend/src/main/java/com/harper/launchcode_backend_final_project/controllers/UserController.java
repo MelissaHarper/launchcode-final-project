@@ -1,3 +1,4 @@
+
 package com.harper.launchcode_backend_final_project.controllers;
 
 
@@ -22,17 +23,17 @@ public class UserController {
     UserService userService;
 
     // Post or Update a User
-    // Endpoint: http://localhost:8080/api/users/create-or-update
+    // Endpoint: http://localhost:8080/api/users/add
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value="/add", consumes= MediaType.APPLICATION_JSON_VALUE)
-    public User createUser(@RequestBody UserDTO user, Authentication authentication){
+    public User addOrUpdateUser(@RequestBody UserDTO user, Authentication authentication){
         try{
             if(!authentication.getName().equals(user.getId())){
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User does not have permission to access this resource");
             }
 
             System.out.println("User received: " + user);
-            return userService.addUser(user);
+            return userService.addOrUpdateUser(user);
         } catch (Exception e){
             throw new RuntimeException(e);
 

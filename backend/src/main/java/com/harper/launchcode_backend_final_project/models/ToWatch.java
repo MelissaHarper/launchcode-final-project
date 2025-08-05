@@ -1,34 +1,35 @@
 package com.harper.launchcode_backend_final_project.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
+@ToString(exclude = {"user", "movies"})
 public class ToWatch {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private int id;
+    @Column(name = "user_id")
+    private String id;
 
-    private String userId;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    @JsonBackReference("user-towatch")
+    private User user;
 
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "to_watch_movies",
-            joinColumns = @JoinColumn(name = "to_watch_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    private Set<Movie> movies = new HashSet<>();
+    @JsonManagedReference("towatch-movies")
+    private List<Movie> movies;
 
     @NonNull
     @CreationTimestamp
@@ -38,4 +39,5 @@ public class ToWatch {
     @NonNull
     @UpdateTimestamp
     private Instant updatedAt;
+
 }
