@@ -6,6 +6,7 @@ import "../styles/recommend-movieCard.css";
 import AddToWatchList from "./services/AddToWatchList.jsx";
 import RemoveFromWatchList from "./services/RemoveFromToWatchList.jsx";
 import { BackendContext } from "../context/UserSyncHandler.jsx";
+import { SignedIn, SignIn } from "@clerk/clerk-react";
 
 const MovieCard = ({ movie }) => {
   const { handleToWatchClick, checkToWatchList, toWatchList } =
@@ -32,16 +33,17 @@ const MovieCard = ({ movie }) => {
             }}
           />
         </Link>
-
-        {!isInToWatchList ? (
-          <div className="overlay" onClick={() => handleToWatchClick(movie)}>
-            <AddToWatchList />
-          </div>
-        ) : (
-          <div className="overlay" onClick={() => handleToWatchClick(movie)}>
-            <RemoveFromWatchList />
-          </div>
-        )}
+        <SignedIn>
+          {!isInToWatchList ? (
+            <div className="overlay" onClick={() => handleToWatchClick(movie)}>
+              <AddToWatchList />
+            </div>
+          ) : (
+            <div className="overlay" onClick={() => handleToWatchClick(movie)}>
+              <RemoveFromWatchList />
+            </div>
+          )}
+        </SignedIn>
       </div>
 
       <Link to={`/selection/movie/detail/${movie.id}`} className="movie-title">
