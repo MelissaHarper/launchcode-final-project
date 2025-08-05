@@ -111,11 +111,13 @@ const Item = ({ option }) => {
     >
       {assignedList.includes(option) && <FiCheck />}
 
-      <img
-        className="w-6 h-6 "
-        src={`${tmdbImgBaseUrl}${option.imgUrl}`}
-        alt={`${option.name} image`}
-      />
+      {option.imgUrl && (
+        <img
+          className="w-6 h-6 "
+          src={`${tmdbImgBaseUrl}${option.imgUrl}`}
+          alt={`${option.name} image`}
+        />
+      )}
       <span>{option.name}</span>
     </li>
   );
