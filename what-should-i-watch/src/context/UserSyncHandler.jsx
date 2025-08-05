@@ -5,15 +5,14 @@ import axios from "axios";
 export const BackendContext = createContext();
 
 export const BackendContextProvider = ({ children }) => {
+  const [userLoading, setUserLoading] = useState(true);
   const [toWatchList, setToWatchList] = useState([]);
-
+  const [synced, setSynced] = useState(false);
   const { isLoaded, isSignedIn, getToken } = useAuth();
   const { user } = useUser();
   const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 
   const UserSyncHandler = () => {
-    const [synced, setSynced] = useState(false);
-
     useEffect(() => {
       const saveUser = async () => {
         if (!isLoaded || !isSignedIn || synced) {
@@ -41,8 +40,8 @@ export const BackendContextProvider = ({ children }) => {
           );
         }
       };
-      saveUser();
-    }, [synced]);
+      saveUser(), setUserLoading(false);
+    }, []);
     return null;
   };
 
@@ -50,11 +49,17 @@ export const BackendContextProvider = ({ children }) => {
     setToWatchList(list);
   };
 
-  const fetchWatchListFromBackend = useCallback(async () => {
-    // useCallback to avoid infinite rerendering
+  //   if (isLoaded && isSignedIn) {
+  //     fetchWatchListFromBackend();
+  //   }
+  //
 
-    if (!isLoaded || !isSignedIn) {
-      return console.error("User not signed in");
+  const fetchWatchListFromBackend = useCallback(async () => {
+    if (!isLoaded || !isSignedIn || !user) {
+      console.log(
+        "⏳ Waiting for Clerk user to load before fetching watchlist"
+      );
+      return;
     }
     try {
       const token = await getToken({ template: "pickQuick" });
@@ -65,22 +70,24 @@ export const BackendContextProvider = ({ children }) => {
         photoUrl: user.imageUrl,
         createdAt: user.createdAt,
       };
-      const res = await axios.get(
-        `${backendBaseUrl}/towatch/${user.id}`,
-        userData,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await axios.get(`${backendBaseUrl}/towatch/${userData.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       populateToWatchList(res.data.movies);
-      console.log("Watchlist fetched from backend:", res.data);
+      console.log("✅ Watchlist fetched from backend:", res.data);
     } catch (error) {
       console.error(
-        "Error fetching watchlist:",
+        "❌ Error fetching watchlist:",
         error.response?.data || error.message
       );
     }
-  }, [isLoaded, isSignedIn, getToken, user, backendBaseUrl]);
+  }, [isLoaded, isSignedIn, user, getToken, backendBaseUrl]);
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn && user) {
+      fetchWatchListFromBackend();
+    }
+  }, [isLoaded, isSignedIn, user, fetchWatchListFromBackend]);
 
   const addMovieToWatchList = async (movie) => {
     try {
@@ -110,23 +117,11 @@ export const BackendContextProvider = ({ children }) => {
   const removeMovieFromWatchList = async (movie) => {
     try {
       const token = await getToken({ template: "pickQuick" });
-
-      const movieData = {
-        id: movie.id ? movie.id : null,
-        originalTitle: movie.original_title ? movie.original_title : null,
-        posterPath: movie.poster_path ? movie.poster_path : null,
-        title: movie.title ? movie.title : null,
-        originalName: movie.original_name ? movie.original_name : null,
-      };
-
       await axios.delete(
         `${backendBaseUrl}/towatch/${user.id}/remove/${movie.id}`,
-        movieData,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+          headers: { Authorization: `Bearer ${token}` },
+          "Content-Type": "application/json",
         }
       );
       await fetchWatchListFromBackend();
