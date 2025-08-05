@@ -1,14 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import "../styles/NavBar-Footer.css";
 import tmdbLogo from "../assets/images/tmdb-logo.svg";
+import "../styles/NavBar-Footer.css";
 
 const Footer = () => {
-  const navigate = useNavigate();
-
-  const handleRedirect = (event) => {
-    event.preventDefault();
-    navigate(`/recommendations`);
-  };
   return (
     <footer>
       <div className="tmdb-attribution">
@@ -23,9 +16,6 @@ const Footer = () => {
         </p>
       </div>
 
-      <button className="reusable-button" onClick={handleRedirect}>
-        Surprise Me!
-      </button>
       <div className="box-travel"></div>
     </footer>
   );
