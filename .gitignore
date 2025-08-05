@@ -93,3 +93,5 @@ unit1-final-project.code-workspace
 >>>>>>> 89a25e95539bc3ce59659f8339849e4c745abf19
 
 
+backend/src/main/resources/app.env
+backend/src/test/java/com/harper/launchcode_backend_final_project/LaunchcodeBackendFinalProjectApplicationTests.java
