@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getDetail, getCredits, getTrailers } from "./services/call-functions";
-import { options } from "./services/call-headers";
+import { getDetail, getCredits, getTrailers } from "../services/call-functions";
+import { options } from "../services/call-headers";
 import SelectionDescription from "./SelectionDescriptionCard";
 import SelectionCredits from "./SelectionsCreditsCard";
 import SelectionTrailers from "./SelectionTrailersCard";
-import "../styles/Selection.css";
+import "../../styles/Selection.css";
 
 const Selection = () => {
   const { type, id } = useParams();

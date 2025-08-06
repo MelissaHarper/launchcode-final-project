@@ -1,5 +1,5 @@
-import Dummy from "../assets/images/logo.png";
-import "../styles/Selection.css";
+import Dummy from "../../assets/images/logo.png";
+import "../../styles/Selection.css";
 
 const DetailDescription = ({ movie }) => {
   const releaseDate = movie

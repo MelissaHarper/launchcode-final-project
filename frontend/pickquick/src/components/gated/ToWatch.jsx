@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react";
 import { useUser } from "@clerk/clerk-react";
-import MovieCard from "../MovieCard.jsx";
+import MovieCard from "../movie-components/MovieCard.jsx";
 import { BackendContext } from "../../context/UserSyncHandler";
 
 function ToWatch() {

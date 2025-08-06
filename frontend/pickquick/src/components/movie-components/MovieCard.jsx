@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import Dummy from "../assets/images/logo.png";
+import Dummy from "../../assets/images/logo.png";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
-import "../styles/recommend-movieCard.css";
-import AddToWatchList from "./services/AddToWatchList.jsx";
-import RemoveFromWatchList from "./services/RemoveFromToWatchList.jsx";
-import { BackendContext } from "../context/UserSyncHandler.jsx";
+import "../../styles/recommend-movieCard.css";
+import AddToWatchList from "../services/AddToWatchList.jsx";
+import RemoveFromWatchList from "../services/RemoveFromToWatchList.jsx";
+import { BackendContext } from "../../context/UserSyncHandler.jsx";
 import { SignedIn } from "@clerk/clerk-react";
 
 const MovieCard = ({ movie }) => {

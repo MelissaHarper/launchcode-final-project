@@ -1,6 +1,6 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import DummyUser from "../assets/images/logo.png";
-import "../styles/Selection.css";
+import DummyUser from "../../assets/images/logo.png";
+import "../../styles/Selection.css";
 
 const DetailCredits = ({ credits }) => {
   return (
