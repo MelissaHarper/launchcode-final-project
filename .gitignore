@@ -31,7 +31,9 @@ HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
-!**/src/test/**/target/
+!**/src/test/**
+backend/src/test/java/com/harper/launchcode_backend_final_project/LaunchcodeBackendFinalProjectApplicationTests.java
+
 
 ### STS ###
 .apt_generated
@@ -57,6 +59,7 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+app.env
 
 ### VS Code ###
 .vscode/
@@ -95,4 +98,31 @@ unit1-final-project.code-workspace
 
 backend/src/main/resources/app.env
 backend/src/test/java/com/harper/launchcode_backend_final_project/LaunchcodeBackendFinalProjectApplicationTests.java
+.env
+### Frontend ###
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+
+
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 .env
