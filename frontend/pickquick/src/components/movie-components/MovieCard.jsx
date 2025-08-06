@@ -54,15 +54,17 @@ const MovieCard = ({ movie }) => {
             </div>
           )}
         </SignedIn>
-        <div
-          className="overlay"
-          onClick={(e) => {
-            e.preventDefault(), handleToWatchClick(movie);
-          }}
-        >
-          <p>Sign in to add this movie to your watchlist</p>
-        </div>
-        <SignedOut></SignedOut>
+
+        <SignedOut>
+          <div
+            className="overlay"
+            onClick={(e) => {
+              e.preventDefault(), handleToWatchClick(movie);
+            }}
+          >
+            <p>Sign in to add this movie to your watchlist</p>
+          </div>
+        </SignedOut>
       </div>
 
       <Link to={`/selection/movie/detail/${movie.id}`} className="movie-title">
