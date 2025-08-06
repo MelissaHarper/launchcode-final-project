@@ -22,7 +22,7 @@ function ToWatch() {
   }
 
   return (
-    <div className="to-watch-list">
+    <div className="movie-grid">
       {toWatchList.map((movie) => (
         <MovieCard key={movie.id} movie={movie} />
       ))}
