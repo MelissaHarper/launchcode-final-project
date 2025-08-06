@@ -16,7 +16,8 @@ const FilterDropdown = ({
   const FilterDropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  useClickOutside(FilterDropdownRef, () => {
+  useClickOutside(FilterDropdownRef, (e) => {
+    e.preventDefault();
     setIsDropdownOpen(false);
   });
 
@@ -43,7 +44,10 @@ const Button = () => {
   return (
     <button
       className="  px-4 py-2 flex items-center justify-between w-full rounded border border-[#828FA340] hover:border-primary cursor-pointer relative text-[#605e80]"
-      onClick={() => setIsDropdownOpen(true)}
+      onClick={(e) => {
+        e.preventDefault();
+        setIsDropdownOpen(true);
+      }}
     >
       <span className="block">
         <FiChevronDown color="#635FC7" size={24} />
@@ -80,7 +84,8 @@ const ListContainer = () => {
 const Item = ({ option }) => {
   const { assignedList, setAssignedList } = useContext(FilterContext);
 
-  function handleAssign(option) {
+  function handleAssign(option, e) {
+    e.preventDefault();
     setAssignedList((prevList) => {
       if (prevList.includes(option)) {
         const updatedList = prevList.filter((item) => item !== option);
@@ -95,7 +100,7 @@ const Item = ({ option }) => {
     <li
       key={option.id}
       className={`flex items-center gap-2 p-4 hover:bg-[#2b2c37] rounded transition-all duration-200 `}
-      onClick={() => handleAssign(option)}
+      onClick={(e) => handleAssign(option, e)}
     >
       {assignedList.includes(option) && <FiCheck />}
 
@@ -115,7 +120,8 @@ const AssignedList = () => {
   const { assignedList, setAssignedList, selectionIdentifier } =
     useContext(FilterContext);
 
-  function handleRemove(id) {
+  function handleRemove(id, e) {
+    e.preventDefault();
     setAssignedList((assignedList) =>
       assignedList.filter((option) => option.id !== id)
     );
@@ -136,7 +142,7 @@ const AssignedList = () => {
           <div
             key={option.id}
             className="flex items-center gap-1 w-[47.5%] p-2 hover:bg-[#20212c] rounded transition-all duration-200"
-            onClick={() => handleRemove(option.id)}
+            onClick={(e) => handleRemove(option.id, e)}
           >
             {option.imgUrl && (
               <img
@@ -163,6 +169,7 @@ const Close = () => {
     <div
       className="absolute top-0 right-0 flex items-center justify-center -translate-y-full gap-2 bg-[#C0392B] px-2 py-1 rounded-t"
       onClick={(e) => {
+        e.preventDefault();
         e.stopPropagation();
         setIsDropdownOpen(false);
       }}
