@@ -5,29 +5,31 @@ import { getRandomNumberBelow10 } from "./utils";
 const BASE_URL = import.meta.env.VITE_BASE_TMDB_API_URL;
 
 export async function getWithFilters(type, genreId, providerId, payload) {
-  try {
-    const page = getRandomNumberBelow10();
-    const response = await api().get(
-      `/discover/${type}`,
-      {
-        params: {
-          include_adult: false,
-          sort_by: "popularity.desc",
-          page: page,
-          watch_region: "US",
-          with_genres: genreId.join(","),
-          with_watch_providers: providerId.join(","),
-          with_watch_monetization_types: "flatrate,free,ads,rent,buy",
+  let results = [];
+  while (results.length < 1) {
+    try {
+      const page = getRandomNumberBelow10();
+      const response = await api().get(
+        `/discover/${type}`,
+        {
+          params: {
+            include_adult: false,
+            sort_by: "popularity.desc",
+            page: page,
+            watch_region: "US",
+            with_genres: genreId.join("%2C%20"),
+            with_watch_providers: providerId.join("%2C%20"),
+            with_watch_monetization_types: "flatrate||free||ads||rent||buy",
+          },
         },
-      },
-      { payload }
-    );
-
-    return response.data.results;
-  } catch (error) {
-    console.error("Error fetching movies:", error);
-    return [];
+        { payload }
+      );
+      results = response.data.results;
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
   }
+  return results;
 }
 
 export async function getGenres(payload) {
