@@ -50,7 +50,7 @@ const Button = () => {
       }}
     >
       <span className="block">
-        <FiChevronDown color="#635FC7" size={24} />
+        <FiChevronDown color="white" size={24} />
       </span>
 
       <FilterDropdown.List />

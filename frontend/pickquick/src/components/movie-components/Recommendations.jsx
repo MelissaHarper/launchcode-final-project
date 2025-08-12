@@ -3,13 +3,22 @@ import MovieCard from "./MovieCard.jsx";
 import "../../styles/recommend-movieCard.css";
 
 const Recommendations = () => {
-  const { recommendations } = useAppContext();
+  const { recommendations, handleEditSearchClick, handleNewSearchClick } =
+    useAppContext();
 
   return (
-    <div className="movie-grid">
-      {recommendations.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} />
-      ))}
+    <div>
+      <div className="movie-grid">
+        {recommendations.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
+      <div className="edit-search">
+        <button onClick={handleEditSearchClick}>Edit Search</button>
+      </div>
+      <div className="new-search">
+        <button onClick={handleNewSearchClick}>New Search</button>
+      </div>
     </div>
   );
 };

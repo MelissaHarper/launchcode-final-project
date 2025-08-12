@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   gap: 1rem;
 }
@@ -15,10 +15,12 @@
   align-content: center;
   margin: 1rem;
   width: 250px;
+  height: 450px;
   border-radius: 1rem;
   border-width: 1px;
-  border-color: rgb(229, 231, 235);
+  border-color: transparent;
   padding: 1rem;
+  background-color: #272727;
   box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 15px -3px rgb(0, 0, 0, 0.1),
     0 4px 6px -4px rgb(0, 0, 0, 0.1);
 }
@@ -107,6 +109,18 @@ img.poster {
   font-size: 0.75rem;
   gap: 15px;
   padding: 0;
+}
+
+.edit-search {
+  position: absolute;
+  left: 0;
+  margin: 1vw 1vw;
+}
+
+.new-search {
+  position: absolute;
+  right: 0;
+  margin: 1vw 1vw;
 }
 
 a {

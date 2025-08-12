@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getDetail, getCredits, getTrailers } from "../services/call-functions";
 import { options } from "../services/call-headers";
+import { useAppContext } from "../../context/AppContext";
 import SelectionDescription from "./SelectionDescriptionCard";
 import SelectionCredits from "./SelectionsCreditsCard";
 import SelectionTrailers from "./SelectionTrailersCard";
@@ -9,6 +10,7 @@ import "../../styles/Selection.css";
 
 const Selection = () => {
   const { type, id } = useParams();
+  const { handleEditSearchClick, handleNewSearchClick } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
   const [detail, setDetail] = useState(null);
   const [trailers, setTrailers] = useState([]);
@@ -58,6 +60,13 @@ const Selection = () => {
 
   return (
     <>
+      {/* <div className="edit-search">
+        <button onClick={handleEditSearchClick}>Edit Search</button>
+      </div>
+      <div className="new-search">
+        <button onClick={handleNewSearchClick}>New Search</button>
+      </div> */}
+
       {!isLoading && <SelectionDescription movie={detail} />}
 
       <div className="credits-video-container">

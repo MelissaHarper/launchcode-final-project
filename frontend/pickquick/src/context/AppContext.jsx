@@ -1,14 +1,20 @@
 import { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router";
+import { getWithFilters } from "../components/services/call-functions.js";
+import { options } from "../components/services/call-headers.js";
+import { getRandomMovies } from "../components/services/utils.js";
 
 export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
   const [movieList, setMovieList] = useState();
-
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedProviders, setSelectedProviders] = useState([]);
   const [recommendations, setRecommendations] = useState(() => {
     const saved = localStorage.getItem("recommendations");
     return saved ? JSON.parse(saved) : [];
   });
+  const navigate = useNavigate();
 
   const populateMovieList = (list) => {
     setMovieList(list);
@@ -20,6 +26,37 @@ export const AppContextProvider = ({ children }) => {
     localStorage.setItem("recommendations", JSON.stringify(list));
   };
 
+  const handleEditSearchClick = (e) => {
+    e.preventDefault();
+    navigate("/");
+  };
+
+  const handleNewSearchClick = (e) => {
+    e.preventDefault();
+    setSelectedGenres([]);
+    setSelectedProviders([]);
+    navigate("/");
+  };
+
+  const handleFilterSubmit = async (e) => {
+    e.preventDefault();
+    const genreIds = selectedGenres.map((genre) => genre.id);
+
+    const providerIds = selectedProviders.map((provider) => provider.id);
+
+    const movies = await getWithFilters(
+      "movie",
+      genreIds,
+      providerIds,
+      options
+    );
+    populateMovieList(movies);
+
+    const randomFive = getRandomMovies(movies, 5);
+    populateRecommendations(randomFive);
+    navigate(`/recommendations`);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -27,6 +64,13 @@ export const AppContextProvider = ({ children }) => {
         populateMovieList,
         recommendations,
         populateRecommendations,
+        selectedGenres,
+        setSelectedGenres,
+        selectedProviders,
+        setSelectedProviders,
+        handleEditSearchClick,
+        handleNewSearchClick,
+        handleFilterSubmit,
       }}
     >
       {children}
