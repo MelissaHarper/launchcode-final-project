@@ -21,7 +21,10 @@ const MovieCard = ({ movie }) => {
   return (
     <div className="movie-card">
       <div className="poster-container">
-        <Link to={`/selection/movie/detail/${movie.id}`}>
+        <Link
+          className="link-to-selection"
+          to={`/selection/movie/detail/${movie.id}`}
+        >
           <img
             className="poster"
             src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}

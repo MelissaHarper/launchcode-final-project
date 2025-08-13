@@ -5,7 +5,7 @@ const AddToWatchList = () => {
     <>
       <span className="overlay-message">Add to Watch List </span>
       <svg
-        className="heart"
+        className="overlay-icon"
         viewBox="0 0 16 16"
         xmlns="http://www.w3.org/2000/svg"
       >
