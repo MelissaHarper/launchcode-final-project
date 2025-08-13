@@ -3,8 +3,13 @@ import MovieCard from "./MovieCard.jsx";
 import "../../styles/recommend-movieCard.css";
 
 const Recommendations = () => {
-  const { recommendations, handleEditSearchClick, handleNewSearchClick } =
-    useAppContext();
+  const {
+    recommendations,
+    handleEditSearch,
+    handleNewSearch,
+    handleFilterSubmit,
+  } = useAppContext();
+  console.log("Recommend page rendered");
 
   return (
     <div>
@@ -13,11 +18,16 @@ const Recommendations = () => {
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
-      <div className="edit-search">
-        <button onClick={handleEditSearchClick}>Edit Search</button>
-      </div>
-      <div className="new-search">
-        <button onClick={handleNewSearchClick}>New Search</button>
+      <div className="search-nav-container">
+        <div className="nav-button">
+          <button onClick={handleEditSearch}>Edit Search</button>
+        </div>
+        <div className="nav-button">
+          <button onClick={handleFilterSubmit}>New Recommendations</button>
+        </div>
+        <div className="nav-button">
+          <button onClick={handleNewSearch}>New Search</button>
+        </div>
       </div>
     </div>
   );

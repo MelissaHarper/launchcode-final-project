@@ -13,7 +13,7 @@ const DetailDescription = ({ movie }) => {
     : "";
 
   const onErrorImage = (e) => (e.target.src = Dummy);
-  const { handleEditSearchClick, handleNewSearchClick } = useAppContext();
+  const { handleNewSearch } = useAppContext();
 
   return (
     <>
@@ -49,7 +49,7 @@ const DetailDescription = ({ movie }) => {
               <Link to="/">
                 <div className="search-navigation">Edit Search</div>
               </Link>
-              <Link onClick={handleNewSearchClick}>
+              <Link onClick={handleNewSearch}>
                 <div className="search-navigation">New Search</div>
               </Link>
               <Link to="/recommendations">

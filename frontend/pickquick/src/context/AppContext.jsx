@@ -26,12 +26,12 @@ export const AppContextProvider = ({ children }) => {
     localStorage.setItem("recommendations", JSON.stringify(list));
   };
 
-  const handleEditSearchClick = (e) => {
+  const handleEditSearch = (e) => {
     e.preventDefault();
     navigate("/");
   };
 
-  const handleNewSearchClick = (e) => {
+  const handleNewSearch = (e) => {
     e.preventDefault();
     setSelectedGenres([]);
     setSelectedProviders([]);
@@ -68,8 +68,8 @@ export const AppContextProvider = ({ children }) => {
         setSelectedGenres,
         selectedProviders,
         setSelectedProviders,
-        handleEditSearchClick,
-        handleNewSearchClick,
+        handleEditSearch,
+        handleNewSearch,
         handleFilterSubmit,
       }}
     >
