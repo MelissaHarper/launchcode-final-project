@@ -5,7 +5,7 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
-import logo from "../assets/images/PickQuickLogoSmall.png";
+import logo from "../assets/images/PickQuickLogo.png";
 import "../styles/NavBar-Footer.css";
 
 function NavBar() {

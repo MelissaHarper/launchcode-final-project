@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react";
 import { useUser } from "@clerk/clerk-react";
-import MovieCard from "../MovieCard.jsx";
+import MovieCard from "../movie-components/MovieCard.jsx";
 import { BackendContext } from "../../context/UserSyncHandler";
 
 function ToWatch() {
@@ -22,7 +22,7 @@ function ToWatch() {
   }
 
   return (
-    <div className="to-watch-list">
+    <div className="movie-grid">
       {toWatchList.map((movie) => (
         <MovieCard key={movie.id} movie={movie} />
       ))}

@@ -7,31 +7,27 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist-ssr
-*.local
-
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+node_modules
+dist-ssr
+*.local
 
-# Others
-/prep-work
-unit1-final-project.code-workspace
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
-<<<<<<< HEAD
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+### VS Code ###
+.vscode/
+.vscode/*
+!.vscode/extensions.json
 
 ### STS ###
 .apt_generated
@@ -41,12 +37,6 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
 
 ### NetBeans ###
 /nbproject/private/
@@ -58,41 +48,17 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
-
-backend-backup/
-=======
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
 # Others
 /prep-work
 unit1-final-project.code-workspace
->>>>>>> 89a25e95539bc3ce59659f8339849e4c745abf19
-
-
-backend/src/main/resources/app.env
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**
 backend/src/test/java/com/harper/launchcode_backend_final_project/LaunchcodeBackendFinalProjectApplicationTests.java
+what-should-i-watch
+backend-backup/
+backend/src/main/resources/app.env
+app.env
 .env

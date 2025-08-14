@@ -1,0 +1,259 @@
+.relative {
+  position: relative;
+}
+
+.backdrop {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 296px;
+  object-fit: cover;
+}
+
+.backdrop-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(36, 36, 36, 1) 1%,
+    rgba(36, 36, 36, 0.9) 20%,
+    rgba(36, 36, 36, 0.2) 50%,
+    rgba(36, 36, 36, 0.05) 70%
+  );
+}
+
+.selection-detail-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  margin-top: -7rem;
+  flex-direction: column;
+  row-gap: 2rem;
+  z-index: 10;
+}
+
+.selection-poster-container {
+  position: relative;
+}
+
+img.selection-poster {
+  margin-left: 0.5rem;
+  border-radius: 0.75rem;
+  width: 190px;
+  height: 290px;
+}
+
+img.poster-blur {
+  position: absolute;
+  top: 0.5rem;
+  border-radius: 0.5rem;
+  opacity: 0.3;
+  filter: blur(16px);
+  width: 160px;
+  height: 240px;
+  z-index: -10;
+}
+
+.selection-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4rem;
+}
+
+.title {
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  margin-left: 0.5rem;
+}
+
+.year-language {
+  display: flex;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  margin-left: calc(0.5rem * calc(1 - 0));
+}
+
+.genre-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-left: 0.45rem;
+  overflow-x: auto;
+}
+
+.genre {
+  white-space: nowrap;
+  border-radius: 0.25rem;
+  background-color: rgba(10, 10, 10, 0.5);
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+.selection-description {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  text-align: left;
+  margin-left: 0.5rem;
+}
+
+.credits-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: 2rem;
+  gap: 1rem;
+}
+
+.credits-card {
+  display: flex;
+  margin: 0.25rem;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  max-width: 120px;
+}
+
+.credits-placeholder {
+  border-radius: 9999px;
+  width: 5rem;
+  height: 5rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  max-width: 80px;
+  max-height: 80px;
+}
+
+.credits-image {
+  object-fit: cover;
+  border-radius: 9999px;
+  width: 5rem;
+  height: 5rem;
+  background-position: center;
+  max-width: 80px;
+  max-height: 80px;
+}
+
+.credits-name {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+
+.credits-character {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(165, 162, 162);
+}
+
+.trailer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-left: 1.5rem;
+}
+
+.trailer-window {
+  width: 500px;
+  height: 300px;
+  border-radius: 0.5rem;
+}
+
+.trailer {
+  border-radius: 0.5rem;
+  width: 360px;
+  height: 200px;
+}
+
+@media (min-width: 768px) {
+  .credits-card {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+  .backdrop {
+    height: auto;
+  }
+  .selection-detail-container {
+    flex-direction: row;
+    margin-top: -13rem;
+    column-gap: 2.5rem;
+    padding-right: 0.5rem;
+    max-width: 768px;
+  }
+  .selection-poster {
+    width: 170px;
+    height: 270px;
+  }
+  .poster-blur {
+    width: 170px;
+    height: 270px;
+  }
+  .selection-info {
+    display: flex;
+    flex-direction: column;
+    margin: 2, 2.5;
+  }
+  .title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+  .trailer {
+    width: 450px;
+    height: 250px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .selection-detail-container {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    max-width: 1024px;
+  }
+  .selection-poster {
+    width: 190px;
+    height: 290px;
+  }
+  .poster-blur {
+    width: 190px;
+    height: 290px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .selection-detail-container {
+    padding-right: 5rem;
+    padding-left: 5rem;
+    max-width: 1280px;
+  }
+  .credits-card {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+  .selection-poster {
+    min-width: 220px;
+    min-height: 330px;
+  }
+  .poster-blur {
+    width: 220px;
+    height: 330px;
+  }
+  .title {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  .trailer {
+    width: 500px;
+    height: 300px;
+  }
+}

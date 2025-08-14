@@ -1,6 +1,6 @@
 import { options } from "./call-headers.js";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const useClickOutside = (ref, handler) => {
   useEffect(() => {
@@ -21,6 +21,45 @@ export const useClickOutside = (ref, handler) => {
     };
   }, [ref, handler]);
 };
+
+export function useFitText(maxFontSize = 80) {
+  const ref = useRef();
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const element = ref.current;
+    const parent = element.parentElement;
+
+    const fitText = () => {
+      if (!element || !parent) return;
+
+      const parentWidth = parent.offsetWidth;
+      element.style.fontSize = `${maxFontSize}px`; // reset to max
+      let fontSize = maxFontSize;
+
+      // Shrink text until it fits
+      while (element.scrollWidth > parentWidth && fontSize > 0) {
+        fontSize -= 1;
+        element.style.fontSize = `${fontSize}px`;
+      }
+    };
+
+    // Observe both parent and text
+    const observer = new ResizeObserver(fitText);
+    observer.observe(parent);
+    observer.observe(element);
+
+    // Run immediately on mount
+    fitText();
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [maxFontSize]);
+
+  return ref;
+}
 
 export function getRandomMovies(list, count) {
   const shuffled = [...list].sort(() => 0.5 - Math.random());

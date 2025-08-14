@@ -38,6 +38,7 @@ export const BackendContextProvider = ({ children }) => {
         }
       };
       saveUser(), setUserLoading(false);
+      console.log("User synced with backed");
     }, []);
     return null;
   };

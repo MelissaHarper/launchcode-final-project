@@ -6,13 +6,14 @@ import "../styles/recommend-movieCard.css";
 import AddToWatchList from "./services/AddToWatchList.jsx";
 import RemoveFromWatchList from "./services/RemoveFromToWatchList.jsx";
 import { BackendContext } from "../context/UserSyncHandler.jsx";
-import { SignedIn } from "@clerk/clerk-react";
+import { SignedIn, SignIn } from "@clerk/clerk-react";
 
 const MovieCard = ({ movie }) => {
   const { handleToWatchClick, checkToWatchList, toWatchList } =
     useContext(BackendContext);
   const [isInToWatchList, setIsInToWatchList] = useState(false);
 
+  // Check if movie is in watch list if movie or watch list changes
   useEffect(() => {
     movie && setIsInToWatchList(checkToWatchList(movie));
     console.log(`Movie is in toWatchList. ${isInToWatchList}`);
