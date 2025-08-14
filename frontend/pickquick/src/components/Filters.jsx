@@ -16,8 +16,7 @@ const FilterDropdown = ({
   const FilterDropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  useClickOutside(FilterDropdownRef, (e) => {
-    e.preventDefault();
+  useClickOutside(FilterDropdownRef, () => {
     setIsDropdownOpen(false);
   });
 

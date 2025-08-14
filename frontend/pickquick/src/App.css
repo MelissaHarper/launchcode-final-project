@@ -3,9 +3,25 @@
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  margin: 0;
-  padding: 8px;
+  margin-bottom: 1vh;
   min-width: 1vw;
+}
+
+.hero-div {
+  display: flexbox;
+  flex-flow: row, nowrap;
+  justify-content: flex-end;
+  align-content: flex-end;
+  max-height: 655px;
+  overflow: hidden;
+}
+
+img.hero {
+  position: relative;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  max-height: 655px;
 }
 
 .about {
@@ -66,6 +82,10 @@ textarea.input {
   .title {
     font-size: 1.5rem;
     line-height: 2rem;
+  }
+  img.hero {
+    min-width: 100%;
+    object-fit: none;
   }
 }
 

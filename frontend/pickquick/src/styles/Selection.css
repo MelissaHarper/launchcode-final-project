@@ -18,16 +18,15 @@
   height: 100%;
   background: linear-gradient(
     0deg,
-    rgba(36, 36, 36, 1) 1%,
-    rgba(36, 36, 36, 0.9) 20%,
-    rgba(36, 36, 36, 0.2) 50%,
-    rgba(36, 36, 36, 0.05) 70%
+    rgba(16, 20, 22, 1) 1%,
+    rgba(16, 20, 22, 0.9) 20%,
+    rgba(16, 20, 22, 0.2) 50%,
+    rgba(16, 20, 22, 0.05) 70%
   );
 }
 
 .selection-detail-container {
   display: flex;
-  /* position: relative; */
   width: 100%;
   margin-top: -7rem;
   flex-direction: column;
@@ -116,13 +115,14 @@ img.poster-blur {
   line-height: 1.25rem;
   font-weight: 500;
   margin-left: 0.5rem;
+  padding-left: 0.75rem;
 }
 
 .genre-container {
   display: flex;
   flex-direction: row;
   gap: 5px;
-  margin-left: 0.45rem;
+  margin: 0.5rem;
   overflow-x: auto;
 }
 
@@ -146,6 +146,7 @@ img.poster-blur {
   font-weight: 400;
   text-align: left;
   margin-left: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .credits-container {
