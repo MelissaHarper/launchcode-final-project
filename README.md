@@ -60,6 +60,8 @@
 
 ## Installation
 
+You'll need an [API key from TMDb](https://developer.themoviedb.org/docs/getting-started) and a [Clerk account](https://clerk.com/) for full functionality.
+
 To install and run the PickQuick application locally, follow these steps:
 
 ---
