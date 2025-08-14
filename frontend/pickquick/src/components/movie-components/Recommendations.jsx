@@ -1,24 +1,30 @@
 import { useAppContext } from "../../context/AppContext.jsx";
+import { useFitText } from "../services/utils.js";
 import MovieCard from "./MovieCard.jsx";
 import "../../styles/recommend-movieCard.css";
 
 const Recommendations = () => {
+  const textRef = useFitText(24); // Max font size
   const {
     recommendations,
     handleEditSearch,
     handleNewSearch,
     handleFilterSubmit,
+    isTouchScreen,
   } = useAppContext();
-  console.log("Recommend page rendered");
 
   return (
     <div>
       <div className="movie-grid">
         {recommendations.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            isTouchScreen={isTouchScreen}
+          />
         ))}
       </div>
-      <div className="search-nav-container">
+      <div className="search-nav-container" ref={textRef}>
         <div className="nav-button">
           <button onClick={handleEditSearch}>Edit Search</button>
         </div>
