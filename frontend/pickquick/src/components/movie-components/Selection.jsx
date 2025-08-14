@@ -64,9 +64,11 @@ const Selection = () => {
         <div>
           <p className="title">Cast</p>
           {<SelectionCredits credits={displayedCredits} />}
-          <button className="reusable-button" onClick={handleLoadMore}>
-            Load More Cast
-          </button>
+          {displayedCredits.length < allCredits.length && (
+            <button className="reusable-button" onClick={handleLoadMore}>
+              Load More Cast
+            </button>
+          )}
         </div>
 
         {trailers.length > 0 && (

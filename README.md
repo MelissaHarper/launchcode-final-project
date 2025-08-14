@@ -1,7 +1,7 @@
 # PickQuick
 
 ## Project Overview
-![PickQuick Logo](/src/assets/images/PickQuickLogo.png)
+![PickQuick Logo](frontend/pickquick/src/assets/images/PickQuickLogo.png)
 **PickQuick** is a movie recommendation platform that lets users quickly discover new content tailored to their preferences. Users can filter by genres and streaming providers, receive random curated picks from a larger pool, and save movies to their personal "To Watch" list. The goal is to reduce decision fatigue by giving fast, relevant, and fun recommendations without endlessly scrolling through streaming platforms. 
 
 ---
@@ -59,6 +59,8 @@
 <br>
 
 ## Installation
+
+You'll need an [API key from TMDb](https://developer.themoviedb.org/docs/getting-started) and a [Clerk account](https://clerk.com/) for full functionality.
 
 To install and run the PickQuick application locally, follow these steps:
 

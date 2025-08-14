@@ -18,7 +18,6 @@ function App() {
   return (
     <main>
       <div className="App">
-        <UserSyncHandler />
         <NavBar />
         <div className="body-content">
           <Routes>

@@ -16,8 +16,7 @@ const FilterDropdown = ({
   const FilterDropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  useClickOutside(FilterDropdownRef, (e) => {
-    e.preventDefault();
+  useClickOutside(FilterDropdownRef, () => {
     setIsDropdownOpen(false);
   });
 
@@ -50,7 +49,7 @@ const Button = () => {
       }}
     >
       <span className="block">
-        <FiChevronDown color="#635FC7" size={24} />
+        <FiChevronDown color="white" size={24} />
       </span>
 
       <FilterDropdown.List />

@@ -27,23 +27,49 @@
 
 .selection-detail-container {
   display: flex;
-  position: relative;
   width: 100%;
   margin-top: -7rem;
   flex-direction: column;
-  row-gap: 2rem;
   z-index: 10;
 }
 
 .selection-poster-container {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 190px;
+  margin-left: 0.5rem;
+}
+
+.search-navigation-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 190px;
+  margin-top: 0.5vw;
+  gap: 5px;
+  z-index: 1;
+}
+
+.search-navigation {
+  white-space: nowrap;
+  border-radius: 0.25rem;
+  background-color: rgba(10, 10, 10, 0.5);
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
 }
 
 img.selection-poster {
-  margin-left: 0.5rem;
   border-radius: 0.75rem;
   width: 190px;
   height: 290px;
+  z-index: 1;
 }
 
 img.poster-blur {
@@ -52,21 +78,35 @@ img.poster-blur {
   border-radius: 0.5rem;
   opacity: 0.3;
   filter: blur(16px);
-  width: 160px;
-  height: 240px;
-  z-index: -10;
+  width: 190px;
+  height: 290px;
 }
 
-.selection-info {
+.selection-description-container {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   margin-top: 4rem;
+  text-align: left;
+  padding-bottom: 3.5rem;
+}
+
+.selection-movie-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  margin: 0.5rem;
+  text-align: left;
 }
 
 .title {
-  font-weight: 700;
+  /* font-size: 1.75rem; */
+  font-weight: 500;
   letter-spacing: 0.025em;
-  margin-left: 0.5rem;
+  margin: 3vw;
+  text-align: left;
+  background-color: #272727;
+  border-radius: 0.5rem;
 }
 
 .year-language {
@@ -74,14 +114,15 @@ img.poster-blur {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 500;
-  margin-left: calc(0.5rem * calc(1 - 0));
+  margin-left: 0.5rem;
+  padding-left: 0.75rem;
 }
 
 .genre-container {
   display: flex;
   flex-direction: row;
   gap: 5px;
-  margin-left: 0.45rem;
+  margin: 0.5rem;
   overflow-x: auto;
 }
 
@@ -105,6 +146,7 @@ img.poster-blur {
   font-weight: 400;
   text-align: left;
   margin-left: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .credits-container {
@@ -112,7 +154,7 @@ img.poster-blur {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  margin-left: 2rem;
+  margin: 2rem;
   gap: 1rem;
 }
 

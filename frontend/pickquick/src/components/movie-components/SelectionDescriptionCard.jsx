@@ -1,5 +1,7 @@
+import { useAppContext } from "../../context/AppContext";
 import Dummy from "../../assets/images/logo.png";
 import "../../styles/Selection.css";
+import { Link } from "react-router";
 
 const DetailDescription = ({ movie }) => {
   const releaseDate = movie
@@ -11,6 +13,7 @@ const DetailDescription = ({ movie }) => {
     : "";
 
   const onErrorImage = (e) => (e.target.src = Dummy);
+  const { handleNewSearch } = useAppContext();
 
   return (
     <>
@@ -42,13 +45,26 @@ const DetailDescription = ({ movie }) => {
               className="poster-blur"
               onError={onErrorImage}
             />
+            <div className="search-navigation-container">
+              <Link to="/">
+                <div className="search-navigation">Edit Search</div>
+              </Link>
+              <Link onClick={handleNewSearch}>
+                <div className="search-navigation">New Search</div>
+              </Link>
+              <Link to="/recommendations">
+                <div className="search-navigation">
+                  Return to Recommendations
+                </div>
+              </Link>
+            </div>
           </div>
 
-          <div className="selection-info">
+          <div className="selection-description-container">
             {/* Title */}
-            <h1 className="title">
+            <p className="selection-movie-title">
               {movie.original_name || movie.original_title}
-            </h1>
+            </p>
 
             {/* Release year */}
             {movie.spoken_languages.length > 0 && (

@@ -1,40 +1,19 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getWithFilters } from "./services/call-functions.js";
 import genreData from "../assets/data/tmdbGenres.json";
 import providerData from "../assets/data/watchProvidersIDsNames.json";
-import { options } from "./services/call-headers.js";
 import FilterDropdown from "./Filters.jsx";
-import { sortByRank, getRandomMovies } from "./services/utils.js";
+import { sortByRank } from "./services/utils.js";
 import { useAppContext } from "../context/AppContext.jsx";
 
 function FilterContainer() {
-  const { populateMovieList } = useAppContext();
-  const { populateRecommendations } = useAppContext();
   const genres = genreData;
   const providers = sortByRank(providerData);
-  const [selectedGenres, setSelectedGenres] = useState([]);
-  const [selectedProviders, setSelectedProviders] = useState([]);
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const genreIds = selectedGenres.map((genre) => genre.id);
-
-    const providerIds = selectedProviders.map((provider) => provider.id);
-
-    const movies = await getWithFilters(
-      "movie",
-      genreIds,
-      providerIds,
-      options
-    );
-    populateMovieList(movies);
-
-    const randomFive = getRandomMovies(movies, 5);
-    populateRecommendations(randomFive);
-    navigate(`/recommendations`);
-  };
+  const {
+    selectedGenres,
+    setSelectedGenres,
+    selectedProviders,
+    setSelectedProviders,
+    handleFilterSubmit,
+  } = useAppContext();
 
   return (
     <div className="bg-[#2b2c37] h-[100dvh] text-white flex  p-20 gap-4 items-center flex-col">
@@ -68,7 +47,7 @@ function FilterContainer() {
           <FilterDropdown.AssignedList />
         </FilterDropdown>
       </div>
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleFilterSubmit}>Submit</button>
     </div>
   );
 }
