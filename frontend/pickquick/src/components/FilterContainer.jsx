@@ -16,7 +16,7 @@ function FilterContainer() {
   } = useAppContext();
 
   return (
-    <div className="bg-[#2b2c37] h-[100dvh] text-white flex  p-20 gap-4 items-center flex-col">
+    <div className=" relative h-[100dvh] text-white flex md:flex-row items-start p-20 gap-4 justify-content-start flex-col">
       <div className=" w-[400px] ">
         <p className="text-2xl ">Genres</p>
         <FilterDropdown
@@ -43,11 +43,20 @@ function FilterContainer() {
           selectionIdentifier={"Streaming Providers"}
         >
           <FilterDropdown.Header />
-          <FilterDropdown.Button />
+          <FilterDropdown.Button
+            listStyles={
+              "!-left-5 !-translate-x-full bg-[#605e80]  border text-white"
+            }
+          />
           <FilterDropdown.AssignedList />
         </FilterDropdown>
       </div>
-      <button onClick={handleFilterSubmit}>Submit</button>
+      <button
+        className="md:absolute md:top-28 md:right-10"
+        onClick={handleFilterSubmit}
+      >
+        Submit
+      </button>
     </div>
   );
 }
