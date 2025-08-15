@@ -123,13 +123,13 @@ const AssignedList = () => {
 
   if (assignedList.length === 0)
     return (
-      <p className="mt-4 p-2 shadow-sm bg-[#828fa318] rounded">
+      <p className="mt-4 p-2 shadow-sm bg-[#272727] rounded">
         No options selected.
       </p>
     );
 
   return (
-    <div className="mt-4 p-2 shadow-sm bg-[#828fa318] rounded">
+    <div className="mt-4 p-2 shadow-sm bg-[#272727] rounded">
       <h2 className="px-2 my-3 font-bold">{`Selected ${selectionIdentifier}: `}</h2>
       <div className="flex flex-wrap gap-4 ">
         {assignedList?.map((option) => (

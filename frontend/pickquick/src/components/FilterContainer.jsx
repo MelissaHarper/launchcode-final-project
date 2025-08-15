@@ -16,7 +16,7 @@ function FilterContainer() {
   } = useAppContext();
 
   return (
-    <div className=" relative h-[100dvh] text-white flex md:flex-row items-start p-20 gap-4 justify-content-start flex-col">
+    <div className=" relative h-[100dvh] -top-30 md:-top-20 text-white flex md:flex-row items-start  gap-4 justify-content-start flex-col lg:justify-center">
       <div className=" w-[400px] ">
         <p className="text-2xl ">Genres</p>
         <FilterDropdown
@@ -52,7 +52,7 @@ function FilterContainer() {
         </FilterDropdown>
       </div>
       <button
-        className="md:absolute md:top-28 md:right-10"
+        className="md:absolute md:top-23 md:right-1 lg:top-23 lg:right-10 xl:right-20 2xl:right-66"
         onClick={handleFilterSubmit}
       >
         Submit
