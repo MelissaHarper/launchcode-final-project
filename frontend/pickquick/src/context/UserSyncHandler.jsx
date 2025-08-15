@@ -28,7 +28,7 @@ export const BackendContextProvider = ({ children }) => {
             createdAt: user.createdAt,
           };
 
-          await axios.post(`${backendBaseUrl}/api/users/add`, userData, {
+          await axios.post(`${backendBaseUrl}/users/add`, userData, {
             headers: {
               Authorization: `Bearer ${token}`,
               "ngrok-skip-browser-warning": "1",
@@ -62,15 +62,12 @@ export const BackendContextProvider = ({ children }) => {
         photoUrl: user.imageUrl,
         createdAt: user.createdAt,
       };
-      const res = await axios.get(
-        `${backendBaseUrl}/api/towatch/${userData.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "ngrok-skip-browser-warning": "1",
-          },
-        }
-      );
+      const res = await axios.get(`${backendBaseUrl}/towatch/${userData.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "1",
+        },
+      });
 
       const formatMovies = res.data.movies.map(
         ({ posterPath: poster_path, ...rest }) => ({ poster_path, ...rest })
@@ -98,16 +95,12 @@ export const BackendContextProvider = ({ children }) => {
         originalName: movie.original_name,
       };
 
-      await axios.put(
-        `${backendBaseUrl}/api/towatch/${user.id}/add`,
-        movieData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "ngrok-skip-browser-warning": "1",
-          },
-        }
-      );
+      await axios.put(`${backendBaseUrl}/towatch/${user.id}/add`, movieData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "1",
+        },
+      });
       await fetchWatchListFromBackend();
     } catch (error) {
       console.error(error.response?.data || error.message);
@@ -118,7 +111,7 @@ export const BackendContextProvider = ({ children }) => {
     try {
       const token = await getToken({ template: "pickQuick" });
       await axios.delete(
-        `${backendBaseUrl}/api/towatch/${user.id}/remove/${movie.id}`,
+        `${backendBaseUrl}/towatch/${user.id}/remove/${movie.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
