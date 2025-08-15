@@ -3,6 +3,7 @@ package com.harper.launchcode_backend_final_project.config;
 import com.harper.launchcode_backend_final_project.security.AuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -28,8 +29,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private static final String ISSUER = "https://integral-bison-87.clerk.accounts.dev";
-    private static final String JWKS_URI = ISSUER + "/.well-known/jwks.json";
+
+    private String ISSUER = System.getenv("CLERK_ISSUER");
+
+    private String JWKS_URI = ISSUER + "/.well-known/jwks.json";
+    @Value("${app.allowed-origins}")
+    private String allowedOrigins;
 
     @Autowired
     AuthenticationFilter authenticationFilter;
@@ -58,11 +63,7 @@ public class SecurityConfig {
     }
     private CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
-                "http://localhost:5173",
-                "https://harper-unit1-final-project.netlify.app",
-                "https://integral-bison-87.clerk.accounts.dev",
-                "https://api.clerk.com"
+        config.setAllowedOrigins(List.of(allowedOrigins.split(", ")
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
@@ -93,24 +94,3 @@ public class SecurityConfig {
         return jwtDecoder;
     }
 }
-//    @Autowired
-//    AuthenticationFilter jwtAuthenticationFilter;
-//
-//
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.cors(Customizer.withDefaults())
-//                .csrf(AbstractHttpConfigurer::disable)// Disable CSRF for APIs
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-//                        .requestMatchers("/api/**").permitAll() // all API needs authentication
-//                        .anyRequest().permitAll())
-//                        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//
-//        return httpSecurity.build();
-//    }
-//
-
-//}
