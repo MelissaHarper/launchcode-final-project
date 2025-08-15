@@ -70,15 +70,9 @@ const MovieCard = ({ movie, isTouchScreen }) => {
           </div>
         </SignedOut>
       </div>
-      <div className="movie-title-container">
-        <Link
-          to={`/selection/movie/detail/${movie.id}`}
-          className="movie-title-link"
-        >
-          <div className="movie-title" ref={titleRef}>
-            {movie.title || movie.name}
-          </div>
-        </Link>
+
+      <div className="movie-title" ref={titleRef}>
+        {movie.title || movie.name}
       </div>
     </div>
   );
