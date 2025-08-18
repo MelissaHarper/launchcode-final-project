@@ -58,10 +58,12 @@ const Selection = () => {
 
   return (
     <>
-      {!isLoading && <SelectionDescription movie={detail} />}
+      <div className="section">
+        {!isLoading && <SelectionDescription movie={detail} />}
+      </div>
 
       <div className="credits-video-container">
-        <div>
+        <div className="section">
           <p className="title">Cast</p>
           {<SelectionCredits credits={displayedCredits} />}
           {displayedCredits.length < allCredits.length && (
@@ -72,14 +74,12 @@ const Selection = () => {
         </div>
 
         {trailers.length > 0 && (
-          <div>
+          <div className="section">
             <p className="title">Trailers</p>
             {<SelectionTrailers trailers={trailers} />}
           </div>
         )}
       </div>
-
-      <p> {!detail && "We messed up, click that button again."}</p>
     </>
   );
 };
