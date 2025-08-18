@@ -110,27 +110,6 @@ img.tmdb-logo {
   text-align: left;
 }
 
-.box-travel {
-  background-color: white;
-  position: absolute;
-  bottom: 0;
-  height: 5px;
-  width: 10px;
-  animation: travel 2s infinite;
-}
-
-@keyframes travel {
-  0% {
-    left: 85%;
-  }
-  50% {
-    left: 95%;
-  }
-  100% {
-    left: 85%;
-  }
-}
-
 @media (min-width: 768px) {
   .button-navbar {
     align-self: flex-end;

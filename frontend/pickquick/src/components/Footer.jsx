@@ -19,8 +19,6 @@ const Footer = () => {
       <Link className="footer-link" to="/feedback">
         Feedback
       </Link>
-
-      <div className="box-travel"></div>
     </footer>
   );
 };
