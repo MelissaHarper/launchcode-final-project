@@ -1,5 +1,5 @@
-.relative {
-  position: relative;
+.body-content {
+  gap: 0vh;
 }
 
 .backdrop {
@@ -26,9 +26,10 @@
 }
 
 .selection-detail-container {
+  position: relative;
   display: flex;
   width: 100%;
-  margin-top: -7rem;
+  top: -10rem;
   flex-direction: column;
   z-index: 10;
 }
@@ -85,25 +86,23 @@ img.poster-blur {
 .selection-description-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  margin-top: 4rem;
   text-align: left;
-  padding-bottom: 3.5rem;
 }
 
 .selection-movie-title {
+  align-self: flex-end;
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.025em;
-  margin: 0.5rem;
+  margin: 0.6rem 0.8rem;
   text-align: left;
 }
 
 .title {
-  /* font-size: 1.75rem; */
   font-weight: 500;
   letter-spacing: 0.025em;
   margin: 3vw;
+  padding-left: 1vw;
   text-align: left;
   background-color: #272727;
   border-radius: 0.5rem;
@@ -111,16 +110,18 @@ img.poster-blur {
 
 .year-language {
   display: flex;
+  align-self: flex-end;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 500;
-  margin-left: 0.5rem;
+  margin: 0 1rem;
   padding-left: 0.75rem;
 }
 
 .genre-container {
   display: flex;
   flex-direction: row;
+  align-self: flex-end;
   gap: 5px;
   margin: 0.5rem;
   overflow-x: auto;
@@ -144,8 +145,8 @@ img.poster-blur {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 400;
-  text-align: left;
-  margin-left: 0.5rem;
+  text-align: right;
+  margin-right: 0.5rem;
   margin-top: 0.5rem;
 }
 
@@ -164,7 +165,6 @@ img.poster-blur {
   flex-direction: column;
   align-items: center;
   width: 120px;
-  max-width: 120px;
 }
 
 .credits-placeholder {
@@ -203,7 +203,7 @@ img.poster-blur {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem;
-  margin-left: 1.5rem;
+  margin: 2rem 1.5rem;
 }
 
 .trailer-window {
@@ -228,18 +228,51 @@ img.poster-blur {
   }
   .selection-detail-container {
     flex-direction: row;
-    margin-top: -13rem;
+    margin-top: -13vw;
     column-gap: 2.5rem;
     padding-right: 0.5rem;
     max-width: 768px;
   }
   .selection-poster {
-    width: 170px;
-    height: 270px;
+    width: 190px;
+    height: 290px;
   }
   .poster-blur {
-    width: 170px;
-    height: 270px;
+    width: 190px;
+    height: 290px;
+  }
+  .search-navigation-container {
+    min-width: 190px;
+  }
+  .selection-description-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 4rem;
+    text-align: left;
+    padding-bottom: 3.5rem;
+  }
+  .selection-movie-title {
+    align-self: flex-start;
+  }
+  .genre-container {
+    align-self: flex-start;
+  }
+  .selection-description {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    text-align: left;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .year-language {
+    display: flex;
+    align-self: flex-start;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    margin: 0 0.5rem;
+    padding-left: 0.75rem;
   }
   .selection-info {
     display: flex;
@@ -249,6 +282,7 @@ img.poster-blur {
   .title {
     font-size: 1.5rem;
     line-height: 2rem;
+    padding: 1vw;
   }
   .trailer {
     width: 450px;
@@ -258,17 +292,10 @@ img.poster-blur {
 
 @media (min-width: 1024px) {
   .selection-detail-container {
+    margin-top: -5vw;
     padding-right: 1rem;
     padding-left: 1rem;
     max-width: 1024px;
-  }
-  .selection-poster {
-    width: 190px;
-    height: 290px;
-  }
-  .poster-blur {
-    width: 190px;
-    height: 290px;
   }
 }
 

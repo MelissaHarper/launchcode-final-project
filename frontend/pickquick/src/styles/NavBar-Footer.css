@@ -25,25 +25,12 @@
 }
 
 .navbar .nav-logo {
-  /* position: fixed; */
   width: 70px;
   height: 55px;
   padding: 0;
   margin: 0;
   top: 0;
   border-radius: 0.25vw;
-}
-
-p.site-name {
-  margin-top: 55px;
-  margin-bottom: 0;
-  height: 70px;
-  width: 70px;
-  justify-self: flex-end;
-  align-self: flex-end;
-  font-size: 7px;
-  z-index: 1;
-  text-wrap: nowrap;
 }
 
 .navbar .rightSide {
@@ -62,19 +49,26 @@ p.site-name {
   color: white;
   width: fit-content;
   padding: 1em;
+  margin-bottom: 0.15em;
   padding-bottom: 0;
   align-self: flex-end;
-  font-size: 3vw;
+  font-size: 1.35rem;
   text-decoration: none;
 }
 
 .button-navbar {
   flex-grow: 0.05;
-  max-height: 40px;
-  width: 10vw;
-  margin: 0.5em;
-  font-size: 2vw;
+  height: 35px;
+  /* width: 10vw; */
+  align-self: flex-end;
+  margin: 0.25em;
+  padding: 0 4px;
+  font-size: 1rem;
   background-color: #1a1a1a;
+}
+
+.button-navbar:hover {
+  border-color: white;
 }
 
 .cl-userButtonTrigger.cl-button.🔒️.cl-internal-1cqt5d5 {
@@ -86,6 +80,7 @@ footer {
   position: fixed;
   left: 0;
   bottom: 0;
+  max-height: 76px;
   margin-top: 1vh;
   padding: 10px;
   display: flex;
@@ -115,32 +110,12 @@ img.tmdb-logo {
   text-align: left;
 }
 
-.box-travel {
-  background-color: white;
-  position: absolute;
-  bottom: 0;
-  height: 5px;
-  width: 10px;
-  animation: travel 2s infinite;
-}
-
-@keyframes travel {
-  0% {
-    left: 85%;
-  }
-  50% {
-    left: 95%;
-  }
-  100% {
-    left: 85%;
-  }
-}
-
 @media (min-width: 768px) {
   .button-navbar {
     align-self: flex-end;
     width: 10vw;
     font-size: 2vw;
+    padding: 0;
   }
 }
 
@@ -152,6 +127,7 @@ img.tmdb-logo {
     align-self: flex-end;
     width: 102px;
     font-size: 20px;
+    padding: 0;
   }
 }
 
@@ -160,6 +136,7 @@ img.tmdb-logo {
     align-self: flex-end;
     width: 102px;
     font-size: 20px;
+    padding: 0;
   }
 
   .hiddenLinks {

@@ -8,6 +8,11 @@ export const BackendContextProvider = ({ children }) => {
   const [userLoading, setUserLoading] = useState(true);
   const [toWatchList, setToWatchList] = useState([]);
   const [synced, setSynced] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const { isLoaded, isSignedIn, getToken } = useAuth();
   const { user } = useUser();
   const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
@@ -29,7 +34,10 @@ export const BackendContextProvider = ({ children }) => {
           };
 
           await axios.post(`${backendBaseUrl}/users/add`, userData, {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "ngrok-skip-browser-warning": "1",
+            },
           });
 
           setSynced(true);
@@ -38,9 +46,41 @@ export const BackendContextProvider = ({ children }) => {
         }
       };
       saveUser(), setUserLoading(false);
-      console.log("User synced with backed");
     }, []);
     return null;
+  };
+
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      formData.name.length === 0 ||
+      formData.email.length === 0 ||
+      formData.message.length === 0
+    )
+      return alert("Please complete all fields");
+    try {
+      const token = await getToken({ template: "pickQuick" });
+      let feedbackData;
+
+      feedbackData = {
+        userId: user.id,
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      };
+      await axios.post(`${backendBaseUrl}/feedback/submit`, feedbackData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "1",
+        },
+      });
+      formData.name = "";
+      formData.email = "";
+      formData.message = "";
+      return alert("Thank you for your feedback.");
+    } catch (error) {
+      console.error(error.response?.data || error.message);
+    }
   };
 
   const populateToWatchList = (list) => {
@@ -61,7 +101,10 @@ export const BackendContextProvider = ({ children }) => {
         createdAt: user.createdAt,
       };
       const res = await axios.get(`${backendBaseUrl}/towatch/${userData.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "1",
+        },
       });
 
       const formatMovies = res.data.movies.map(
@@ -91,8 +134,10 @@ export const BackendContextProvider = ({ children }) => {
       };
 
       await axios.put(`${backendBaseUrl}/towatch/${user.id}/add`, movieData, {
-        headers: { Authorization: `Bearer ${token}` },
-        "Content-Type": "application/json",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "1",
+        },
       });
       await fetchWatchListFromBackend();
     } catch (error) {
@@ -106,8 +151,10 @@ export const BackendContextProvider = ({ children }) => {
       await axios.delete(
         `${backendBaseUrl}/towatch/${user.id}/remove/${movie.id}`,
         {
-          headers: { Authorization: `Bearer ${token}` },
-          "Content-Type": "application/json",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "ngrok-skip-browser-warning": "1",
+          },
         }
       );
       await fetchWatchListFromBackend();
@@ -143,6 +190,10 @@ export const BackendContextProvider = ({ children }) => {
         removeMovieFromWatchList,
         checkToWatchList,
         handleToWatchClick,
+        handleFeedbackSubmit,
+        formData,
+        setFormData,
+        userLoading,
       }}
     >
       {children}

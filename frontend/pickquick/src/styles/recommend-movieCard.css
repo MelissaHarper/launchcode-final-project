@@ -9,6 +9,7 @@
 }
 
 .movie-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -43,6 +44,7 @@
 .movie-card:hover {
   cursor: grab;
   transform: scale(1.15);
+  z-index: 50;
 }
 
 img.poster {
@@ -53,11 +55,11 @@ img.poster {
 
 .movie-card:hover .overlay {
   opacity: 1;
+  z-index: 50;
 }
 
 .overlay {
   display: flex;
-  justify-content: center;
   position: absolute;
   flex-flow: row, nowrap;
   justify-content: center;
@@ -68,6 +70,22 @@ img.poster {
   opacity: 0;
   left: -1px;
   bottom: -23px;
+  font-size: 0.75rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.touch-overlay {
+  display: flex;
+  position: absolute;
+  flex-flow: row, nowrap;
+  justify-content: center;
+  height: 34px;
+  width: 253px;
+  left: -1px;
+  bottom: -23px;
+  background: rgba(0, 0, 0, 0.8);
+  transition: 0.5s ease;
   font-size: 0.75rem;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
@@ -131,12 +149,16 @@ img.poster {
 .search-nav-container {
   display: flex;
   flex-direction: row;
+  max-width: 100%;
   justify-content: space-between;
-  margin: 4vw 8vw;
+  margin-top: 1rem;
+  margin-bottom: 80px;
+  overflow: hidden;
 }
 
 .nav-button {
   margin: 2vw;
+  flex-shrink: 1;
 }
 
 a {
@@ -153,5 +175,8 @@ a:hover {
   .movie-grid {
     flex-direction: row;
     align-items: flex-end;
+  }
+  .search-nav-container {
+    margin: 4vw 8vw;
   }
 }

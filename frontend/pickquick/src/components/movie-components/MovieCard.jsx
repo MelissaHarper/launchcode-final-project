@@ -9,7 +9,7 @@ import { BackendContext } from "../../context/UserSyncHandler.jsx";
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import { useFitText } from "../services/utils.js";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, isTouchScreen }) => {
   const { handleToWatchClick, checkToWatchList, toWatchList } =
     useContext(BackendContext);
   const [isInToWatchList, setIsInToWatchList] = useState(false);
@@ -39,7 +39,7 @@ const MovieCard = ({ movie }) => {
         <SignedIn>
           {!isInToWatchList ? (
             <div
-              className="overlay"
+              className={isTouchScreen ? "touch-overlay" : "overlay"}
               onClick={(e) => {
                 e.preventDefault(), handleToWatchClick(movie);
               }}
@@ -48,7 +48,7 @@ const MovieCard = ({ movie }) => {
             </div>
           ) : (
             <div
-              className="overlay"
+              className={isTouchScreen ? "touch-overlay" : "overlay"}
               onClick={(e) => {
                 e.preventDefault;
                 handleToWatchClick(movie);
@@ -61,7 +61,7 @@ const MovieCard = ({ movie }) => {
 
         <SignedOut>
           <div
-            className="overlay"
+            className={isTouchScreen ? "touch-overlay" : "overlay"}
             onClick={(e) => {
               e.preventDefault(), handleToWatchClick(movie);
             }}
@@ -70,15 +70,9 @@ const MovieCard = ({ movie }) => {
           </div>
         </SignedOut>
       </div>
-      <div className="movie-title-container">
-        <Link
-          to={`/selection/movie/detail/${movie.id}`}
-          className="movie-title-link"
-        >
-          <div className="movie-title" ref={titleRef}>
-            {movie.title || movie.name}
-          </div>
-        </Link>
+
+      <div className="movie-title" ref={titleRef}>
+        {movie.title || movie.name}
       </div>
     </div>
   );

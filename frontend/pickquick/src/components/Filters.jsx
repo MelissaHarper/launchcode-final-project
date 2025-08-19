@@ -1,5 +1,5 @@
-import { createContext, useContext, useRef, useState } from "react";
-import { useClickOutside } from "./services/utils";
+import { createContext, useContext, useRef, useState, useEffect } from "react";
+import { useClickOutside, dropdownFilterFunction } from "./services/utils";
 import { FiCheck, FiChevronDown } from "react-icons/fi";
 import { FaXmark } from "react-icons/fa6";
 import { tmdbImgBaseUrl } from "./services/call-headers";
@@ -43,10 +43,7 @@ const Button = () => {
   return (
     <button
       className="  px-4 py-2 flex items-center justify-between w-full rounded border border-[#828FA340] hover:border-primary cursor-pointer relative text-[#605e80]"
-      onClick={(e) => {
-        e.preventDefault();
-        setIsDropdownOpen(true);
-      }}
+      onClick={() => setIsDropdownOpen(true)}
     >
       <span className="block">
         <FiChevronDown color="white" size={24} />
@@ -63,15 +60,34 @@ const Header = () => {
 
 const ListContainer = () => {
   const { options, isDropdownOpen } = useContext(FilterContext);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredOptions, setFilteredOptions] = useState(options);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    // Filter options based on searchTerm
+    setFilteredOptions(
+      options.filter((option) =>
+        option.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, options]);
 
   return (
     isDropdownOpen && (
       <ul
-        className={`absolute bottom-full translate-x-9 text-white  left-full translate-y-full rounded bg-[#20212c] w-max list-none `}
+        className={`absolute bottom-full -translate-x-5 text-white rounded border border-[#828FA340] translate-y-full rounded bg-[#20212c] w-full list-none z-1`}
       >
         <FilterDropdown.Close />
-        <div className="flex flex-col p-2 z-10">
-          {options?.map((option, index) => (
+        <div className="flex flex-col p-2 z-10" id="dropdown" ref={dropdownRef}>
+          <input
+            type="text"
+            placeholder="Search..."
+            className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {filteredOptions?.map((option, index) => (
             <FilterDropdown.Item key={index} option={option} />
           ))}
         </div>
@@ -83,8 +99,7 @@ const ListContainer = () => {
 const Item = ({ option }) => {
   const { assignedList, setAssignedList } = useContext(FilterContext);
 
-  function handleAssign(option, e) {
-    e.preventDefault();
+  function handleAssign(option) {
     setAssignedList((prevList) => {
       if (prevList.includes(option)) {
         const updatedList = prevList.filter((item) => item !== option);
@@ -99,7 +114,7 @@ const Item = ({ option }) => {
     <li
       key={option.id}
       className={`flex items-center gap-2 p-4 hover:bg-[#2b2c37] rounded transition-all duration-200 `}
-      onClick={(e) => handleAssign(option, e)}
+      onClick={() => handleAssign(option)}
     >
       {assignedList.includes(option) && <FiCheck />}
 
@@ -119,8 +134,7 @@ const AssignedList = () => {
   const { assignedList, setAssignedList, selectionIdentifier } =
     useContext(FilterContext);
 
-  function handleRemove(id, e) {
-    e.preventDefault();
+  function handleRemove(id) {
     setAssignedList((assignedList) =>
       assignedList.filter((option) => option.id !== id)
     );
@@ -128,20 +142,20 @@ const AssignedList = () => {
 
   if (assignedList.length === 0)
     return (
-      <p className="mt-4 p-2 shadow-sm bg-[#828fa318] rounded">
+      <p className="mt-4 p-2 shadow-sm bg-[#272727] rounded">
         No options selected.
       </p>
     );
 
   return (
-    <div className="mt-4 p-2 shadow-sm bg-[#828fa318] rounded">
+    <div className="mt-4 p-2 shadow-sm bg-[#272727] rounded">
       <h2 className="px-2 my-3 font-bold">{`Selected ${selectionIdentifier}: `}</h2>
       <div className="flex flex-wrap gap-4 ">
         {assignedList?.map((option) => (
           <div
             key={option.id}
             className="flex items-center gap-1 w-[47.5%] p-2 hover:bg-[#20212c] rounded transition-all duration-200"
-            onClick={(e) => handleRemove(option.id, e)}
+            onClick={() => handleRemove(option.id)}
           >
             {option.imgUrl && (
               <img
@@ -168,7 +182,6 @@ const Close = () => {
     <div
       className="absolute top-0 right-0 flex items-center justify-center -translate-y-full gap-2 bg-[#C0392B] px-2 py-1 rounded-t"
       onClick={(e) => {
-        e.preventDefault();
         e.stopPropagation();
         setIsDropdownOpen(false);
       }}

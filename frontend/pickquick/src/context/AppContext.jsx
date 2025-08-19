@@ -10,11 +10,21 @@ export const AppContextProvider = ({ children }) => {
   const [movieList, setMovieList] = useState();
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedProviders, setSelectedProviders] = useState([]);
+  const [isTouchScreen, setIsTouchScreen] = useState();
   const [recommendations, setRecommendations] = useState(() => {
     const saved = localStorage.getItem("recommendations");
     return saved ? JSON.parse(saved) : [];
   });
   const navigate = useNavigate();
+
+  window.addEventListener(
+    "touchstart",
+    function onFirstTouch() {
+      setIsTouchScreen(true);
+      window.removeEventListener("touchstart", onFirstTouch, false);
+    },
+    false
+  );
 
   const populateMovieList = (list) => {
     setMovieList(list);
@@ -71,6 +81,7 @@ export const AppContextProvider = ({ children }) => {
         handleEditSearch,
         handleNewSearch,
         handleFilterSubmit,
+        isTouchScreen,
       }}
     >
       {children}
