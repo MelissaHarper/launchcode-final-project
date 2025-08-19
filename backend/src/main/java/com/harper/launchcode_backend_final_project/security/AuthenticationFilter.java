@@ -33,6 +33,12 @@ public class AuthenticationFilter extends OncePerRequestFilter{
     private final ClerkJwksProvider jwksProvider;
 
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request)
+            throws ServletException {
+        String path = request.getRequestURI();
+        return path.contains("/api/feedback") || path.startsWith("/public") || path.startsWith("/static") || path.startsWith("/favicon.ico");
+    }
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -41,7 +47,7 @@ public class AuthenticationFilter extends OncePerRequestFilter{
             throws ServletException, IOException {
 
 
-        if(request.getRequestURI().contains("/api")){
+        if(request.getRequestURI().contains("/user") || request.getRequestURI().contains("/towatch")){
             filterChain.doFilter(request, response);
             return;
         }
