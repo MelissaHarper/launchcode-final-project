@@ -105,7 +105,8 @@ img.hero {
 }
 
 .arrow {
-  align-self: center;
+  /* align-self: center; */
+  cursor: pointer;
 }
 
 .about {

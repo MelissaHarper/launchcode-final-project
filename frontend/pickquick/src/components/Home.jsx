@@ -20,23 +20,49 @@ function Home() {
         <div className={active === 1 ? "card-active" : "card-from-right"}>
           <FiChevronLeft size={40} color="transparent" />
           Stop endlessly scrolling through streaming platforms and get fast,
-          relevant recommendations.
-          <FiChevronRight size={40} onClick={() => handleActive(2)} />
+          relevant recommendations. <br /> Click the arrow to find out how to
+          get started.
+          <FiChevronRight
+            className="arrow"
+            size={40}
+            onClick={() => handleActive(2)}
+          />
         </div>
         <div className={active === 2 ? "card-active" : "card-from-right"}>
-          <FiChevronLeft size={40} onClick={() => handleActive(1)} />
+          <FiChevronLeft
+            className="arrow"
+            size={40}
+            onClick={() => handleActive(1)}
+          />
           Below, select the genres and streaming providers you'd like to include
-          in the results.
-          <FiChevronRight size={40} onClick={() => handleActive(3)} />
+          in the results. We'll filter through thousands of movies and return 5
+          recommendations.
+          <FiChevronRight
+            className="arrow"
+            size={40}
+            onClick={() => handleActive(3)}
+          />
         </div>
         <div className={active === 3 ? "card-active" : "card-from-right"}>
-          <FiChevronLeft size={40} onClick={() => handleActive(2)} />
-          You can click on any movie poster to get more information
-          <FiChevronRight size={40} onClick={() => handleActive(4)} />
+          <FiChevronLeft
+            className="arrow"
+            size={40}
+            onClick={() => handleActive(2)}
+          />
+          Then, you can click on any movie poster to get more information.
+          <FiChevronRight
+            className="arrow"
+            size={40}
+            onClick={() => handleActive(4)}
+          />
         </div>
         <div className={active === 4 ? "card-active" : "card-from-right"}>
-          <FiChevronLeft size={40} onClick={() => handleActive(3)} />
-          Sign-in to add movies to your personal watchlist
+          <FiChevronLeft
+            className="arrow"
+            size={40}
+            onClick={() => handleActive(3)}
+          />
+          Sign-in to add movies to your personal "To Watch" list.
           <FiChevronLeft color="transparent" size={40} />
         </div>
       </div>
