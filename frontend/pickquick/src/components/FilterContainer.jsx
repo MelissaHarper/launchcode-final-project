@@ -1,5 +1,5 @@
 import genreData from "../assets/data/tmdbGenres.json";
-import providerData from "../assets/data/watchProvidersIDsNames.json";
+import providerData from "../assets/data/tmdb-watch-providers.json";
 import FilterDropdown from "./Filters.jsx";
 import { sortByRank } from "./services/utils.js";
 import { useAppContext } from "../context/AppContext.jsx";
@@ -16,7 +16,7 @@ function FilterContainer() {
   } = useAppContext();
 
   return (
-    <div className=" relative h-[100dvh] -top-30 md:-top-20 text-white flex md:flex-row items-start  gap-4 justify-content-start flex-col lg:justify-center">
+    <div className=" relative h-[100dvh]  text-white flex md:flex-row items-start  gap-4 justify-content-start flex-col lg:justify-center">
       <div className=" w-[400px] ">
         <p className="text-2xl ">Genres</p>
         <FilterDropdown

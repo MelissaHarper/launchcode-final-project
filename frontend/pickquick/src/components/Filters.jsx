@@ -1,5 +1,5 @@
-import { createContext, useContext, useRef, useState } from "react";
-import { useClickOutside } from "./services/utils";
+import { createContext, useContext, useRef, useState, useEffect } from "react";
+import { useClickOutside, dropdownFilterFunction } from "./services/utils";
 import { FiCheck, FiChevronDown } from "react-icons/fi";
 import { FaXmark } from "react-icons/fa6";
 import { tmdbImgBaseUrl } from "./services/call-headers";
@@ -60,6 +60,18 @@ const Header = () => {
 
 const ListContainer = () => {
   const { options, isDropdownOpen } = useContext(FilterContext);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredOptions, setFilteredOptions] = useState(options);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    // Filter options based on searchTerm
+    setFilteredOptions(
+      options.filter((option) =>
+        option.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, options]);
 
   return (
     isDropdownOpen && (
@@ -67,8 +79,15 @@ const ListContainer = () => {
         className={`absolute bottom-full -translate-x-5 text-white rounded border border-[#828FA340] translate-y-full rounded bg-[#20212c] w-full list-none z-1`}
       >
         <FilterDropdown.Close />
-        <div className="flex flex-col p-2 z-10">
-          {options?.map((option, index) => (
+        <div className="flex flex-col p-2 z-10" id="dropdown" ref={dropdownRef}>
+          <input
+            type="text"
+            placeholder="Search..."
+            className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {filteredOptions?.map((option, index) => (
             <FilterDropdown.Item key={index} option={option} />
           ))}
         </div>
