@@ -228,7 +228,7 @@ img.poster-blur {
   }
   .selection-detail-container {
     flex-direction: row;
-    margin-top: -13rem;
+    margin-top: -13vw;
     column-gap: 2.5rem;
     padding-right: 0.5rem;
     max-width: 768px;
@@ -292,6 +292,7 @@ img.poster-blur {
 
 @media (min-width: 1024px) {
   .selection-detail-container {
+    margin-top: -5vw;
     padding-right: 1rem;
     padding-left: 1rem;
     max-width: 1024px;
