@@ -8,7 +8,7 @@
 }
 
 .hero-div {
-  display: flexbox;
+  display: flex;
   flex-flow: row, nowrap;
   justify-content: flex-end;
   align-content: flex-end;
@@ -174,13 +174,25 @@ textarea.input {
   .card-list {
     top: 0;
     width: 100vw;
-    height: 25vw;
-    margin-bottom: 5vh;
+    min-height: none;
+    height: auto;
+    margin-bottom: 0;
   }
   .card-active {
+    flex-direction: row;
     width: 95vw;
+    min-height: none;
+    height: auto;
+    padding: 2vw;
     left: 50%;
     transform: translate(-52%);
+  }
+  .card-from-right {
+    flex-direction: row;
+    width: 95vw;
+    min-height: none;
+    height: auto;
+    padding: 2vw;
   }
 }
 
