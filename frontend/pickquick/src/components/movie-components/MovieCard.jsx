@@ -13,7 +13,7 @@ const MovieCard = ({ movie }) => {
   const { handleToWatchClick, checkToWatchList, toWatchList } =
     useContext(BackendContext);
   const [isInToWatchList, setIsInToWatchList] = useState(false);
-  const titleRef = useFitText(24); // Max font size
+  const titleRef = useFitText(24);
 
   useEffect(() => {
     movie && setIsInToWatchList(checkToWatchList(movie));
@@ -71,14 +71,9 @@ const MovieCard = ({ movie }) => {
         </SignedOut>
       </div>
       <div className="movie-title-container">
-        <Link
-          to={`/selection/movie/detail/${movie.id}`}
-          className="movie-title-link"
-        >
-          <div className="movie-title" ref={titleRef}>
-            {movie.title || movie.name}
-          </div>
-        </Link>
+        <div className="movie-title" ref={titleRef}>
+          {movie.title || movie.name}
+        </div>
       </div>
     </div>
   );

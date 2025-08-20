@@ -32,7 +32,6 @@
   align-content: center;
   height: 330px;
   width: 220px;
-  /* margin: 0px, 5px; */
   transition: transform 0.2s;
 }
 
@@ -95,12 +94,13 @@ img.poster {
 .movie-title-container {
   width: 100%;
   overflow: hidden;
+  max-width: 215px;
 }
 
 .movie-title {
-  /* margin-top: 0.5rem; */
   white-space: nowrap;
   overflow: hidden;
+  max-width: 215px;
 }
 
 .description {
@@ -147,9 +147,6 @@ a:hover {
 }
 
 @media (min-width: 768px) {
-  /* .poster-container {
-    flex-direction: row;
-  } */
   .movie-grid {
     flex-direction: row;
     align-items: flex-end;
