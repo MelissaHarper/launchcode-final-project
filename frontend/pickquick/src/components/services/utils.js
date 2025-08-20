@@ -67,8 +67,34 @@ export function getRandomMovies(list, count) {
 }
 
 export function sortByRank(listOfObjects) {
-  const sorted = [...listOfObjects].sort((a, b) => a.rank - b.rank);
+  const sorted = [...listOfObjects].sort((a, b) => {
+    const priorityA = a.display_priorities.US || 0; // default to 0 if not present
+    const priorityB = b.display_priorities.US || 0; // default to 0 if not present
+
+    if (priorityA === 0 && priorityB !== 0) {
+      return -1;
+    } else if (priorityA !== 0 && priorityB === 0) {
+      return 1;
+    } else {
+      return priorityA - priorityB;
+    }
+  });
   return sorted;
+}
+
+export function dropdownFilterFunction() {
+  const input = document.getElementById("userInput");
+  const filter = input.value.toUpperCase();
+  const div = document.getElementById("dropdown");
+  const li = div.getElementsByTagName("li");
+  for (let i = 0; i < li.length; i++) {
+    txtValue = li[i].textContent || li[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
 }
 
 export function getRandomNumber() {

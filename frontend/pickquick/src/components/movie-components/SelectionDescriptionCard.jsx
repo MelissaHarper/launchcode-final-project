@@ -29,60 +29,56 @@ const DetailDescription = ({ movie }) => {
         </div>
       )}
 
-      <div className={"relative"}>
-        <div className="selection-detail-container">
-          {/* Poster */}
-          <div className="selection-poster-container">
-            <img
-              src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
-              alt={movie.title || movie.name}
-              className="selection-poster"
-              onError={onErrorImage}
-            />
-            <img
-              src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
-              alt={movie.title || movie.name}
-              className="poster-blur"
-              onError={onErrorImage}
-            />
-            <div className="search-navigation-container">
-              <Link to="/">
-                <div className="search-navigation">Edit Search</div>
-              </Link>
-              <Link onClick={handleNewSearch}>
-                <div className="search-navigation">New Search</div>
-              </Link>
-              <Link to="/recommendations">
-                <div className="search-navigation">
-                  Return to Recommendations
-                </div>
-              </Link>
-            </div>
+      <div className="selection-detail-container">
+        {/* Poster */}
+        <div className="selection-poster-container">
+          <img
+            src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
+            alt={movie.title || movie.name}
+            className="selection-poster"
+            onError={onErrorImage}
+          />
+          <img
+            src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
+            alt={movie.title || movie.name}
+            className="poster-blur"
+            onError={onErrorImage}
+          />
+          <div className="search-navigation-container">
+            <Link to="/">
+              <div className="search-navigation">Edit Search</div>
+            </Link>
+            <Link onClick={handleNewSearch}>
+              <div className="search-navigation">New Search</div>
+            </Link>
+            <Link to="/recommendations">
+              <div className="search-navigation">Return to Recommendations</div>
+            </Link>
+          </div>
+        </div>
+
+        <div className="selection-description-container">
+          {/* Title */}
+          <p className="selection-movie-title">
+            {movie.original_name || movie.original_title}
+          </p>
+
+          {/* Release year */}
+          {movie.spoken_languages.length > 0 && (
+            <p className="year-language">{releaseDate}</p>
+          )}
+
+          {/* Genres */}
+          <div className="genre-container">
+            {movie.genres.map((genre) => (
+              <div key={genre.id} className="genre">
+                {genre.name}
+              </div>
+            ))}
           </div>
 
-          <div className="selection-description-container">
-            {/* Title */}
-            <p className="selection-movie-title">
-              {movie.original_name || movie.original_title}
-            </p>
-
-            {/* Release year */}
-            {movie.spoken_languages.length > 0 && (
-              <p className="year-language">{releaseDate}</p>
-            )}
-
-            {/* Genres */}
-            <div className="genre-container">
-              {movie.genres.map((genre) => (
-                <div key={genre.id} className="genre">
-                  {genre.name}
-                </div>
-              ))}
-            </div>
-
-            {/* Description */}
-            <p className="selection-description">{movie.overview}</p>
-          </div>
+          {/* Description */}
+          <p className="selection-description">{movie.overview}</p>
         </div>
       </div>
     </>

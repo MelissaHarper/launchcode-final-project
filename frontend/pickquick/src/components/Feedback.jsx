@@ -1,15 +1,12 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { BackendContext } from "../context/UserSyncHandler.jsx";
 
 function UserForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    feedback: "",
-  });
+  const { handleFeedbackSubmit, formData, setFormData } =
+    useContext(BackendContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(`Updating ${name}:`, value);
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -47,34 +44,31 @@ function UserForm() {
         <br />
 
         <label>
-          Feedback:
+          Suggestion:
           <br />
           <textarea
             type="textarea"
-            name="feedback"
+            name="message"
             rows="5"
             cols="30"
-            value={formData.feedback}
+            value={formData.message}
             onChange={handleChange}
             className="input"
             required
           />
         </label>
         <br />
-
-        <input
-          style={{ borderColor: "black" }}
-          type="submit"
-          value="Submit Feedback"
-        />
       </form>
+      <button style={{ borderColor: "black" }} onClick={handleFeedbackSubmit}>
+        Submit
+      </button>
 
-      <section>
-        <h2>Preview</h2>
+      <h2>Preview</h2>
+      <section className="preview">
         <p>Name: {formData.name}</p>
         <p>Email: {formData.email}</p>
-        <p>Feedback: {formData.feedback}</p>
-        <p>Feedback Character Count: {formData.feedback.length}</p>
+        <p>Feedback: {formData.message}</p>
+        <p>Feedback Character Count: {formData.message.length}</p>
       </section>
     </div>
   );

@@ -8,11 +8,11 @@
 }
 
 .hero-div {
-  display: flexbox;
+  display: flex;
   flex-flow: row, nowrap;
   justify-content: flex-end;
   align-content: flex-end;
-  max-height: 655px;
+  max-height: 400px;
   overflow: hidden;
 }
 
@@ -21,7 +21,92 @@ img.hero {
   display: flex;
   align-self: center;
   justify-self: center;
-  max-height: 655px;
+  max-height: 550px;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100vw;
+  top: -10vh;
+  min-height: 300px;
+  margin-bottom: 15vh;
+  overflow: hidden;
+}
+
+.card-active {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem;
+  width: 275px;
+  height: 225px;
+  border-radius: 1rem;
+  border-width: 1px;
+  border-color: transparent;
+  background-color: #272727;
+  box-shadow: -1rem 0 3rem #000;
+  left: 50%;
+  transform: translate(-50%);
+  transition: 400ms 0ms ease-in, height 0ms 800ms, opacity 100ms 0ms ease-in;
+}
+
+.card-from-right {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 200%;
+  justify-content: center;
+  align-content: center;
+  gap: 10px;
+  margin: 1rem;
+  width: 275px;
+  height: 225px;
+  border-radius: 1rem;
+  border-width: 1px;
+  border-color: transparent;
+  background-color: #272727;
+  box-shadow: -1rem 0 3rem #000;
+  opacity: 0;
+  left: 110%;
+  transition: left 800ms 0ms ease-out, height 0ms 800ms,
+    opacity 400ms 0ms ease-in;
+  z-index: 1;
+}
+.card-from-left {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 200%;
+  justify-content: center;
+  align-content: center;
+  gap: 10px;
+  margin: 1rem;
+  width: 275px;
+  height: 225px;
+  border-radius: 1rem;
+  border-width: 1px;
+  border-color: transparent;
+  padding: 0.75rem;
+  padding-left: 0.95rem;
+  background-color: #272727;
+  box-shadow: -1rem 0 3rem #000;
+  opacity: 0;
+  left: -110%;
+  transition: left 800ms 0ms ease-out, height 0ms 800ms,
+    opacity 400ms 0ms ease-in;
+
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.arrow {
+  /* align-self: center; */
+  cursor: pointer;
 }
 
 .about {
@@ -62,16 +147,51 @@ img.hero {
   gap: 2rem;
 }
 
+h1 {
+  font-size: 2rem;
+  margin: 2rem;
+}
+
 input {
   border: 1px, solid, white;
   border-radius: 0.5rem;
   padding: 0.5rem;
+  margin: 1rem;
 }
 
 textarea.input {
   border: 1px, solid, white;
   border-radius: 0.5rem;
   padding: 0.5rem;
+}
+
+button.disabled-button {
+  color: "gray";
+  color: "gray";
+  cursor: "not-allowed";
+  margin: 10;
+  padding: 15, 20;
+  border-radius: "8px";
+  border: "none";
+  box-shadow: "0px 0px 10px 0px grey";
+}
+
+button.enabled-button {
+  background-color: "green";
+  color: "white";
+  cursor: "pointer";
+  margin: 10;
+  padding: 15, 20;
+  border-radius: "8px";
+  border: "none";
+  box-shadow: "0px 0px 10px 0px grey";
+}
+
+.preview {
+  border: 1px, solid, white;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  text-align: left;
 }
 
 .basic-multi-select {
@@ -86,6 +206,29 @@ textarea.input {
   img.hero {
     min-width: 100%;
     object-fit: none;
+  }
+  .card-list {
+    top: 0;
+    width: 100vw;
+    min-height: none;
+    height: auto;
+    margin-bottom: 0;
+  }
+  .card-active {
+    flex-direction: row;
+    width: 95vw;
+    min-height: none;
+    height: auto;
+    padding: 2vw;
+    left: 50%;
+    transform: translate(-52%);
+  }
+  .card-from-right {
+    flex-direction: row;
+    width: 95vw;
+    min-height: none;
+    height: auto;
+    padding: 2vw;
   }
 }
 
