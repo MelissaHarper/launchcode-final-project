@@ -6,7 +6,7 @@ import "../../styles/recommend-movieCard.css";
 import AddToWatchList from "../services/AddToWatchList.jsx";
 import RemoveFromWatchList from "../services/RemoveFromToWatchList.jsx";
 import { BackendContext } from "../../context/UserSyncHandler.jsx";
-import { SignedIn, SignedOut } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
 import { useFitText } from "../services/utils.js";
 
 const MovieCard = ({ movie, isTouchScreen }) => {
@@ -60,14 +60,17 @@ const MovieCard = ({ movie, isTouchScreen }) => {
         </SignedIn>
 
         <SignedOut>
-          <div
-            className={isTouchScreen ? "touch-overlay" : "overlay"}
-            onClick={(e) => {
-              e.preventDefault(), handleToWatchClick(movie);
-            }}
-          >
-            <p>Sign in to add this movie to your watchlist</p>
-          </div>
+          <SignInButton asChild>
+            <Link
+              className={isTouchScreen ? "touch-overlay" : "overlay"}
+              onClick={(e) => {
+                e.preventDefault(), handleToWatchClick(movie);
+              }}
+              href="/sign-in"
+            >
+              Sign in to add this movie to your watchlist
+            </Link>
+          </SignInButton>
         </SignedOut>
       </div>
       <div className="movie-title-container">
