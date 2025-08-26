@@ -11,11 +11,14 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @ToString(exclude = "toWatchLists")
 public class Movie {
 
     @Id
+    @NonNull
     private int id;
+    @NonNull
     private String originalTitle;
     private String posterPath;
     private String title;
