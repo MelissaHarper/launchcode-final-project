@@ -1,9 +1,10 @@
 import { useAppContext } from "../../context/AppContext";
+import { tmdbImgBaseUrl } from "../services/call-headers.js";
 import Dummy from "../../assets/images/logo.png";
 import "../../styles/Selection.css";
-import { Link } from "react-router";
+import { Link } from "react-scroll";
 
-const DetailDescription = ({ movie }) => {
+const DetailDescription = ({ movie, providers }) => {
   const releaseDate = movie
     ? movie.release_date
       ? movie.release_date.split("-")[0]
@@ -14,7 +15,7 @@ const DetailDescription = ({ movie }) => {
 
   const onErrorImage = (e) => (e.target.src = Dummy);
   const { handleNewSearch } = useAppContext();
-
+  console.log(movie, providers);
   return (
     <>
       {/* Banner */}
@@ -79,6 +80,41 @@ const DetailDescription = ({ movie }) => {
 
           {/* Description */}
           <p className="selection-description">{movie.overview}</p>
+
+          {/* Providers */}
+
+          {providers.results.US.flatrate ? (
+            <div>
+              <p className="streaming">Streaming</p>
+              <div className="selection-provider-container">
+                {providers.results.US.flatrate.map((provider) => (
+                  <div key={provider.provider_id} className="provider">
+                    <img
+                      className="provider-image"
+                      src={`${tmdbImgBaseUrl}${provider.logo_path}`}
+                      alt={provider.provider_name}
+                    />
+                  </div>
+                ))}
+                <Link
+                  to="purchase-options"
+                  smooth={true}
+                  style={{ cursor: "pointer" }}
+                >
+                  Purchase Options
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <Link
+              to="purchase-options"
+              smooth={true}
+              duration={500}
+              style={{ cursor: "pointer" }}
+            >
+              Purchase Options
+            </Link>
+          )}
         </div>
       </div>
     </>
