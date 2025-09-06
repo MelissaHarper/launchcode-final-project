@@ -1,10 +1,15 @@
-import axios from "axios";
 import { api } from "./call-headers";
 import { getRandomNumberBelow10 } from "./utils";
 
 const BASE_URL = import.meta.env.VITE_BASE_TMDB_API_URL;
 
-export async function getWithFilters(type, genreId, providerId, payload) {
+export async function getWithFilters(
+  type,
+  genreId,
+  providerId,
+  keywordId,
+  payload
+) {
   let results = [];
   while (results.length < 1) {
     try {
@@ -20,6 +25,7 @@ export async function getWithFilters(type, genreId, providerId, payload) {
             with_genres: genreId.join("%2C%20"),
             with_watch_providers: providerId.join("%2C%20"),
             with_watch_monetization_types: "flatrate||free||ads||rent||buy",
+            with_keywords: keywordId.join("%2C%20"),
           },
         },
         { payload }
@@ -36,12 +42,6 @@ export async function getGenres(payload) {
   const url = `${BASE_URL}/genre/movie/list`;
   const { data } = await api().get(url, { payload });
   return data.genres;
-}
-
-export async function getProviders(payload) {
-  const url = `${BASE_URL}/watch/providers/movie`;
-  const { data } = await axios.get(url, { payload });
-  return data.results;
 }
 
 export const getTrending = async (type, payload) => {
@@ -104,6 +104,24 @@ export const getDetail = async (type, id, payload) => {
   return response;
 };
 
+export const getProviders = async (type, id, payload) => {
+  const response = await api()
+    .get(`/${type}/${id}/watch/providers`, { payload })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
+    });
+  return response;
+};
+
 export const getCredits = async (type, id, payload) => {
   const response = await api().get(`/${type}/${id}/credits`, {
     payload,
@@ -139,5 +157,10 @@ export const searchFilm = async (payload) => {
 
 export const searchTv = async (payload) => {
   const response = await api().get(`search/tv`, { payload });
+  return response;
+};
+
+export const searchKeyword = async (payload) => {
+  const response = await api().get(`search/keyword`, { payload });
   return response;
 };
