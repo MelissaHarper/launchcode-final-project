@@ -10,6 +10,7 @@ export const AppContextProvider = ({ children }) => {
   const [movieList, setMovieList] = useState();
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedProviders, setSelectedProviders] = useState([]);
+  const [selectedKeywords, setSelectedKeywords] = useState([]);
   const [isTouchScreen, setIsTouchScreen] = useState();
   const [recommendations, setRecommendations] = useState(() => {
     const saved = localStorage.getItem("recommendations");
@@ -45,6 +46,7 @@ export const AppContextProvider = ({ children }) => {
     e.preventDefault();
     setSelectedGenres([]);
     setSelectedProviders([]);
+    setSelectedKeywords([]);
     navigate("/");
   };
 
@@ -54,10 +56,13 @@ export const AppContextProvider = ({ children }) => {
 
     const providerIds = selectedProviders.map((provider) => provider.id);
 
+    const keywordIds = selectedKeywords.map((provider) => provider.id);
+
     const movies = await getWithFilters(
       "movie",
       genreIds,
       providerIds,
+      keywordIds,
       options
     );
     populateMovieList(movies);
@@ -78,6 +83,8 @@ export const AppContextProvider = ({ children }) => {
         setSelectedGenres,
         selectedProviders,
         setSelectedProviders,
+        selectedKeywords,
+        setSelectedKeywords,
         handleEditSearch,
         handleNewSearch,
         handleFilterSubmit,
