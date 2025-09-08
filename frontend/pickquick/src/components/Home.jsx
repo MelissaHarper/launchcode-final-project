@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
-import FilterContainer from "./FilterContainer";
+import FilterContainer from "./filter-components/FilterContainer";
 import hero from "../assets/images/PickQuickLogo.png";
 import "../App.css";
 
 function Home() {
+  //Variables
   const [active, setActive] = useState(1);
 
   const handleActive = (num) => {
