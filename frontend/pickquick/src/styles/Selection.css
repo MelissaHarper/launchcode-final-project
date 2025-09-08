@@ -236,12 +236,14 @@ img.poster-blur {
 }
 
 .trailer-window {
-  width: 500px;
-  height: 300px;
+  justify-content: center;
+  align-content: center;
   border-radius: 0.5rem;
 }
 
 .trailer {
+  justify-self: center;
+  align-self: center;
   border-radius: 0.5rem;
   width: 360px;
   height: 200px;
@@ -312,6 +314,11 @@ img.poster-blur {
     font-size: 1.5rem;
     line-height: 2rem;
     padding: 1vw;
+  }
+  .trailer-window {
+    justify-content: center;
+    width: 500px;
+    height: 300px;
   }
   .trailer {
     width: 450px;
