@@ -39,10 +39,11 @@ export function useFitText(maxFontSize = 80) {
       let fontSize = maxFontSize;
 
       // Shrink text until it fits
-      while (element.scrollWidth > parentWidth && fontSize > 0) {
+      while (element.scrollWidth > parentWidth - 25 && fontSize > 0) {
         fontSize -= 1;
         element.style.fontSize = `${fontSize}px`;
       }
+      console.log(element.scrollWidth, parentWidth);
     };
 
     // Observe both parent and text
@@ -82,20 +83,20 @@ export function sortByRank(listOfObjects) {
   return sorted;
 }
 
-export function dropdownFilterFunction() {
-  const input = document.getElementById("userInput");
-  const filter = input.value.toUpperCase();
-  const div = document.getElementById("dropdown");
-  const li = div.getElementsByTagName("li");
-  for (let i = 0; i < li.length; i++) {
-    txtValue = li[i].textContent || li[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      li[i].style.display = "";
-    } else {
-      li[i].style.display = "none";
-    }
-  }
-}
+// export function dropdownFilterFunction() {
+//   const input = document.getElementById("userInput");
+//   const filter = input.value.toUpperCase();
+//   const div = document.getElementById("dropdown");
+//   const li = div.getElementsByTagName("li");
+//   for (let i = 0; i < li.length; i++) {
+//     txtValue = li[i].textContent || li[i].innerText;
+//     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+//       li[i].style.display = "";
+//     } else {
+//       li[i].style.display = "none";
+//     }
+//   }
+// }
 
 export function getRandomNumber() {
   let randomNumber = Math.floor(Math.random() * 80000);
