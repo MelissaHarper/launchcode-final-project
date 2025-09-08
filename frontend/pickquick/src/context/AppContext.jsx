@@ -56,7 +56,7 @@ export const AppContextProvider = ({ children }) => {
 
     const providerIds = selectedProviders.map((provider) => provider.id);
 
-    const keywordIds = selectedKeywords.map((provider) => provider.id);
+    const keywordIds = selectedKeywords.map((keyword) => keyword.id);
 
     const movies = await getWithFilters(
       "movie",
