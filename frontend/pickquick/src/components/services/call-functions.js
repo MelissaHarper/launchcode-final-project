@@ -160,7 +160,7 @@ export const searchTv = async (payload) => {
   return response;
 };
 
-export const searchKeyword = async (payload) => {
-  const response = await api().get(`search/keyword`, { payload });
+export const searchKeyword = async (params, payload) => {
+  const response = await api().get(`search/keyword`, { params }, { payload });
   return response;
 };
