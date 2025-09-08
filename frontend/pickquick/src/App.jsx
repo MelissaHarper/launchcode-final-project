@@ -1,20 +1,17 @@
+import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Route, Routes } from "react-router-dom";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
-import NavBar from "./components/NavBar";
-import FilterContainer from "./components/FilterContainer";
-import Home from "./components/Home";
 import About from "./components/About";
-import Footer from "./components/Footer";
-import Selection from "./components/movie-components/Selection";
-import Recommendations from "./components/movie-components/Recommendations";
 import Feedback from "./components/Feedback";
-import MovieCard from "./components/movie-components/MovieCard";
+import FilterContainer from "./components/filter-components/FilterContainer";
+import Footer from "./components/Footer";
 import UserDashboard from "./components/gated/UserDashboard";
-import { BackendContext } from "./context/UserSyncHandler";
-import { useContext } from "react";
+import Home from "./components/Home";
+import MovieCard from "./components/movie-components/MovieCard";
+import Recommendations from "./components/movie-components/Recommendations";
+import Selection from "./components/movie-components/Selection";
+import NavBar from "./components/NavBar";
 
 function App() {
-  const { UserSyncHandler } = useContext(BackendContext);
   return (
     <main>
       <div className="App">
