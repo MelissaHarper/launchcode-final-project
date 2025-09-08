@@ -1,7 +1,7 @@
 import { useAppContext } from "../../context/AppContext";
 import { tmdbImgBaseUrl } from "../services/call-headers.js";
-import { Link } from "react-scroll";
-import Dummy from "../../assets/images/logo.png";
+import { Link } from "react-router";
+import Dummy from "../../assets/images/PickQuickLogo.png";
 import "../../styles/Selection.css";
 
 const DetailDescription = ({ movie, providers }) => {
@@ -18,13 +18,18 @@ const DetailDescription = ({ movie, providers }) => {
   return (
     <>
       {/* Banner */}
-      {movie.backdrop_path && (
+      {movie.backdrop_path ? (
         <div className="relative">
           <img
             src={`https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie.backdrop_path}`}
             alt={movie.name}
             className="backdrop"
           />
+          <div className="backdrop-gradient" />
+        </div>
+      ) : (
+        <div className="relative">
+          <img src={Dummy} alt={movie.name} className="backdrop" />
           <div className="backdrop-gradient" />
         </div>
       )}
