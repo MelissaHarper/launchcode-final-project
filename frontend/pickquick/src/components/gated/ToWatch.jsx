@@ -1,7 +1,7 @@
 import { useEffect, useContext } from "react";
 import { useUser } from "@clerk/clerk-react";
 import MovieCard from "../movie-components/MovieCard.jsx";
-import { BackendContext } from "../../context/UserSyncHandler";
+import { BackendContext } from "../../context/BackendContext";
 
 function ToWatch() {
   const { isSignedIn, user } = useUser();

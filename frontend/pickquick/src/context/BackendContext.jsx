@@ -169,13 +169,10 @@ export const BackendContextProvider = ({ children }) => {
   };
 
   const handleToWatchClick = (movie) => {
-    console.log(`WatchList length on click: ${toWatchList.length}`);
     if (checkToWatchList(movie)) {
       removeMovieFromWatchList(movie);
-      console.log(`WatchList length after remove: ${toWatchList.length}`);
     } else {
       addMovieToWatchList(movie);
-      console.log(`WatchList length after add: ${toWatchList.length}`);
     }
   };
 

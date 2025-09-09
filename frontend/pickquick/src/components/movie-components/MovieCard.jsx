@@ -1,19 +1,19 @@
-import { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import Dummy from "../../assets/images/logo.png";
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
+import { useContext, useEffect, useState } from "react";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
-import "../../styles/recommend-movieCard.css";
+import { Link } from "react-router-dom";
+import { useFitText } from "../services/utils.js";
+import { BackendContext } from "../../context/BackendContext.jsx";
+import Dummy from "../../assets/images/PickQuickLogo.png";
 import AddToWatchList from "../services/AddToWatchList.jsx";
 import RemoveFromWatchList from "../services/RemoveFromToWatchList.jsx";
-import { BackendContext } from "../../context/UserSyncHandler.jsx";
-import { SignedIn, SignedOut } from "@clerk/clerk-react";
-import { useFitText } from "../services/utils.js";
+import "../../styles/recommend-movieCard.css";
 
 const MovieCard = ({ movie, isTouchScreen }) => {
   const { handleToWatchClick, checkToWatchList, toWatchList } =
     useContext(BackendContext);
   const [isInToWatchList, setIsInToWatchList] = useState(false);
-  const titleRef = useFitText(24); // Max font size
+  const titleRef = useFitText(24);
 
   useEffect(() => {
     movie && setIsInToWatchList(checkToWatchList(movie));
@@ -62,11 +62,11 @@ const MovieCard = ({ movie, isTouchScreen }) => {
         <SignedOut>
           <div
             className={isTouchScreen ? "touch-overlay" : "overlay"}
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault(), handleToWatchClick(movie);
             }}
           >
-            <p>Sign in to add this movie to your watchlist</p>
+            <p>Sign in to add this movie to your To Watch List</p>
           </div>
         </SignedOut>
       </div>
