@@ -1,5 +1,6 @@
+import { lazy, Suspense } from "react";
 import { useUser } from "@clerk/clerk-react";
-import ToWatch from "./ToWatch";
+const ToWatch = lazy(() => import("./ToWatch"));
 
 const UserDashboard = () => {
   const { isSignedIn } = useUser();
@@ -10,8 +11,10 @@ const UserDashboard = () => {
 
   return (
     <div>
-      <h3>Your To Watch List</h3>
-      <ToWatch />
+      <Suspense fallback={<Loading />}>
+        <h3>Your To Watch List</h3>
+        <ToWatch />
+      </Suspense>
     </div>
   );
 };

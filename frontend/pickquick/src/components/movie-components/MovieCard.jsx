@@ -34,7 +34,7 @@ const MovieCard = ({ movie, isTouchScreen }) => {
         >
           <img
             className="poster"
-            src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w220_and_h330_face${movie.poster_path}`}
             alt={movie.title || movie.original_title || movie.original_name}
             onError={(event) => {
               event.currentTarget.onerror = null;
