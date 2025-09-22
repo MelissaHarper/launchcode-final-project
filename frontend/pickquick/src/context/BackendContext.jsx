@@ -1,6 +1,7 @@
-import { useEffect, useState, useCallback, createContext } from "react";
+import { useEffect, useState, useCallback, useRef, createContext } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import axios from "axios";
+import ErrorModal from "../components/services/ErrorModal";
 
 export const BackendContext = createContext();
 
@@ -13,9 +14,16 @@ export const BackendContextProvider = ({ children }) => {
     email: "",
     message: "",
   });
+  const [error, setError] = useState(null);
+  const errorModalRef = useRef(null);
   const { isLoaded, isSignedIn, getToken } = useAuth();
   const { user } = useUser();
   const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+
+  const openErrorModal = (err) => {
+    setError(err);
+    errorModalRef.current?.openModal();
+  };
 
   const UserSyncHandler = () => {
     useEffect(() => {
@@ -78,13 +86,25 @@ export const BackendContextProvider = ({ children }) => {
       formData.email = "";
       formData.message = "";
       return alert("Thank you for your feedback.");
-    } catch (error) {
-      console.error(error.response?.data || error.message);
+    } catch (err) {
+      openErrorModal(
+        err.response?.data ||
+          (err.message &&
+            " You are currently using a development version of this site. Some features may not be available at this time.")
+      );
     }
   };
 
   const populateToWatchList = (list) => {
-    setToWatchList(list);
+    try {
+      setToWatchList(list);
+    } catch (err) {
+      openErrorModal(
+        err.response?.data ||
+          (err.message &&
+            " You are currently using a development version of this site. Some features may not be available at this time.")
+      );
+    }
   };
 
   const fetchWatchListFromBackend = useCallback(async () => {
@@ -111,8 +131,12 @@ export const BackendContextProvider = ({ children }) => {
         ({ posterPath: poster_path, ...rest }) => ({ poster_path, ...rest })
       );
       populateToWatchList(formatMovies);
-    } catch (error) {
-      console.error(error.response?.data || error.message);
+    } catch (err) {
+      openErrorModal(
+        err.response?.data ||
+          (err.message &&
+            " You are currently using a development version of this site. Some features may not be available at this time.")
+      );
     }
   }, [isLoaded, isSignedIn, user, getToken, backendBaseUrl]);
 
@@ -140,8 +164,12 @@ export const BackendContextProvider = ({ children }) => {
         },
       });
       await fetchWatchListFromBackend();
-    } catch (error) {
-      console.error(error.response?.data || error.message);
+    } catch (err) {
+      openErrorModal(
+        err.response?.data ||
+          (err.message &&
+            " You are currently using a development version of this site. Some features may not be available at this time.")
+      );
     }
   };
 
@@ -158,8 +186,12 @@ export const BackendContextProvider = ({ children }) => {
         }
       );
       await fetchWatchListFromBackend();
-    } catch (error) {
-      console.error(error.response?.data || error.message);
+    } catch (err) {
+      openErrorModal(
+        err.response?.data ||
+          (err.message &&
+            " You are currently using a development version of this site. Some features may not be available at this time.")
+      );
     }
   };
 
@@ -169,10 +201,18 @@ export const BackendContextProvider = ({ children }) => {
   };
 
   const handleToWatchClick = (movie) => {
-    if (checkToWatchList(movie)) {
-      removeMovieFromWatchList(movie);
-    } else {
-      addMovieToWatchList(movie);
+    try {
+      if (checkToWatchList(movie)) {
+        removeMovieFromWatchList(movie);
+      } else {
+        addMovieToWatchList(movie);
+      }
+    } catch (err) {
+      openErrorModal(
+        err.response?.data ||
+          (err.message &&
+            " You are currently using a development version of this site. Some features may not be available at this time.")
+      );
     }
   };
 
@@ -191,9 +231,12 @@ export const BackendContextProvider = ({ children }) => {
         formData,
         setFormData,
         userLoading,
+        error,
+        errorModalRef,
       }}
     >
       {children}
+      <ErrorModal ref={errorModalRef}>{error}</ErrorModal>
     </BackendContext.Provider>
   );
 };
