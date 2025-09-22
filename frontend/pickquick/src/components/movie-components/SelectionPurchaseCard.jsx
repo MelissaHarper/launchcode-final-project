@@ -1,7 +1,7 @@
 import { tmdbImgBaseUrl } from "../services/call-headers.js";
 import "../../styles/Selection.css";
 
-const SelectionPurchases = ({ providers }) => {
+const SelectionPurchaseCard = ({ providers }) => {
   return (
     <div id="purchase-options">
       {providers.results.US.rent && (
@@ -40,4 +40,4 @@ const SelectionPurchases = ({ providers }) => {
   );
 };
 
-export default SelectionPurchases;
+export default SelectionPurchaseCard;
