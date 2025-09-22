@@ -67,6 +67,22 @@
   margin-left: 0.5rem;
   margin-top: 0.5rem;
 }
+
+.to-purchase-link {
+  align-self: flex-end;
+  white-space: nowrap;
+  border-radius: 0.25rem;
+  border-width: 2px;
+  border-color: black;
+  background-color: rgba(10, 10, 10, 0.5);
+  padding: 0.25rem 0.75rem;
+  margin-right: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
 .purchase-provider-container {
   display: flex;
   flex-direction: row;
@@ -90,11 +106,10 @@
 .search-navigation {
   white-space: nowrap;
   border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: black;
   background-color: rgba(10, 10, 10, 0.5);
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  padding: 0.25rem 0.75rem;
   font-size: 0.75rem;
   line-height: 1rem;
   font-weight: 500;
@@ -174,7 +189,6 @@ img.poster-blur {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 400;
-  text-align: right;
   margin-right: 0.5rem;
   margin-top: 0.5rem;
 }
@@ -229,6 +243,7 @@ img.poster-blur {
 
 .trailer-container {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem;
@@ -314,6 +329,9 @@ img.poster-blur {
     font-size: 1.5rem;
     line-height: 2rem;
     padding: 1vw;
+  }
+  .trailer-container {
+    flex-direction: row;
   }
   .trailer-window {
     justify-content: center;

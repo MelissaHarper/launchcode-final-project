@@ -3,6 +3,7 @@ import { tmdbImgBaseUrl } from "../services/call-headers.js";
 import { Link } from "react-router";
 import Dummy from "../../assets/images/PickQuickLogo.png";
 import "../../styles/Selection.css";
+import { HashLink } from "react-router-hash-link";
 
 const DetailDescription = ({ movie, providers }) => {
   const releaseDate = movie
@@ -100,24 +101,18 @@ const DetailDescription = ({ movie, providers }) => {
                     />
                   </div>
                 ))}
-                <Link
-                  to="purchase-options"
-                  smooth={true}
-                  style={{ cursor: "pointer" }}
-                >
-                  Purchase Options
-                </Link>
               </div>
             </div>
           ) : (
-            <Link
-              to="purchase-options"
-              smooth={true}
+            <HashLink
+              className="to-purchase-link"
+              to={`/selection/movie/detail/${movie.id}/#purchase-options`}
+              smooth
               duration={500}
               style={{ cursor: "pointer" }}
             >
               Purchase Options
-            </Link>
+            </HashLink>
           )}
         </div>
       </div>

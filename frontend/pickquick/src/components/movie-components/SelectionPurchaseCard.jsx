@@ -3,8 +3,7 @@ import "../../styles/Selection.css";
 
 const SelectionPurchases = ({ providers }) => {
   return (
-    <div>
-      {/* Purchase Providers */}
+    <div id="purchase-options">
       {providers.results.US.rent && (
         <div>
           <p className="title">Rent</p>
