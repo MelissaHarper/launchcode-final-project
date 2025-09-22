@@ -1,4 +1,10 @@
-import { SignedIn, SignedOut } from "@clerk/clerk-react";
+import {
+  RedirectToSignIn,
+  SignedIn,
+  SignedOut,
+  SignIn,
+  SignInButton,
+} from "@clerk/clerk-react";
 import { useContext, useEffect, useState } from "react";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
 import { Link } from "react-router-dom";
@@ -60,13 +66,10 @@ const MovieCard = ({ movie, isTouchScreen }) => {
         </SignedIn>
 
         <SignedOut>
-          <div
-            className={isTouchScreen ? "touch-overlay" : "overlay"}
-            onClick={async (e) => {
-              e.preventDefault(), handleToWatchClick(movie);
-            }}
-          >
-            <p>Sign in to add this movie to your To Watch List</p>
+          <div className={isTouchScreen ? "touch-overlay" : "overlay"}>
+            <SignInButton>
+              <p>Sign in to add this movie to your To Watch List</p>
+            </SignInButton>
           </div>
         </SignedOut>
       </div>
