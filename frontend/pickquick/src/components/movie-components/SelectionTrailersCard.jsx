@@ -1,8 +1,8 @@
 const DetailTrailers = ({ trailers }) => {
   return (
     <div className="trailer-container">
-      {trailers.map((trailer, index) => (
-        <div key={`trailer-${index}`} className="trailer-window">
+      {trailers.map((trailer) => (
+        <div key={`trailer-${trailer.id}`} className="trailer-window">
           <iframe
             src={`https://www.youtube.com/embed/${trailer.key}`}
             title={trailer.name}
