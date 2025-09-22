@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import FilterContainer from "./filter-components/FilterContainer";
 import hero from "../assets/images/PickQuickLogo.png";
@@ -73,4 +73,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default memo(Home);

@@ -7,6 +7,7 @@ import {
 } from "@clerk/clerk-react";
 import logo from "../assets/images/PickQuickLogo.png";
 import "../styles/NavBar-Footer.css";
+import { memo } from "react";
 
 function NavBar() {
   return (
@@ -38,4 +39,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default memo(NavBar);

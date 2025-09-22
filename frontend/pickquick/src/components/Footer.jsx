@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { SignedIn } from "@clerk/clerk-react";
 import tmdbLogo from "../assets/images/tmdb-logo.svg";
 import "../styles/NavBar-Footer.css";
+import { memo } from "react";
 
 const Footer = () => {
   return (
@@ -26,4 +27,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);
