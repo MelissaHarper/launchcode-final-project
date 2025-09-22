@@ -24,6 +24,7 @@ const FilterDropdown = ({
   setMovieList,
   assignedList,
   setAssignedList,
+  header,
   options,
   selectionIdentifier,
 }) => {
@@ -36,6 +37,7 @@ const FilterDropdown = ({
         setMovieList,
         assignedList,
         setAssignedList,
+        header,
         options,
         selectionIdentifier,
         FilterDropdownRef,
@@ -65,7 +67,8 @@ const Button = () => {
 };
 
 const Header = () => {
-  return <label className="mt-4 mb-2 text-sm"></label>;
+  const { header } = useContext(FilterContext);
+  return <label className="mt-4 mb-2 text-2xl">{header}</label>;
 };
 
 const ListContainer = () => {
@@ -130,13 +133,16 @@ const ListContainer = () => {
                         <Listbox multiple>
                           <FilterDropdown.Close />
                           <FiSearch />
-                          <input
-                            type="text"
-                            placeholder="Search..."
-                            className="search-input"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                          />
+                          <label>
+                            <input
+                              name="search"
+                              type="text"
+                              placeholder="Search..."
+                              className="search-input"
+                              value={searchTerm}
+                              onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                          </label>
                           {filteredOptions?.map((option, index) => (
                             <FilterDropdown.Item key={index} option={option} />
                           ))}

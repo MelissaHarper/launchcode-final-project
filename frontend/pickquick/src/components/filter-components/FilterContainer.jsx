@@ -19,10 +19,10 @@ function FilterContainer() {
 
   return (
     <>
-      <div className=" relative   text-white flex md:flex-row flex-wrap items-start  gap-4 justify-content-start flex-col lg:justify-center">
+      <div className=" relative   text-white flex  flex-wrap gap-4 justify-center flex-col md:flex-row lg:justify-center">
         <div className=" w-[400px] ">
-          <p className="text-2xl ">Genres</p>
           <FilterDropdown
+            header={"Genres"}
             assignedList={selectedGenres}
             setAssignedList={setSelectedGenres}
             options={genres}
@@ -38,8 +38,8 @@ function FilterContainer() {
           </FilterDropdown>
         </div>
         <div className=" w-[400px] ">
-          <p className="text-2xl ">Streaming Service Providers</p>
           <FilterDropdown
+            header={"Streaming Service Providers"}
             assignedList={selectedProviders}
             setAssignedList={setSelectedProviders}
             options={providers}
@@ -55,8 +55,8 @@ function FilterContainer() {
           </FilterDropdown>
         </div>
         <div className=" w-[400px] ">
-          <p className="text-2xl ">Keywords</p>
           <FilterDropdown
+            header={"Keywords"}
             assignedList={selectedKeywords}
             setAssignedList={setSelectedKeywords}
             selectionIdentifier={"Keywords"}

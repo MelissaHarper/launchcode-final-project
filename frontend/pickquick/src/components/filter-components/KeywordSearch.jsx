@@ -30,12 +30,15 @@ const KeywordSearch = () => {
       <div className="relative w-full">
         <FilterDropdown.Close />
         <FiSearch />
-        <input
-          type="text"
-          placeholder="Search for keywords"
-          className="w-full p-2 pl-10 bg-background-light dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-600 placeholder:dark:text-slate-400 border border-gray-400/60 dark:border-slate-700 focus:!border-blue-500 outline-none rounded-md transition-all duration-300"
-          onChange={(e) => handleSearch(e.target.value)}
-        />
+        <label>
+          <input
+            name="keyword-search"
+            type="text"
+            placeholder="Search for keywords"
+            className="w-full p-2 pl-10 bg-background-light dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-600 placeholder:dark:text-slate-400 border border-gray-400/60 dark:border-slate-700 focus:!border-blue-500 outline-none rounded-md transition-all duration-300"
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+        </label>
       </div>
       <div className="max-h-[40vh] mt-4 space-y-4 overflow-y-auto scroll-thin">
         {/* Search List */}

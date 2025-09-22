@@ -80,13 +80,16 @@ const ListContainer = () => {
       >
         <FilterDropdown.Close />
         <div className="flex flex-col p-2 z-10" id="dropdown" ref={dropdownRef}>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="search-input"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+          <label>
+            <input
+              name="dropdown-search"
+              type="text"
+              placeholder="Search..."
+              className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </label>
           {filteredOptions?.map((option, index) => (
             <FilterDropdown.Item key={index} option={option} />
           ))}
