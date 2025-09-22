@@ -7,11 +7,11 @@ import { getRandomMovies } from "../components/services/utils.js";
 export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
-  const [movieList, setMovieList] = useState();
+  const [movieList, setMovieList] = useState(null);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedProviders, setSelectedProviders] = useState([]);
   const [selectedKeywords, setSelectedKeywords] = useState([]);
-  const [isTouchScreen, setIsTouchScreen] = useState();
+  const [isTouchScreen, setIsTouchScreen] = useState(false);
   const [recommendations, setRecommendations] = useState(() => {
     const saved = localStorage.getItem("recommendations");
     return saved ? JSON.parse(saved) : [];
