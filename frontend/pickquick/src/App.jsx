@@ -9,12 +9,15 @@ import Home from "./components/Home";
 import MovieCard from "./components/movie-components/MovieCard";
 import Recommendations from "./components/movie-components/Recommendations";
 import Selection from "./components/movie-components/Selection";
+import ScrollToTop from "./components/ScrollToTop";
 import NavBar from "./components/NavBar";
+import { memo } from "react";
 
 function App() {
   return (
     <main>
       <div className="App">
+        <ScrollToTop />
         <NavBar />
         <div className="body-content">
           <Routes>
@@ -47,4 +50,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);

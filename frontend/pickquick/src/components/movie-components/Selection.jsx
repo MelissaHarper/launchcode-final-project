@@ -30,10 +30,6 @@ const Selection = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
 
