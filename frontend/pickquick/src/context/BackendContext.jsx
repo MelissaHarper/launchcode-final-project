@@ -233,6 +233,7 @@ export const BackendContextProvider = ({ children }) => {
         userLoading,
         error,
         errorModalRef,
+        openErrorModal,
       }}
     >
       {children}

@@ -11,9 +11,9 @@ export async function getWithFilters(
   payload
 ) {
   let results = [];
-  while (results.length < 1) {
+  let page = getRandomNumberBelow10();
+  while (results.length < 5 && page !== 0) {
     try {
-      const page = getRandomNumberBelow10();
       const response = await api().get(
         `/discover/${type}`,
         {
@@ -22,8 +22,8 @@ export async function getWithFilters(
             sort_by: "popularity.desc",
             page: page,
             watch_region: "US",
-            with_genres: genreId.join("%2C%20"),
-            with_watch_providers: providerId.join("%2C%20"),
+            with_genres: genreId.join(","),
+            with_watch_providers: providerId.join("||"),
             with_watch_monetization_types: "flatrate||free||ads||rent||buy",
             with_keywords: keywordId.join("%2C%20"),
           },
@@ -34,6 +34,7 @@ export async function getWithFilters(
     } catch (error) {
       console.error("Error fetching movies:", error);
     }
+    page -= 1;
   }
   return results;
 }
