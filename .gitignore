@@ -17,6 +17,8 @@ lerna-debug.log*
 node_modules
 dist-ssr
 *.local
+package-lock.json
+profiling-data.*
 
 ### IntelliJ IDEA ###
 .idea
