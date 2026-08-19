@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 import NavBar from "./components/NavBar";
 import FilterContainer from "./components/FilterContainer";
 import Home from "./components/Home";
@@ -24,19 +23,6 @@ function App() {
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/selection/:type/detail/:id" element={<Selection />} />
             <Route path="/userDashboard" element={<UserDashboard />} />
-            <Route
-              path="/dashboard"
-              element={
-                <>
-                  <SignedIn>
-                    <UserDashboard />
-                  </SignedIn>
-                  <SignedOut>
-                    <RedirectToSignIn />
-                  </SignedOut>
-                </>
-              }
-            />
           </Routes>
         </div>
         <Footer />

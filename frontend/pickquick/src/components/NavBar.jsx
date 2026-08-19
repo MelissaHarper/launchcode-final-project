@@ -1,10 +1,4 @@
 import { Link } from "react-router-dom";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
 import logo from "../assets/images/PickQuickLogo.png";
 import "../styles/NavBar-Footer.css";
 
@@ -18,21 +12,6 @@ function NavBar() {
         <Link className="nav-link" to="/">
           Home
         </Link>
-
-        <Link className="nav-link" to="/about">
-          About
-        </Link>
-        <SignedIn>
-          <Link className="nav-link" to="/userDashboard">
-            User Dashboard
-          </Link>
-        </SignedIn>
-        <SignedOut>
-          <SignInButton className="button-navbar" />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
       </div>
     </div>
   );

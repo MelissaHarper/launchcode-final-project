@@ -56,15 +56,6 @@ function Home() {
             onClick={() => handleActive(4)}
           />
         </div>
-        <div className={active === 4 ? "card-active" : "card-from-right"}>
-          <FiChevronLeft
-            className="arrow"
-            size={40}
-            onClick={() => handleActive(3)}
-          />
-          Sign-in to add movies to your personal "To Watch" list.
-          <FiChevronLeft color="transparent" size={40} />
-        </div>
       </div>
 
       <FilterContainer />

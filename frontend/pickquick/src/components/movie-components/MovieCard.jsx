@@ -6,12 +6,10 @@ import "../../styles/recommend-movieCard.css";
 import AddToWatchList from "../services/AddToWatchList.jsx";
 import RemoveFromWatchList from "../services/RemoveFromToWatchList.jsx";
 import { BackendContext } from "../../context/UserSyncHandler.jsx";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
 import { useFitText } from "../services/utils.js";
 
-const MovieCard = ({ movie, isTouchScreen }) => {
-  const { handleToWatchClick, checkToWatchList, toWatchList } =
-    useContext(BackendContext);
+const MovieCard = ({ movie }) => {
+  const { checkToWatchList, toWatchList } = useContext(BackendContext);
   const [isInToWatchList, setIsInToWatchList] = useState(false);
   const titleRef = useFitText(24);
 
@@ -35,48 +33,12 @@ const MovieCard = ({ movie, isTouchScreen }) => {
               event.currentTarget.src = Dummy;
             }}
           />
+          <div className="movie-title-container">
+            <div className="movie-title" ref={titleRef}>
+              {movie.title || movie.name}
+            </div>
+          </div>
         </Link>
-        <SignedIn>
-          {!isInToWatchList ? (
-            <div
-              className={isTouchScreen ? "touch-overlay" : "overlay"}
-              onClick={(e) => {
-                e.preventDefault(), handleToWatchClick(movie);
-              }}
-            >
-              <AddToWatchList />
-            </div>
-          ) : (
-            <div
-              className={isTouchScreen ? "touch-overlay" : "overlay"}
-              onClick={(e) => {
-                e.preventDefault;
-                handleToWatchClick(movie);
-              }}
-            >
-              <RemoveFromWatchList />
-            </div>
-          )}
-        </SignedIn>
-
-        <SignedOut>
-          <SignInButton asChild>
-            <Link
-              className={isTouchScreen ? "touch-overlay" : "overlay"}
-              onClick={(e) => {
-                e.preventDefault(), handleToWatchClick(movie);
-              }}
-              href="/sign-in"
-            >
-              Sign in to add this movie to your watchlist
-            </Link>
-          </SignInButton>
-        </SignedOut>
-      </div>
-      <div className="movie-title-container">
-        <div className="movie-title" ref={titleRef}>
-          {movie.title || movie.name}
-        </div>
       </div>
     </div>
   );

@@ -6,13 +6,14 @@
 
 ---
 
-## Features
+Struck through items are temporarily disabled for backend overhaul. Sign-in options have temporarily been removed effectively making this a frontend only for the time being.
 
+## Features
 
 - **Streaming Provider Filtering** Choose specific streaming services or search across all.
 - **Randomized Recommendations** From the filtered results, 5 random picks are shown to reduce decision fatigue.
-- **"To Watch" List** Save movies for later viewing with a single click.
-- **User Accounts** Secure login and profile management via Clerk.
+- ~~**"To Watch" List** Save movies for later viewing with a single click.~~ 
+- ~~**User Accounts** Secure login and profile management via Clerk.~~
 - **Cross-Platform Access** Works on desktop and mobile browsers.
 
 
@@ -24,20 +25,20 @@
 - **Vite** – Fast build tool and development server
 - **React Router DOM** – Client-side routing for navigating between views
 - **Context API** – State management across components
-- **Clerk Authentication** – Safe and secure user authentication
+~~- **Clerk Authentication** – Safe and secure user authentication~~
 - **The Movie Database (TMDB)** – API for movie data 
 
 ### ⚙️ Backend
 
 - **Java & Spring Boot** – RESTful APIs and server-side logic
-- **Clerk Webhooks** – Account event handling (planned for lifecycle support)
+~~- **Clerk Webhooks** – Account event handling (planned for lifecycle support)~~
 - **CORS** – Config security
 - **MySQL** – Object Relational Database
 
 ### 🧩 Infrastructure & Dev Tools
 
 - **IntelliJ** – Dev environment
-- **Clerk** – Complete auth suite (signup, sessions, secure JWT)
+~~- **Clerk** – Complete auth suite (signup, sessions, secure JWT)~~
 - **Visual Studio Code** – Dev environment
 - **Postman** – API testing and debugging
 
@@ -53,14 +54,14 @@
 
 ### 🗃️ Local Database
 - **MySQL** – For running and interacting with your local database  
-  [MongoDB Download](https://www.mongodb.com/try/download/community)  
+  [MySQL Download](https://www.mysql.com/downloads/)  
 
 
 <br>
 
 ## Installation
 
-You'll need an [API key from TMDb](https://developer.themoviedb.org/docs/getting-started) and a [Clerk account](https://clerk.com/) for full functionality.
+You'll need an [API key from TMDb](https://developer.themoviedb.org/docs/getting-started) ~~and a [Clerk account](https://clerk.com/) for full functionality.~~
 
 To install and run the PickQuick application locally, follow these steps:
 
