@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import { SignedIn } from "@clerk/clerk-react";
 import tmdbLogo from "../assets/images/tmdb-logo.svg";
 import "../styles/NavBar-Footer.css";
 
@@ -17,11 +16,6 @@ const Footer = () => {
           is not endorsed or certified by TMDB or JustWatch.
         </p>
       </div>
-      <SignedIn>
-        <Link className="footer-link" to="/feedback">
-          Feedback
-        </Link>
-      </SignedIn>
     </footer>
   );
 };
